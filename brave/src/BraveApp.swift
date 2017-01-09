@@ -8,6 +8,7 @@ import Deferred
     import Crashlytics
     import Mixpanel
 #endif
+import Allow2
 
 #if !DEBUG
     func print(items: Any..., separator: String = " ", terminator: String = "\n") {}
@@ -38,6 +39,9 @@ class BraveApp {
     // If app runs for this long, clear the saved pref that indicates it is safe to restore tabs
     static let kDelayBeforeDecidingAppHasBootedOk = (Int64(NSEC_PER_SEC) * 10) // 10 sec
 
+    var allow2Timer : NSTimer?
+    let allow2Activities = [ Allow2.Allow2Activity(activity: Allow2.Activity.Internet, log: true) ]    // just log internet usage = browser use
+    
     class var singleton: BraveApp {
         return _singleton
     }
@@ -176,6 +180,9 @@ class BraveApp {
                 }
             }
         }
+        
+        // check usage while in the foreground
+        BraveApp.singleton.startAllow2Timer()
     }
 
     // This can only be checked ONCE, the flag is cleared after this.
@@ -195,9 +202,24 @@ class BraveApp {
     }
 
     @objc func didEnterBackground(_: NSNotification) {
+        allow2Timer?.invalidate()
+        allow2Timer = nil
     }
 
     @objc func willEnterForeground(_ : NSNotification) {
+        // check usage while in the foreground
+        startAllow2Timer()
+    }
+    
+    @objc func startAllow2Timer() {
+        if (allow2Timer == nil) {
+            allow2Timer = NSTimer.scheduledTimerWithTimeInterval(10.0, target: self, selector: #selector(BraveApp.checkAllow2), userInfo: nil, repeats: true)
+            Allow2.sharedInstance.check(allow2Activities)
+        }
+    }
+    
+    @objc func checkAllow2() {
+        Allow2.sharedInstance.check(allow2Activities)
     }
 
     class func shouldHandleOpenURL(components: NSURLComponents) -> Bool {

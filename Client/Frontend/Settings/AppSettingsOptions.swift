@@ -7,6 +7,7 @@ import Shared
 
 import SwiftKeychainWrapper
 import LocalAuthentication
+import Allow2
 
 // This file contains all of the settings available in the main settings screen of the app.
 
@@ -173,6 +174,78 @@ class ClearPrivateDataSetting: Setting {
         navigationController?.pushViewController(viewController, animated: true)
     }
 }
+
+class Allow2Setting: Setting {
+    let profile: Profile
+    //var tabManager: TabManager!
+    
+    override var accessoryType: UITableViewCellAccessoryType { return .DisclosureIndicator }
+    
+    override var accessibilityIdentifier: String? { return "SetupAllow2" }
+    
+    init(settings: SettingsTableViewController) {
+        self.profile = settings.profile
+        
+        let allow2Title = "Allow2"
+        super.init(title: NSAttributedString(string: allow2Title, attributes: [NSForegroundColorAttributeName: UIConstants.TableViewRowTextColor]))
+    }
+    
+    override func onClick(navigationController: UINavigationController?) {
+        /*let viewController = */
+        //viewController.profile = profile
+        //viewController.tabManager = tabManager
+        //navigationController?.pushViewController(viewController, animated: true)
+        
+        if Allow2.sharedInstance.isPaired {
+            let alert = UIAlertController(title: "Paired", message: "Once paired with Allow2, Brave can only be unpaired by the controlling account by logging in to the Allow2 web portal.", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Cancel) { (action) in })
+            navigationController?.presentViewController(alert, animated: true, completion: nil)
+            return
+        }
+        
+        pairWithAllow2(navigationController)
+        
+    }
+    
+    func pairWithAllow2(navigationController: UINavigationController?) {
+        let alert = UIAlertController(title: "Pair with Allow2", message: "Enter Details", preferredStyle: .Alert)
+        alert.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
+            textField.placeholder = "Username"
+            textField.secureTextEntry = false
+        })
+        alert.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
+            textField.placeholder = "Password"
+            textField.secureTextEntry = true
+        })
+        alert.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
+            textField.placeholder = "Device Name"
+            textField.secureTextEntry = false
+        })
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            })
+        alert.addAction(UIAlertAction(title: "Pair", style: .Default, handler:{ (action) in
+            let user = (alert.textFields![0] as UITextField).text!.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet())
+            let password = (alert.textFields![1] as UITextField).text!
+            let deviceName = (alert.textFields![2] as UITextField).text!.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet())
+            
+            guard (user.characters.count > 0) && (password.characters.count > 0) && (deviceName.characters.count > 0) else {
+                print("Cancelled")
+                return
+            }
+            
+            UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            Allow2.sharedInstance.pair(user, password: password, deviceName: deviceName) { (res) in
+                print("paired")
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            }
+        }))
+        navigationController?.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+}
+
 
 class PrivacyPolicySetting: Setting {
     override var title: NSAttributedString? {

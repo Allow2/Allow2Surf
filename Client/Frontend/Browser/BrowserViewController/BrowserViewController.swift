@@ -13,6 +13,7 @@ import Shared
 
 import ReadingList
 import MobileCoreServices
+import Allow2
 
 private let log = Logger.browserLogger
 
@@ -98,6 +99,10 @@ class BrowserViewController: UIViewController {
     var navigationToolbar: BrowserToolbarProtocol {
         return toolbar ?? urlBar
     }
+
+    // allow2
+    var allow2CheckTimer : NSTimer?
+    var allow2BlockViewController: Allow2BlockViewController!
 
     static var instanceAsserter = 0 // Brave: it is easy to get confused as to which fx classes are effectively singletons
 
@@ -237,6 +242,7 @@ class BrowserViewController: UIViewController {
         }
     }
 
+    
     func SELappDidEnterBackgroundNotification() {
         displayedPopoverController?.dismissViewControllerAnimated(false, completion: nil)
     }
@@ -274,6 +280,8 @@ class BrowserViewController: UIViewController {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillResignActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillEnterForegroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        //NSNotificationCenter.defaultCenter().removeObserver(self, name: Allow2.PairingChangedNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: Allow2.CheckResultNotification, object: nil)
     }
 
     override func loadView() {
@@ -289,6 +297,8 @@ class BrowserViewController: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BrowserViewController.SELappWillResignActiveNotification), name: UIApplicationWillResignActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BrowserViewController.SELappDidBecomeActiveNotification), name: UIApplicationDidBecomeActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BrowserViewController.SELappDidEnterBackgroundNotification), name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        //NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BrowserViewController.Allow2PairingChangedNotification(_:)), name: Allow2.PairingChangedNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BrowserViewController.Allow2CheckResultNotification(_:)), name: Allow2.CheckResultNotification, object: nil)
         KeyboardHelper.defaultHelper.addDelegate(self)
 
         log.debug("BVC adding footer and header…")
@@ -309,6 +319,11 @@ class BrowserViewController: UIViewController {
         webViewContainer.addSubview(webViewContainerToolbar)
         view.addSubview(webViewContainer)
 
+        log.debug("BVC setting up allow2 blocking view…")
+        allow2BlockViewController = Allow2.allow2BlockViewController
+        allow2BlockViewController.view.hidden = true
+        view.addSubview(allow2BlockViewController.view)
+        
         log.debug("BVC setting up status bar…")
         // Temporary work around for covering the non-clipped web view content
         statusBarOverlay = UIView()
@@ -408,7 +423,11 @@ class BrowserViewController: UIViewController {
         webViewContainerBackdrop.snp_makeConstraints { make in
             make.edges.equalTo(webViewContainer)
         }
-
+        
+        allow2BlockViewController.view.snp_makeConstraints { make in
+            make.edges.equalTo(webViewContainer)
+        }
+        
         webViewContainerToolbar.snp_makeConstraints { make in
             make.left.right.top.equalTo(webViewContainer)
             make.height.equalTo(0)
@@ -1123,6 +1142,31 @@ extension BrowserViewController: ReaderModeDelegate {
     // not as a full-screen modal, which is the default on compact device classes.
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.None
+    }
+}
+
+// MARK: - Allow2
+
+extension BrowserViewController {
+    func Allow2PairingChangedNotification(notification:NSNotification) {
+        print(notification)
+    }
+
+    func Allow2CheckResultNotification(notification:NSNotification) {
+        guard let userInfo = notification.userInfo,
+            let result  = userInfo["result"] as? Allow2CheckResult else {
+                print("No Allow2CheckResult found in notification")
+                return
+        }
+        print("\(result) received")
+
+        dispatch_async(dispatch_get_main_queue()) {
+            if (!result.allowed) {
+                // configure the block screen to explain the issue
+                self.allow2BlockViewController.checkResult(result)
+            }
+            self.allow2BlockViewController.view.hidden = result.allowed
+        }
     }
 }
 

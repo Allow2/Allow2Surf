@@ -111,6 +111,7 @@ class BraveSettingsView : AppSettingsTableViewController {
                         }
                     })]
             ),
+            SettingSection(title: NSAttributedString(string: "Allow2"), children: [ Allow2Setting(settings: self) ]),
             SettingSection(title: NSAttributedString(string: Strings.Brave_Shield_Defaults), children:
                 [BoolSetting(prefs: prefs, prefKey: AdBlocker.prefKey, defaultValue: true, titleText: Strings.Block_Ads_and_Tracking),
                     BoolSetting(prefs: prefs, prefKey: HttpsEverywhere.prefKey, defaultValue: true, titleText: Strings.HTTPS_Everywhere),
