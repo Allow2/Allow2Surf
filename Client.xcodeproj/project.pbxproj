@@ -129,7 +129,8 @@
 		47FBF29F2D52E54743C0B3C4 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A882DBA989C7226E6E4939 /* Loader.swift */; };
 		48C6EB7A9F5866B0EAD90E90 /* SearchEngines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BDFA099D42674F2B2CE3CC /* SearchEngines.swift */; };
 		49603E1E5183CDC3BD1C2D09 /* BrowserViewController+KeyCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C528288360B38C934F38D /* BrowserViewController+KeyCommands.swift */; };
-		497D6B931E1F9A9C0021EAB8 /* Allow2Framework.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 497D6B821E1F96CE0021EAB8 /* Allow2Framework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4967260E1E29B76D00F33018 /* Allow2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 497D6B821E1F96CE0021EAB8 /* Allow2.framework */; };
+		497D6B931E1F9A9C0021EAB8 /* Allow2.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 497D6B821E1F96CE0021EAB8 /* Allow2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		49B0DDB0C82A7C833ED598C0 /* atomic_pointer.h in Headers */ = {isa = PBXBuildFile; fileRef = 599EC63A8464C30F44D63B47 /* atomic_pointer.h */; };
 		49EC58027D98E205CF632DCF /* FirstPartyHost.h in Headers */ = {isa = PBXBuildFile; fileRef = 32454E9E39178D4B3CD31294 /* FirstPartyHost.h */; };
 		4A6B728ACF11D1753EB947C3 /* Clearables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05853EA6194DFB05DAD2C6FD /* Clearables.swift */; };
@@ -566,6 +567,13 @@
 			remoteGlobalIDString = 288A2D851AB8B3260023ABC3;
 			remoteInfo = Shared;
 		};
+		496726161E29B77300F33018 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 497D6B7C1E1F96CE0021EAB8 /* Allow2Framework.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 497D6B611E1F962A0021EAB8;
+			remoteInfo = Allow2;
+		};
 		497D6B811E1F96CE0021EAB8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 497D6B7C1E1F96CE0021EAB8 /* Allow2Framework.xcodeproj */;
@@ -719,7 +727,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				497D6B931E1F9A9C0021EAB8 /* Allow2Framework.framework in Copy Frameworks */,
+				497D6B931E1F9A9C0021EAB8 /* Allow2.framework in Copy Frameworks */,
 				EBB345801DAD465C00EE24F0 /* SQLite.framework in Copy Frameworks */,
 				E4D567301ADECE2800F1EFE7 /* ReadingList.framework in Copy Frameworks */,
 				2FCAE2321ABB51F800877008 /* Storage.framework in Copy Frameworks */,
@@ -1458,6 +1466,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4967260E1E29B76D00F33018 /* Allow2.framework in Frameworks */,
 				EB8E3D721DF79ABA006EA0D1 /* KIF.framework in Frameworks */,
 				EBE50B871DAEC689000BC0A1 /* Deferred.framework in Frameworks */,
 				EB8E9B561C7CB4E1003AA90E /* libz.tbd in Frameworks */,
@@ -1871,7 +1880,7 @@
 		497D6B7D1E1F96CE0021EAB8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				497D6B821E1F96CE0021EAB8 /* Allow2Framework.framework */,
+				497D6B821E1F96CE0021EAB8 /* Allow2.framework */,
 				497D6B841E1F96CE0021EAB8 /* Allow2FrameworkTests.xctest */,
 			);
 			name = Products;
@@ -3203,6 +3212,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				496726171E29B77300F33018 /* PBXTargetDependency */,
 				EB8E9B361C7CB4E1003AA90E /* PBXTargetDependency */,
 			);
 			name = "brave-unit-KIF-tests";
@@ -3384,10 +3394,10 @@
 			remoteRef = 0B742CCB1B32491400EE9264 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		497D6B821E1F96CE0021EAB8 /* Allow2Framework.framework */ = {
+		497D6B821E1F96CE0021EAB8 /* Allow2.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = Allow2Framework.framework;
+			path = Allow2.framework;
 			remoteRef = 497D6B811E1F96CE0021EAB8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -4086,6 +4096,11 @@
 			isa = PBXTargetDependency;
 			target = 288A2D851AB8B3260023ABC3 /* Shared */;
 			targetProxy = 2FCAE23B1ABB520700877008 /* PBXContainerItemProxy */;
+		};
+		496726171E29B77300F33018 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Allow2;
+			targetProxy = 496726161E29B77300F33018 /* PBXContainerItemProxy */;
 		};
 		497D6B951E1F9AA90021EAB8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
