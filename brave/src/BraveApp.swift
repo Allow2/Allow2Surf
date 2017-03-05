@@ -214,12 +214,20 @@ class BraveApp {
     @objc func startAllow2Timer() {
         if (allow2Timer == nil) {
             allow2Timer = NSTimer.scheduledTimerWithTimeInterval(10.0, target: self, selector: #selector(BraveApp.checkAllow2), userInfo: nil, repeats: true)
-            Allow2.sharedInstance.check(allow2Activities)
+            Allow2.shared.check(allow2Activities)
         }
     }
     
     @objc func checkAllow2() {
-        Allow2.sharedInstance.check(allow2Activities)
+        // this is called every 10 seconds. On each call, we blindly ask permission, which will fail if there is no "default" child
+        // on failure, we can check if we are actually paired, and if so, then we can prompt for the user to select WHO they are
+        Allow2.shared.check(allow2Activities, log: true) { (response) in
+            //if case let .Error(error as? Allow2Error) = response {
+            //    if error == Allow2Error.MissingChildId {
+                    // special case,
+            //    }
+            //}
+        }
     }
 
     class func shouldHandleOpenURL(components: NSURLComponents) -> Bool {

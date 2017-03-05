@@ -175,9 +175,16 @@ class ClearPrivateDataSetting: Setting {
     }
 }
 
-class Allow2Setting: Setting {
+class Allow2Setting: Setting, Allow2PairingViewControllerDelegate {
     let profile: Profile
     //var tabManager: TabManager!
+    
+    weak var navController : UINavigationController?
+    
+    private static let _options =  [
+        Choice<UInt> { (displayName: "Tap to Connect", object: UInt(0), optionId: 0) },
+        Choice<UInt> { (displayName: "Connected to Allow2", object: UInt(1), optionId: 1) }
+    ]
     
     override var accessoryType: UITableViewCellAccessoryType { return .DisclosureIndicator }
     
@@ -185,66 +192,63 @@ class Allow2Setting: Setting {
     
     init(settings: SettingsTableViewController) {
         self.profile = settings.profile
+        // todo: self.status = ( Allow2.shared.isPaired ? "Connected" : "Tap to connect" )
         
         let allow2Title = "Allow2"
         super.init(title: NSAttributedString(string: allow2Title, attributes: [NSForegroundColorAttributeName: UIConstants.TableViewRowTextColor]))
     }
     
     override func onClick(navigationController: UINavigationController?) {
-        /*let viewController = */
-        //viewController.profile = profile
-        //viewController.tabManager = tabManager
-        //navigationController?.pushViewController(viewController, animated: true)
-        
-        if Allow2.sharedInstance.isPaired {
-            let alert = UIAlertController(title: "Paired", message: "Once paired with Allow2, Brave can only be unpaired by the controlling account by logging in to the Allow2 web portal.", preferredStyle: .Alert)
+
+        if Allow2.shared.isPaired {
+            let alert = UIAlertController(title: "Paired", message: "Use your Allow2 account to disconnect this app.", preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "OK", style: .Cancel) { (action) in })
             navigationController?.presentViewController(alert, animated: true, completion: nil)
             return
         }
         
-        pairWithAllow2(navigationController)
-        
+        navController = navigationController
+        if let viewController = Allow2PairingViewController.instantiate() {
+            viewController.delegate = self
+            navigationController?.pushViewController(viewController, animated: true)
+        }
     }
     
-    func pairWithAllow2(navigationController: UINavigationController?) {
-        let alert = UIAlertController(title: "Pair with Allow2", message: "Enter Details", preferredStyle: .Alert)
-        alert.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
-            textField.placeholder = "Username"
-            textField.secureTextEntry = false
-        })
-        alert.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
-            textField.placeholder = "Password"
-            textField.secureTextEntry = true
-        })
-        alert.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
-            textField.placeholder = "Device Name"
-            textField.secureTextEntry = false
-        })
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-            })
-        alert.addAction(UIAlertAction(title: "Pair", style: .Default, handler:{ (action) in
-            let user = (alert.textFields![0] as UITextField).text!.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet())
-            let password = (alert.textFields![1] as UITextField).text!
-            let deviceName = (alert.textFields![2] as UITextField).text!.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet())
-            
-            guard (user.characters.count > 0) && (password.characters.count > 0) && (deviceName.characters.count > 0) else {
-                print("Cancelled")
-                return
-            }
-            
-            UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-            Allow2.sharedInstance.pair(user, password: password, deviceName: deviceName) { (res) in
+    func Allow2PairingCompleted(result: Allow2Response) {
+        dispatch_async(dispatch_get_main_queue()) {
+            switch result {
+            case .PairResult(let result):
                 print("paired")
-                UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                self.navController?.popViewControllerAnimated(true)
+                
+                //self.selectChild(result.children)
+                break
+            case .Error(let error):
+                let err = error as NSError
+                let alert = UIAlertController(title: "Error", message: err.localizedDescription, preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+                (UIApplication.sharedApplication().delegate as! AppDelegate).window?.rootViewController?.presentViewController( alert, animated: true, completion: nil )
+                self.navController?.presentViewController(alert, animated: true, completion: nil)
+                return
+            default:
+                break // cannot happen
             }
-        }))
-        navigationController?.presentViewController(alert, animated: true, completion: nil)
+        }
     }
-    
 }
+
+
+/*
+    func selectChild(children : [Allow2Child]) {
+        let actionSheet = UIAlertController(title: "Child", message: "Which child uses this device?", preferredStyle: .ActionSheet)
+        for child in children {
+            actionSheet.addAction(UIAlertAction(title: child.name, style: .Default) { (action) in
+                Allow2.shared.childId = "\(child.id)"
+            })
+        }
+        actionSheet.addAction(UIAlertAction(title: "Several", style: .Cancel, handler: nil))
+    }
+}*/
 
 
 class PrivacyPolicySetting: Setting {

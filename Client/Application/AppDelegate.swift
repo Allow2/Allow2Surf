@@ -13,6 +13,7 @@ import MessageUI
 import WebImage
 import SwiftKeychainWrapper
 import LocalAuthentication
+import Allow2
 
 private let log = Logger.browserLogger
 
@@ -62,6 +63,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         setUserAgents()
 
+        Allow2.shared.deviceToken = "fkptV9fm4OCbhGv6"
+        
         log.debug("Starting keyboard helper…")
         // Start the keyboard helper to monitor and cache keyboard state.
         KeyboardHelper.defaultHelper.startObserving()
