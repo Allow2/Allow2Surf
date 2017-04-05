@@ -30,8 +30,8 @@ private struct SearchViewControllerUX {
     static let SearchImageHeight: Float = 44
     static let SearchImageWidth: Float = 24
 
-    static let SuggestionBackgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.8)
-    static let SuggestionBorderColor = UIConstants.HighlightBlue
+    static let SuggestionBackgroundColor = BraveUX.ToolbarsBackgroundSolidColor
+    static let SuggestionBorderColor = BraveUX.ToolbarsBackgroundSolidColor
     static let SuggestionBorderWidth: CGFloat = 1
     static let SuggestionCornerRadius: CGFloat = 4
     static let SuggestionInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
@@ -92,12 +92,7 @@ class SearchViewController: SiteTableViewController, KeyboardHelperDelegate, Loa
 
         KeyboardHelper.defaultHelper.addDelegate(self)
 
-        searchEngineScrollView.layer.backgroundColor = SearchViewControllerUX.SearchEngineScrollViewBackgroundColor
-        searchEngineScrollView.layer.shadowRadius = 0
-        searchEngineScrollView.layer.shadowOpacity = 100
-        searchEngineScrollView.layer.shadowOffset = CGSize(width: 0, height: -SearchViewControllerUX.SearchEngineTopBorderWidth)
-        searchEngineScrollView.layer.shadowColor = SearchViewControllerUX.SearchEngineScrollViewBorderColor
-        searchEngineScrollView.clipsToBounds = false
+        searchEngineScrollView.layer.backgroundColor = UIConstants.TableViewHeaderBackgroundColor.CGColor
 
         searchEngineScrollView.decelerationRate = UIScrollViewDecelerationRateFast
         view.addSubview(searchEngineScrollView)
@@ -712,8 +707,8 @@ private class SuggestionButton: InsetButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        setTitleColor(UIConstants.HighlightBlue, forState: UIControlState.Normal)
-        setTitleColor(UIColor.whiteColor(), forState: UIControlState.Highlighted)
+        setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        setTitleColor(UIColor.blackColor(), forState: UIControlState.Highlighted)
         titleLabel?.font = DynamicFontHelper.defaultHelper.DefaultMediumFont
         backgroundColor = SearchViewControllerUX.SuggestionBackgroundColor
         layer.borderColor = SearchViewControllerUX.SuggestionBorderColor.CGColor
@@ -731,7 +726,7 @@ private class SuggestionButton: InsetButton {
     @objc
     override var highlighted: Bool {
         didSet {
-            backgroundColor = highlighted ? UIConstants.HighlightBlue : SearchViewControllerUX.SuggestionBackgroundColor
+            backgroundColor = highlighted ? SearchViewControllerUX.SuggestionBackgroundColor.colorWithAlphaComponent(0.8) : SearchViewControllerUX.SuggestionBackgroundColor
         }
     }
 }

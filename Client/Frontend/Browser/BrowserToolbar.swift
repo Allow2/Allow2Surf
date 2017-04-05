@@ -15,9 +15,9 @@ protocol BrowserToolbarProtocol {
     weak var browserToolbarDelegate: BrowserToolbarDelegate? { get set }
     var shareButton: UIButton { get }
     var pwdMgrButton: UIButton { get }
-    var bookmarkButton: UIButton { get }
     var forwardButton: UIButton { get }
     var backButton: UIButton { get }
+    var addTabButton: UIButton { get }
     var actionButtons: [UIButton] { get }
 
     func updateBackStatus(canGoBack: Bool)
@@ -32,7 +32,6 @@ protocol BrowserToolbarDelegate: class {
     func browserToolbarDidPressForward(browserToolbar: BrowserToolbarProtocol, button: UIButton)
     func browserToolbarDidPressBookmark(browserToolbar: BrowserToolbarProtocol, button: UIButton)
     func browserToolbarDidPressShare(browserToolbar: BrowserToolbarProtocol, button: UIButton)
-    func browserToolbarDidPressPwdMgr(browserToolbar: BrowserToolbarProtocol, button: UIButton)
 }
 
 @objc
@@ -46,43 +45,35 @@ public class BrowserToolbarHelper: NSObject {
     }
 
     private func setTintColor(color: UIColor, forButtons buttons: [UIButton]) {
-      return
-        buttons.forEach { $0.tintColor = color }
+      buttons.forEach { $0.tintColor = color }
     }
 
     init(toolbar: BrowserToolbarProtocol) {
         self.toolbar = toolbar
         super.init()
 
+        // TODO: All of this should be configured directly inside the browser toolbar
+        
         toolbar.backButton.setImage(UIImage(named: "back"), forState: .Normal)
-        //toolbar.backButton.setImage(UIImage(named: "backPressed"), forState: .Highlighted)
         toolbar.backButton.accessibilityLabel = Strings.Back
         toolbar.backButton.addTarget(self, action: #selector(BrowserToolbarHelper.SELdidClickBack), forControlEvents: UIControlEvents.TouchUpInside)
 
         toolbar.forwardButton.setImage(UIImage(named: "forward"), forState: .Normal)
-        //toolbar.forwardButton.setImage(UIImage(named: "forwardPressed"), forState: .Highlighted)
         toolbar.forwardButton.accessibilityLabel = Strings.Forward
         toolbar.forwardButton.addTarget(self, action: #selector(BrowserToolbarHelper.SELdidClickForward), forControlEvents: UIControlEvents.TouchUpInside)
 
         toolbar.shareButton.setImage(UIImage(named: "send"), forState: .Normal)
-#if !BRAVE // we use the default press state for now. 
-        toolbar.shareButton.setImage(UIImage(named: "sendPressed"), forState: .Highlighted)
-#endif
         toolbar.shareButton.accessibilityLabel = Strings.Share
         toolbar.shareButton.addTarget(self, action: #selector(BrowserToolbarHelper.SELdidClickShare), forControlEvents: UIControlEvents.TouchUpInside)
-        toolbar.bookmarkButton.contentMode = UIViewContentMode.Center
         
+        toolbar.addTabButton.setImage(UIImage(named: "add"), forState: .Normal)
+        toolbar.addTabButton.accessibilityLabel = Strings.Add_Tab
+        toolbar.addTabButton.addTarget(self, action: #selector(BrowserToolbarHelper.SELdidClickAddTab), forControlEvents: UIControlEvents.TouchUpInside)
+
         toolbar.pwdMgrButton.setImage(UIImage(named: "passhelper_1pwd")?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         toolbar.pwdMgrButton.hidden = true
         toolbar.pwdMgrButton.tintColor = UIColor.whiteColor()
         toolbar.pwdMgrButton.accessibilityLabel = Strings.PasswordManager
-        toolbar.pwdMgrButton.addTarget(self, action: #selector(BrowserToolbarHelper.SELdidClickPwdMgr), forControlEvents: UIControlEvents.TouchUpInside)
-
-        toolbar.bookmarkButton.setImage(UIImage(named: "bookmark"), forState: .Normal)
-        toolbar.bookmarkButton.setImage(UIImage(named: "bookmarked"), forState: UIControlState.Selected)
-        toolbar.bookmarkButton.setImage(UIImage(named: "bookmarkHighlighted"), forState: UIControlState.Highlighted)
-        toolbar.bookmarkButton.accessibilityLabel = Strings.Bookmark
-        toolbar.bookmarkButton.addTarget(self, action: #selector(BrowserToolbarHelper.SELdidClickBookmark), forControlEvents: UIControlEvents.TouchUpInside)
 
         setTintColor(buttonTintColor, forButtons: toolbar.actionButtons)
     }
@@ -94,30 +85,39 @@ public class BrowserToolbarHelper: NSObject {
     func SELdidClickShare() {
         toolbar.browserToolbarDelegate?.browserToolbarDidPressShare(toolbar, button: toolbar.shareButton)
     }
-    
-    func SELdidClickPwdMgr() {
-        toolbar.browserToolbarDelegate?.browserToolbarDidPressPwdMgr(toolbar, button: toolbar.pwdMgrButton)
-    }
 
     func SELdidClickForward() {
         toolbar.browserToolbarDelegate?.browserToolbarDidPressForward(toolbar, button: toolbar.forwardButton)
     }
-
-    func SELdidClickBookmark() {
-        toolbar.browserToolbarDelegate?.browserToolbarDidPressBookmark(toolbar, button: toolbar.bookmarkButton)
+    
+    func SELdidClickAddTab() {
+        telemetry(action: "add tab", props: ["bottomToolbar": "true"])
+        let app = UIApplication.sharedApplication().delegate as! AppDelegate
+        let isPrivate = PrivateBrowsing.singleton.isOn
+        if isPrivate {
+            app.tabManager.addTabAndSelect(nil, configuration: nil, isPrivate: true)
+        } else {
+            app.tabManager.addTabAndSelect()
+        }
+        app.browserViewController.urlBar.browserLocationViewDidTapLocation(app.browserViewController.urlBar.locationView)
     }
 }
-
 
 class BrowserToolbar: Toolbar, BrowserToolbarProtocol {
     weak var browserToolbarDelegate: BrowserToolbarDelegate?
 
-    let shareButton: UIButton
-    let pwdMgrButton: UIButton
-    let bookmarkButton: UIButton
-    let forwardButton: UIButton
-    let backButton: UIButton
-    let actionButtons: [UIButton]
+    let shareButton = UIButton()
+    
+    // Just used to conform to protocol, never used on this class, see BraveURLBarView for the one that is used on iPad
+    let pwdMgrButton = UIButton()
+    
+    let forwardButton = UIButton()
+    let backButton = UIButton()
+    let addTabButton = UIButton()
+    
+    lazy var actionButtons: [UIButton] = {
+        return [self.shareButton, self.forwardButton, self.backButton, self.addTabButton]
+    }()
 
     var stopReloadButton: UIButton {
         get {
@@ -127,14 +127,15 @@ class BrowserToolbar: Toolbar, BrowserToolbarProtocol {
 
     var helper: BrowserToolbarHelper?
 
-    static var Themes: [String: Theme] = {
+    static let Themes: [String: Theme] = {
         var themes = [String: Theme]()
         var theme = Theme()
         theme.buttonTintColor = UIConstants.PrivateModeActionButtonTintColor
         themes[Theme.PrivateMode] = theme
 
         theme = Theme()
-        theme.buttonTintColor = UIColor.darkGrayColor()
+        theme.buttonTintColor = BraveUX.ActionButtonTintColor
+        theme.backgroundColor = UIColor.clearColor()
         themes[Theme.NormalMode] = theme
 
         return themes
@@ -142,24 +143,15 @@ class BrowserToolbar: Toolbar, BrowserToolbarProtocol {
 
     // This has to be here since init() calls it
     override init(frame: CGRect) {
-        // And these have to be initialized in here or the compiler will get angry
-        backButton = UIButton()
-        backButton.accessibilityIdentifier = "BrowserToolbar.backButton"
-        forwardButton = UIButton()
-        forwardButton.accessibilityIdentifier = "BrowserToolbar.forwardButton"
-        shareButton = UIButton()
+
         shareButton.accessibilityIdentifier = "BrowserToolbar.shareButton"
-        pwdMgrButton = UIButton()
-        pwdMgrButton.accessibilityIdentifier = "BrowserToolbar.pwdMgrButton"
-        bookmarkButton = UIButton()
-        bookmarkButton.accessibilityIdentifier = "BrowserToolbar.bookmarkButton"
-        actionButtons = [backButton, forwardButton, shareButton, bookmarkButton]
 
         super.init(frame: frame)
 
         self.helper = BrowserToolbarHelper(toolbar: self)
+        self.backgroundColor = BraveUX.ToolbarsBackgroundColor
 
-        addButtons(backButton, forwardButton, shareButton, bookmarkButton)
+        addButtons(actionButtons)
 
         accessibilityNavigationStyle = .Combined
         accessibilityLabel = Strings.Navigation_Toolbar
@@ -182,23 +174,8 @@ class BrowserToolbar: Toolbar, BrowserToolbarProtocol {
     }
 
     func updatePageStatus(isWebPage isWebPage: Bool) {
-        bookmarkButton.enabled = isWebPage
         stopReloadButton.enabled = isWebPage
         shareButton.enabled = isWebPage
-    }
-
-    override func drawRect(rect: CGRect) {
-        if let context = UIGraphicsGetCurrentContext() {
-            drawLine(context, start: CGPoint(x: 0, y: 0), end: CGPoint(x: frame.width, y: 0))
-        }
-    }
-
-    private func drawLine(context: CGContextRef, start: CGPoint, end: CGPoint) {
-        CGContextSetStrokeColorWithColor(context, UIColor.blackColor().colorWithAlphaComponent(0.05).CGColor)
-        CGContextSetLineWidth(context, 2)
-        CGContextMoveToPoint(context, start.x, start.y)
-        CGContextAddLineToPoint(context, end.x, end.y)
-        CGContextStrokePath(context)
     }
 }
 

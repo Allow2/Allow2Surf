@@ -479,6 +479,7 @@
 		EB9CAB431DC2592700627A39 /* UIWebViewSwizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = EB9CAB421DC2592700627A39 /* UIWebViewSwizzling.m */; };
 		EB9D8F241D9CCE5F00CA1624 /* BookmarksTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9D8F211D9CCE5F00CA1624 /* BookmarksTest.swift */; };
 		EB9D8F261D9CCE5F00CA1624 /* WebViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9D8F231D9CCE5F00CA1624 /* WebViewTest.swift */; };
+		EBA11E1A1E2EB84800C964E0 /* adblock-regions.txt in Resources */ = {isa = PBXBuildFile; fileRef = EBA11E191E2EB84800C964E0 /* adblock-regions.txt */; };
 		EBACC8551DF9BB3500D5E048 /* SettingsViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBACC8541DF9BB3500D5E048 /* SettingsViewTest.swift */; };
 		EBB345801DAD465C00EE24F0 /* SQLite.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7B9A62DB1C4002B1005C83DC /* SQLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EBE50B831DAE8D77000BC0A1 /* BookmarksTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE50B7C1DAE8D70000BC0A1 /* BookmarksTest.swift */; };
@@ -564,6 +565,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 288A2D851AB8B3260023ABC3;
 			remoteInfo = Shared;
+		};
+		5C82B4D11E1F5D0F00B8942C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D30EBB5A1C75503800105AE9 /* KIF.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FAB89FFC1CAC546900C6DFC1;
+			remoteInfo = KIFFrameworkConsumer;
+		};
+		5C82B4D31E1F5D0F00B8942C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D30EBB5A1C75503800105AE9 /* KIF.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FAB8A0141CAC546A00C6DFC1;
+			remoteInfo = KIFFrameworkConsumerTests;
 		};
 		7B9A62DA1C4002B1005C83DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1288,6 +1303,9 @@
 		EB9CAB421DC2592700627A39 /* UIWebViewSwizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIWebViewSwizzling.m; path = brave/src/webview/UIWebViewSwizzling.m; sourceTree = "<group>"; };
 		EB9D8F211D9CCE5F00CA1624 /* BookmarksTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksTest.swift; sourceTree = "<group>"; };
 		EB9D8F231D9CCE5F00CA1624 /* WebViewTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewTest.swift; sourceTree = "<group>"; };
+		EBA11E191E2EB84800C964E0 /* adblock-regions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "adblock-regions.txt"; path = "brave/adblock-regions.txt"; sourceTree = SOURCE_ROOT; };
+		EBA6F12E1E39312100F7B3D9 /* ad-hoc-export.applescript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.applescript; name = "ad-hoc-export.applescript"; path = "brave/build-system/ad-hoc-export.applescript"; sourceTree = "<group>"; };
+		EBA6F13F1E39410E00F7B3D9 /* upload-to-app-store.applescript */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.applescript; name = "upload-to-app-store.applescript"; path = "brave/build-system/upload-to-app-store.applescript"; sourceTree = "<group>"; };
 		EBACC8541DF9BB3500D5E048 /* SettingsViewTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewTest.swift; sourceTree = "<group>"; };
 		EBE50B7C1DAE8D70000BC0A1 /* BookmarksTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksTest.swift; sourceTree = "<group>"; };
 		EBE50B861DAEC689000BC0A1 /* Deferred.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Deferred.framework; path = Carthage/Build/iOS/Deferred.framework; sourceTree = "<group>"; };
@@ -2148,6 +2166,8 @@
 		9D9FA65B7AF80B044B65F8B2 /* brave */ = {
 			isa = PBXGroup;
 			children = (
+				EBA6F13F1E39410E00F7B3D9 /* upload-to-app-store.applescript */,
+				EBA6F12E1E39312100F7B3D9 /* ad-hoc-export.applescript */,
 				AEC7CC1649CB3DF5D490AFD2 /* ThirdParty */,
 				B036144E80BFD02638E7E647 /* Brave.entitlements */,
 				B5EFAA129595C26547FDD70D /* BraveInfo.plist */,
@@ -2445,6 +2465,8 @@
 				D30EBB661C75503800105AE9 /* Test Host.app */,
 				D30EBB681C75503800105AE9 /* KIF Tests - XCTest.xctest */,
 				D30EBB6A1C75503800105AE9 /* KIF.framework */,
+				5C82B4D21E1F5D0F00B8942C /* KIFFrameworkConsumer.app */,
+				5C82B4D41E1F5D0F00B8942C /* KIFFrameworkConsumerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3319,6 +3341,20 @@
 			remoteRef = 0B742CCB1B32491400EE9264 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		5C82B4D21E1F5D0F00B8942C /* KIFFrameworkConsumer.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = KIFFrameworkConsumer.app;
+			remoteRef = 5C82B4D11E1F5D0F00B8942C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5C82B4D41E1F5D0F00B8942C /* KIFFrameworkConsumerTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = KIFFrameworkConsumerTests.xctest;
+			remoteRef = 5C82B4D31E1F5D0F00B8942C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		7B9A62DB1C4002B1005C83DC /* SQLite.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -3432,6 +3468,7 @@
 				EB8F569C1DD13DF300679A78 /* FiraSans-BoldItalic.ttf in Resources */,
 				886E3B0001BC705ACFC4AD45 /* adInfo-wrapper.js in Resources */,
 				507ACE2A12D675DAF9C79198 /* adInfo.js in Resources */,
+				EBA11E1A1E2EB84800C964E0 /* adblock-regions.txt in Resources */,
 				E4309BC56F1431FEA791E157 /* BlankTargetDetector.js in Resources */,
 				EB4E15ED1DB7F36600A4C7EA /* Localizable.strings in Resources */,
 				EB8F569F1DD13DF300679A78 /* FiraSans-Light.ttf in Resources */,
@@ -4227,6 +4264,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = brave/Brave.entitlements;
+				DEVELOPMENT_TEAM = "";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4600,6 +4638,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = BraveShareTo/BraveShareToInfo.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
@@ -4630,6 +4669,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -4809,6 +4849,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = brave/Brave.entitlements;
+				DEVELOPMENT_TEAM = "";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

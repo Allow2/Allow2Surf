@@ -1,7 +1,7 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="BraveShareTo/BraveShareToInfo.plist" source-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="8.0" build-num="8A218a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="8.2.1" build-num="8C1002"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName">
@@ -11,7 +11,7 @@
   </file>
   <file original="brave/Localizable.strings" source-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="8.0" build-num="8A218a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="8.2.1" build-num="8C1002"/>
     </header>
     <body>
       <trans-unit id="%@ search">
@@ -25,10 +25,6 @@
       <trans-unit id="-">
         <source>-</source>
         <note>Button for smaller reader font size. Keep this extremely short! This is shown in the reader mode toolbar.</note>
-      </trans-unit>
-      <trans-unit id="3rd-party password manager">
-        <source>3rd-party password manager</source>
-        <note>Setting to enable the built-in password manager</note>
       </trans-unit>
       <trans-unit id="Aa">
         <source>Aa</source>
@@ -69,10 +65,6 @@
       <trans-unit id="Allow %@ to open iTunes?">
         <source>Allow %@ to open iTunes?</source>
         <note>Ask user if site can open iTunes store URL</note>
-      </trans-unit>
-      <trans-unit id="Allow Brave to send info to improve our app">
-        <source>Allow Brave to send info to improve our app</source>
-        <note>option in settings screen</note>
       </trans-unit>
       <trans-unit id="Always show">
         <source>Always show</source>
@@ -313,10 +305,6 @@ and here's why...</source>
         <source>Desktop Bookmarks</source>
         <note>The folder name for the virtual folder that contains all desktop bookmarks.</note>
       </trans-unit>
-      <trans-unit id="Display Settings">
-        <source>Display Settings</source>
-        <note>Name for display settings button in reader mode. Display in the meaning of presentation, not monitor.</note>
-      </trans-unit>
       <trans-unit id="Don't block cookies">
         <source>Don't block cookies</source>
         <note>cookie settings option</note>
@@ -518,6 +506,10 @@ Protection</source>
         <source>No tabs</source>
         <note>Message spoken by VoiceOver to indicate that there are no tabs in the Tabs Tray</note>
       </trans-unit>
+      <trans-unit id="Note: Some sites may require scripts to work properly so this shield is turned off by default.">
+        <source>Note: Some sites may require scripts to work properly so this shield is turned off by default.</source>
+        <note>shields overview footer message</note>
+      </trans-unit>
       <trans-unit id="OK">
         <source>OK</source>
         <note>OK button</note>
@@ -541,6 +533,10 @@ Protection</source>
       <trans-unit id="Open Desktop Site tab">
         <source>Open Desktop Site tab</source>
         <note>Share action title</note>
+      </trans-unit>
+      <trans-unit id="Open Image In New Tab">
+        <source>Open Image In New Tab</source>
+        <note>Context menu for opening image in new tab</note>
       </trans-unit>
       <trans-unit id="Open In New Private Tab">
         <source>Open In New Private Tab</source>
@@ -569,6 +565,14 @@ Protection</source>
       <trans-unit id="Panel Chooser">
         <source>Panel Chooser</source>
         <note>Accessibility label for the Home panel's top toolbar containing list of the home panels (top sites, bookmarsk, history, remote tabs, reading list).</note>
+      </trans-unit>
+      <trans-unit id="Password Manager">
+        <source>Password Manager</source>
+        <note>Accessibility Label for the browser toolbar Password Manager button</note>
+      </trans-unit>
+      <trans-unit id="Password Manager Button">
+        <source>Password Manager Button</source>
+        <note>Setting for behaviour of password manager button</note>
       </trans-unit>
       <trans-unit id="Paste">
         <source>Paste</source>
@@ -613,6 +617,10 @@ Protection</source>
       <trans-unit id="Quick-search Engines">
         <source>Quick-search Engines</source>
         <note>Title for quick-search engines settings section.</note>
+      </trans-unit>
+      <trans-unit id="Reader Mode Settings">
+        <source>Reader Mode Settings</source>
+        <note>Name for display settings button in reader mode. Display in the meaning of presentation, not monitor.</note>
       </trans-unit>
       <trans-unit id="Reader View">
         <source>Reader View</source>
@@ -722,6 +730,10 @@ Protection</source>
         <source>Select Location Bar</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Send crash reports and metrics">
+        <source>Send crash reports and metrics</source>
+        <note>option in settings screen</note>
+      </trans-unit>
       <trans-unit id="Sepia">
         <source>Sepia</source>
         <note>Sepia theme setting in Reading View settings</note>
@@ -782,13 +794,13 @@ Protection</source>
         <source>Show Tour</source>
         <note>Show the on-boarding screen again from the settings</note>
       </trans-unit>
-      <trans-unit id="Show a prompt to open your password manager when the current page has a login form.">
-        <source>Show a prompt to open your password manager when the current page has a login form.</source>
-        <note>Footer message on picker for 3rd party password manager setting</note>
-      </trans-unit>
       <trans-unit id="Show in landscape only">
         <source>Show in landscape only</source>
         <note>tabs bar show/hide option</note>
+      </trans-unit>
+      <trans-unit id="Site Shields allow you to control when ads and trackers are blocked for each site that you visit. If you prefer to see ads on a specific site, you can enable them here.">
+        <source>Site Shields allow you to control when ads and trackers are blocked for each site that you visit. If you prefer to see ads on a specific site, you can enable them here.</source>
+        <note>shields overview message</note>
       </trans-unit>
       <trans-unit id="Site shield settings">
         <source>Site shield settings</source>
@@ -902,6 +914,10 @@ Protection</source>
         <source>Update password for %@?</source>
         <note>Prompt for updating a password with no username. The parameter is the hostname of the site.</note>
       </trans-unit>
+      <trans-unit id="Use regional adblock">
+        <source>Use regional adblock</source>
+        <note>Setting to allow user in non-english locale to use adblock rules specifc to their language</note>
+      </trans-unit>
       <trans-unit id="Version %@ (%@)">
         <source>Version %1$@ (%2$@)</source>
         <note>Version number of Brave shown in settings</note>
@@ -941,6 +957,10 @@ Protection</source>
       <trans-unit id="Yesterday">
         <source>Yesterday</source>
         <note>History tableview section header</note>
+      </trans-unit>
+      <trans-unit id="You can choose to show a popup to pick your password manager, or have the selected one open automatically.">
+        <source>You can choose to show a popup to pick your password manager, or have the selected one open automatically.</source>
+        <note>Footer message on picker for 3rd party password manager setting</note>
       </trans-unit>
       <trans-unit id="Your connection is not private">
         <source>Your connection is not private</source>
@@ -994,7 +1014,7 @@ Protection</source>
   </file>
   <file original="brave/BraveInfo.plist" source-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="8.0" build-num="8A218a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="8.2.1" build-num="8C1002"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName">
@@ -1004,7 +1024,7 @@ Protection</source>
   </file>
   <file original="brave/Localizable.strings" source-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="8.0" build-num="8A218a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="8.2.1" build-num="8C1002"/>
     </header>
     <body>
       <trans-unit id="Accept &amp; Continue">

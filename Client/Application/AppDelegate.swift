@@ -20,6 +20,9 @@ let LatestAppVersionProfileKey = "latestAppVersion"
 let AllowThirdPartyKeyboardsKey = "settings.allowThirdPartyKeyboards"
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    // TODO: Having all of these global opens up lots of abuse potential (open via getApp())
+    
     var window: UIWindow?
     var browserViewController: BrowserViewController!
     var rootViewController: UINavigationController!

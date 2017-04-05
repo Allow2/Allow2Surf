@@ -4,11 +4,6 @@ import Shared
 
 let TabsBarHeight = CGFloat(29)
 
-// To hide the curve effect
-class HideCurveView : CurveView {
-    override func drawRect(rect: CGRect) {}
-}
-
 extension UILabel {
     func boldRange(range: Range<String.Index>) {
         if let text = self.attributedText {
@@ -42,13 +37,13 @@ class ButtonWithUnderlayView : UIButton {
         return v
     }()
 
+    // Visible when button is selected
     lazy var underlay: UIView = {
         let v = UIView()
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
             v.backgroundColor = BraveUX.ProgressBarColor
             v.layer.cornerRadius = 4
-            v.layer.borderWidth = 1
-            v.layer.borderColor = UIColor.clearColor().CGColor
+            v.layer.borderWidth = 0
             v.layer.masksToBounds = true
         }
         v.userInteractionEnabled = false
@@ -63,11 +58,9 @@ class ButtonWithUnderlayView : UIButton {
     }
 
     func setStarImageBookmarked(on: Bool) {
-        if on {
-            starView.image = UIImage(named: "listpanel_bookmarked_star")!.imageWithRenderingMode(.AlwaysOriginal)
-        } else {
-            starView.image = UIImage(named: "listpanel_notbookmarked_star")!.imageWithRenderingMode(.AlwaysTemplate)
-        }
+        let starName = on ? "listpanel_bookmarked_star" : "listpanel_notbookmarked_star"
+        let templateMode: UIImageRenderingMode = on ? .AlwaysOriginal : .AlwaysTemplate
+        starView.image = UIImage(named: starName)!.imageWithRenderingMode(templateMode)
     }
 }
 
@@ -84,8 +77,7 @@ class BraveURLBarView : URLBarView {
 
     override func commonInit() {
         BraveURLBarView.currentInstance = self
-        locationContainer.layer.cornerRadius = CGFloat(BraveUX.TextFieldCornerRadius)
-        curveShape = HideCurveView()
+        locationContainer.layer.cornerRadius = BraveUX.TextFieldCornerRadius
 
         addSubview(leftSidePanelButton.underlay)
         addSubview(leftSidePanelButton)
@@ -96,7 +88,6 @@ class BraveURLBarView : URLBarView {
         leftSidePanelButton.setImage(UIImage(named: "listpanel")?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         leftSidePanelButton.setImage(UIImage(named: "listpanel_down")?.imageWithRenderingMode(.AlwaysTemplate), forState: .Selected)
         leftSidePanelButton.accessibilityLabel = Strings.Bookmarks_and_History_Panel
-        leftSidePanelButton.tintColor = BraveUX.ActionButtonTintColor
         leftSidePanelButton.setStarImageBookmarked(false)
 
         braveButton.addTarget(self, action: #selector(onClickBraveButton) , forControlEvents: UIControlEvents.TouchUpInside)
@@ -104,39 +95,6 @@ class BraveURLBarView : URLBarView {
         braveButton.setImage(UIImage(named: "bravePanelButtonOff"), forState: .Selected)
         braveButton.accessibilityLabel = Strings.Brave_Panel
         braveButton.tintColor = BraveUX.ActionButtonTintColor
-
-        //ToolbarTextField.appearance().clearButtonTintColor = nil
-
-        var theme = Theme()
-        theme.URLFontColor = BraveUX.LocationBarTextColor_URLBaseComponent
-        theme.hostFontColor = BraveUX.LocationBarTextColor_URLHostComponent
-        theme.backgroundColor = BraveUX.LocationBarBackgroundColor
-        BrowserLocationViewUX.Themes[Theme.NormalMode] = theme
-
-        theme = Theme()
-        theme.URLFontColor = BraveUX.LocationBarTextColor_URLBaseComponent
-        theme.hostFontColor = BraveUX.LocationBarTextColor_URLHostComponent
-        theme.backgroundColor = BraveUX.LocationBarBackgroundColor_PrivateMode
-        BrowserLocationViewUX.Themes[Theme.PrivateMode] = theme
-
-        theme = Theme()
-        theme.backgroundColor = BraveUX.LocationBarEditModeBackgroundColor
-        theme.textColor = BraveUX.LocationBarEditModeTextColor
-        ToolbarTextField.Themes[Theme.NormalMode] = theme
-
-        theme = Theme()
-        theme.backgroundColor = BraveUX.LocationBarEditModeBackgroundColor_Private
-        theme.textColor = BraveUX.LocationBarEditModeTextColor_Private
-        theme.buttonTintColor = UIColor.whiteColor()    
-        ToolbarTextField.Themes[Theme.PrivateMode] = theme
-
-        theme = Theme()
-        theme.borderColor = BraveUX.TextFieldBorderColor_NoFocus
-        theme.activeBorderColor = BraveUX.TextFieldBorderColor_HasFocus
-        theme.tintColor = URLBarViewUX.ProgressTintColor
-        theme.textColor = BraveUX.LocationBarTextColor
-        theme.buttonTintColor = BraveUX.ActionButtonTintColor
-        URLBarViewUX.Themes[Theme.NormalMode] = theme
 
         tabsBarController.view.alpha = 0.0
         addSubview(tabsBarController.view)
@@ -201,11 +159,30 @@ class BraveURLBarView : URLBarView {
 
     override func applyTheme(themeName: String) {
         super.applyTheme(themeName)
+        
+        guard let theme = URLBarViewUX.Themes[themeName] else { return }
+        
+        leftSidePanelButton.tintColor = theme.buttonTintColor
+        
+        switch(themeName) {
+        case Theme.NormalMode:
+            backgroundColor = BraveUX.ToolbarsBackgroundSolidColor
+        case Theme.PrivateMode:
+            backgroundColor = BraveUX.DarkToolbarsBackgroundSolidColor
+        default:
+            break
+        }
     }
 
     override func updateAlphaForSubviews(alpha: CGFloat) {
         super.updateAlphaForSubviews(alpha)
-        self.superview?.alpha = alpha
+        // TODO tabsBarController use view.alpha to determine if it is shown or hidden, ideally this could be refactored to that
+        // any callers can do tabsBarController.view.alpha == xx, without knowing that it has a side-effect
+        tabsBarController.view.subviews.forEach { $0.alpha = alpha }
+
+        readerModeToolbar?.alpha = alpha
+        leftSidePanelButton.alpha = alpha
+        braveButton.alpha = alpha
     }
 
     @objc func onClickLeftSlideOut() {
@@ -250,29 +227,19 @@ class BraveURLBarView : URLBarView {
 
     override func updateViewsForSearchModeAndToolbarChanges() {
         super.updateViewsForSearchModeAndToolbarChanges()
-
-        if !self.bottomToolbarIsHidden {
-            self.tabsButton.hidden = true
-        } else {
-            self.tabsButton.hidden = false
-        }
-
-        bookmarkButton.hidden = true
+        
+        self.tabsButton.hidden = !self.bottomToolbarIsHidden
     }
 
     override func prepareSearchAnimation() {
         super.prepareSearchAnimation()
-        bookmarkButton.hidden = true
         braveButton.hidden = true
         readerModeToolbar?.hidden = true
     }
 
     override func transitionToSearch(didCancel: Bool = false) {
         super.transitionToSearch(didCancel)
-        bookmarkButton.hidden = true
         locationView.alpha = 0.0
-
-        locationView.superview?.backgroundColor = locationTextField?.backgroundColor
     }
 
     override func leaveSearchMode(didCancel cancel: Bool) {
@@ -317,11 +284,6 @@ class BraveURLBarView : URLBarView {
             make.left.right.equalTo(leftSidePanelButton).inset(4)
             make.top.bottom.equalTo(leftSidePanelButton).inset(7)
         }
-
-        curveShape.hidden = true
-        bookmarkButton.hidden = true
-        bookmarkButton.snp_removeConstraints()
-        curveShape.snp_removeConstraints()
 
         func pinLeftPanelButtonToLeft() {
             leftSidePanelButton.snp_remakeConstraints { make in
@@ -428,6 +390,8 @@ class BraveURLBarView : URLBarView {
     override func updateProgressBar(progress: Float, dueToTabChange: Bool = false) {
         struct staticProgress { static var val = Float(0) }
         let minProgress = locationView.frame.width / 3.0
+        
+        locationView.braveProgressView.backgroundColor = PrivateBrowsing.singleton.isOn ? BraveUX.ProgressBarDarkColor : BraveUX.ProgressBarColor
 
         func setWidth(width: CGFloat) {
             var frame = locationView.braveProgressView.frame

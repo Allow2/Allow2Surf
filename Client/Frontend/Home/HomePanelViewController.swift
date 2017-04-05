@@ -156,10 +156,6 @@ class HomePanelViewController: UIViewController, UITextFieldDelegate, HomePanelD
         panel.view.accessibilityLabel = accessibilityLabel
     }
 
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
-    }
-
     private func hideCurrentPanel() {
         if let panel = childViewControllers.first {
             panel.willMoveToParentViewController(nil)

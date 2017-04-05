@@ -75,16 +75,12 @@ static inline CGFloat lerp(CGFloat a, CGFloat b, CGFloat p)
         _shapeLayer = [CAShapeLayer layer];
         _shapeLayer.fillColor = [_tintColor CGColor];
         _shapeLayer.strokeColor = [[[UIColor darkGrayColor] colorWithAlphaComponent:0.5] CGColor];
-        _shapeLayer.lineWidth = 0.5;
-        _shapeLayer.shadowColor = [[UIColor blackColor] CGColor];
-        _shapeLayer.shadowOffset = CGSizeMake(0, 1);
-        _shapeLayer.shadowOpacity = 0.4;
-        _shapeLayer.shadowRadius = 0.5;
+        _shapeLayer.lineWidth = 0.0;
         [self.layer addSublayer:_shapeLayer];
         
         _arrowLayer = [CAShapeLayer layer];
         _arrowLayer.strokeColor = [[[UIColor darkGrayColor] colorWithAlphaComponent:0.5] CGColor];
-        _arrowLayer.lineWidth = 0.5;
+        _arrowLayer.lineWidth = 0.0;
         _arrowLayer.fillColor = [[UIColor whiteColor] CGColor];
         [_shapeLayer addSublayer:_arrowLayer];
         
@@ -200,7 +196,7 @@ static inline CGFloat lerp(CGFloat a, CGFloat b, CGFloat p)
         
         // Set paths
         _shapeLayer.path = path;
-        _shapeLayer.shadowPath = path;
+        //_shapeLayer.shadowPath = path;
         
         // Add the arrow shape
         CGFloat currentArrowSize = lerp(kMinArrowSize, kMaxArrowSize, percentage);
@@ -219,15 +215,6 @@ static inline CGFloat lerp(CGFloat a, CGFloat b, CGFloat p)
         [_arrowLayer setFillRule:kCAFillRuleEvenOdd];
         CGPathRelease(arrowPath);
         
-        // Add the highlight shape
-        CGMutablePathRef highlightPath = CGPathCreateMutable();
-        CGPathAddArc(highlightPath, NULL, topOrigin.x, topOrigin.y, currentTopRadius, 0, M_PI, YES);
-        CGPathAddArc(highlightPath, NULL, topOrigin.x, topOrigin.y + 1.25, currentTopRadius, M_PI, 0, NO);
-        
-        _highlightLayer.path = highlightPath;
-        [_highlightLayer setFillRule:kCAFillRuleNonZero];
-        
-        CGPathRelease(highlightPath);
         CGPathRelease(path);
     }
 }

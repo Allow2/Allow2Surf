@@ -28,19 +28,25 @@ struct BrowserLocationViewUX {
     static let HostPitch = 1.0
     static let LocationContentInset = 8
 
-    static var Themes: [String: Theme] = {
+    static let Themes: [String: Theme] = {
         var themes = [String: Theme]()
+        
+        // TODO: Currently fontColor theme adjustments are being overriden by the textColor.
+        // This should be cleaned up.
+        
         var theme = Theme()
-        theme.URLFontColor = UIColor.lightGrayColor()
-        theme.hostFontColor = UIColor.whiteColor()
-        theme.backgroundColor = UIConstants.PrivateModeLocationBackgroundColor
-        themes[Theme.PrivateMode] = theme
-
-        theme = Theme()
-        theme.URLFontColor = BaseURLFontColor
-        theme.hostFontColor = HostFontColor
-        theme.backgroundColor = UIColor.whiteColor()
+        theme.URLFontColor = BraveUX.LocationBarTextColor_URLBaseComponent
+        theme.hostFontColor = BraveUX.LocationBarTextColor_URLHostComponent
+        theme.textColor = BraveUX.LocationBarTextColor
+        theme.backgroundColor = BraveUX.LocationBarBackgroundColor
         themes[Theme.NormalMode] = theme
+        
+        theme = Theme()
+        theme.URLFontColor = BraveUX.LocationBarTextColor_URLBaseComponent
+        theme.hostFontColor = BraveUX.LocationBarTextColor_URLHostComponent
+        theme.textColor = .whiteColor()
+        theme.backgroundColor = BraveUX.LocationBarBackgroundColor_PrivateMode
+        themes[Theme.PrivateMode] = theme
 
         return themes
     }()
@@ -51,12 +57,22 @@ class BrowserLocationView: UIView {
     var longPressRecognizer: UILongPressGestureRecognizer!
     var tapRecognizer: UITapGestureRecognizer!
 
+    // Variable colors should be overwritten by theme
     dynamic var baseURLFontColor: UIColor = BrowserLocationViewUX.BaseURLFontColor {
         didSet { updateTextWithURL() }
     }
 
     dynamic var hostFontColor: UIColor = BrowserLocationViewUX.HostFontColor {
         didSet { updateTextWithURL() }
+    }
+    
+    // The color of the URL after it has loaded
+    dynamic var fullURLFontColor: UIColor = BraveUX.LocationBarTextColor {
+        didSet {
+            updateTextWithURL()
+            // Reset placeholder text, which will auto-adjust based on this new color
+            self.urlTextField.attributedPlaceholder = self.placeholder
+        }
     }
 
     var url: NSURL? {
@@ -96,10 +112,11 @@ class BrowserLocationView: UIView {
         }
     }
 
-    lazy var placeholder: NSAttributedString = {
+    /// Returns constant placeholder text with current URL color
+    var placeholder: NSAttributedString {
         let placeholderText = Strings.Search_or_enter_address
-        return NSAttributedString(string: placeholderText, attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
-    }()
+        return NSAttributedString(string: placeholderText, attributes: [NSForegroundColorAttributeName: self.fullURLFontColor.colorWithAlphaComponent(0.5)])
+    }
 
     lazy var urlTextField: UITextField = {
         let urlTextField = DisplayTextField()
@@ -125,16 +142,6 @@ class BrowserLocationView: UIView {
         return lockImageView
     }()
 
-    private lazy var privateBrowsingIconView: UIImageView = {
-        let icon = UIImageView(image: UIImage(named: "privateBrowsingGlasses")!.imageWithRenderingMode(.AlwaysTemplate))
-        icon.tintColor = BraveUX.BraveOrange
-        icon.alpha = 0
-        icon.isAccessibilityElement = true
-        icon.contentMode = UIViewContentMode.ScaleAspectFit
-        icon.accessibilityLabel = Strings.Private_mode_icon
-        return icon
-    }()
-
     private lazy var readerModeButton: ReaderModeButton = {
         let readerModeButton = ReaderModeButton(frame: CGRectZero)
         readerModeButton.hidden = true
@@ -146,23 +153,11 @@ class BrowserLocationView: UIView {
         return readerModeButton
     }()
 
-    let ImageReload = UIImage(named: "reload")
-    let ImageReloadPressed = UIImage(named: "reloadPressed")
-    let ImageStop = UIImage(named: "stop")
-    let ImageStopPressed = UIImage(named: "stopPressed")
-
-    var stopReloadButton: UIButton!
+    let stopReloadButton = UIButton()
 
     func stopReloadButtonIsLoading(isLoading: Bool) {
-        if isLoading {
-            stopReloadButton.setImage(ImageStop, forState: .Normal)
-            stopReloadButton.setImage(ImageStopPressed, forState: .Highlighted)
-            stopReloadButton.accessibilityLabel = Strings.Stop
-        } else {
-            stopReloadButton.setImage(ImageReload, forState: .Normal)
-            stopReloadButton.setImage(ImageReloadPressed, forState: .Highlighted)
-            stopReloadButton.accessibilityLabel = Strings.Reload
-        }
+        stopReloadButton.selected = isLoading
+        stopReloadButton.accessibilityLabel = isLoading ? Strings.Stop : Strings.Reload
     }
 
     func didClickStopReload() {
@@ -179,26 +174,26 @@ class BrowserLocationView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        stopReloadButton = UIButton()
-        stopReloadButton.tintColor = BraveUX.ActionButtonTintColor
         stopReloadButton.accessibilityIdentifier = "BrowserToolbar.stopReloadButton"
-        stopReloadButton.setImage(UIImage(named: "reload"), forState: .Normal)
-        stopReloadButton.setImage(UIImage(named: "reloadPressed"), forState: .Highlighted)
-        stopReloadButton.accessibilityLabel = Strings.Reload
+        
+        stopReloadButton.setImage(UIImage.templateImage(named: "reload"), forState: .Normal)
+        stopReloadButton.setImage(UIImage.templateImage(named: "stop"), forState: .Selected)
+        // Setup the state dependent visuals
+        stopReloadButtonIsLoading(false)
+        
         stopReloadButton.addTarget(self, action: #selector(BrowserLocationView.didClickStopReload), forControlEvents: UIControlEvents.TouchUpInside)
 
         longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(BrowserLocationView.SELlongPressLocation(_:)))
         tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(BrowserLocationView.SELtapLocation(_:)))
 
         addSubview(urlTextField)
-        addSubview(privateBrowsingIconView)
         addSubview(lockImageView)
         addSubview(readerModeButton)
         addSubview(stopReloadButton)
 
         braveProgressView.accessibilityLabel = "braveProgressView"
-        braveProgressView.backgroundColor = BraveUX.ProgressBarColor
-        braveProgressView.layer.cornerRadius = CGFloat(BraveUX.TextFieldCornerRadius)
+        braveProgressView.backgroundColor = PrivateBrowsing.singleton.isOn ? BraveUX.ProgressBarDarkColor : BraveUX.ProgressBarColor
+        braveProgressView.layer.cornerRadius = BraveUX.TextFieldCornerRadius
         braveProgressView.layer.masksToBounds = true
         self.addSubview(braveProgressView)
         self.sendSubviewToBack(braveProgressView)
@@ -206,7 +201,7 @@ class BrowserLocationView: UIView {
 
     override var accessibilityElements: [AnyObject]! {
         get {
-            return [privateBrowsingIconView, lockImageView, urlTextField, readerModeButton].filter { !$0.hidden }
+            return [lockImageView, urlTextField, readerModeButton].filter { !$0.hidden }
         }
         set {
             super.accessibilityElements = newValue
@@ -218,11 +213,10 @@ class BrowserLocationView: UIView {
     }
 
     override func updateConstraints() {
-        privateBrowsingIconLayout()
 
         lockImageView.snp_makeConstraints { make in
             make.centerY.equalTo(self)
-            make.left.equalTo(self.privateBrowsingIconView.snp_right).offset(BrowserLocationViewUX.LocationContentInset)
+            make.left.equalTo(self).offset(BrowserLocationViewUX.LocationContentInset)
             make.width.equalTo(self.lockImageView.intrinsicContentSize().width)
         }
 
@@ -242,7 +236,7 @@ class BrowserLocationView: UIView {
             make.top.bottom.equalTo(self)
 
             if lockImageView.hidden {
-                make.left.equalTo(self.privateBrowsingIconView.snp_right).offset(BrowserLocationViewUX.LocationContentInset)
+                make.left.equalTo(self).offset(BrowserLocationViewUX.LocationContentInset)
             } else {
                 make.left.equalTo(self.lockImageView.snp_right).offset(BrowserLocationViewUX.LocationContentInset)
             }
@@ -255,25 +249,6 @@ class BrowserLocationView: UIView {
         }
 
         super.updateConstraints()
-    }
-
-    func showPrivateBrowsingIcon(enabled: Bool) {
-        privateBrowsingIconView.alpha = enabled ? 1.0 : 0.0
-        setNeedsUpdateConstraints()
-    }
-
-    private func privateBrowsingIconLayout() {
-        privateBrowsingIconView.snp_remakeConstraints() { make in
-            make.centerY.equalTo(self)
-
-            if self.privateBrowsingIconView.alpha > 0 {
-                make.width.equalTo(16)
-                make.left.equalTo(self).offset(BrowserLocationViewUX.LocationContentInset)
-            } else {
-                make.left.equalTo(self)
-                make.width.equalTo(0)
-            }
-        }
     }
 
     func SELtapReaderModeButton() {
@@ -320,7 +295,7 @@ class BrowserLocationView: UIView {
             urlTextField.text = url?.absoluteString
         }
         postAsyncToMain(0.1) {
-            self.urlTextField.textColor = UIColor.whiteColor()
+            self.urlTextField.textColor = self.fullURLFontColor
         }
     }
 }
@@ -353,6 +328,8 @@ extension BrowserLocationView: Themeable {
         }
         baseURLFontColor = theme.URLFontColor!
         hostFontColor = theme.hostFontColor!
+        fullURLFontColor = theme.textColor!
+        stopReloadButton.tintColor = theme.textColor!
         backgroundColor = theme.backgroundColor
     }
 }

@@ -19,6 +19,7 @@ class SettingsViewTest : XCTestCase {
         let app = XCUIApplication()
         table.swipeUp()
         table.staticTexts["Report a bug"].tap()
+        sleep(1)
         app.textFields["url"].tap()
         
         let addressTextField = app.textFields["address"]
@@ -32,6 +33,7 @@ class SettingsViewTest : XCTestCase {
         let app = XCUIApplication()
         table.swipeUp()
         table.staticTexts["Privacy Policy"].tap()
+        sleep(1)
         let search = NSPredicate(format: "label contains %@", "Brave Privacy Policy") // case sensitive
         let found = app.staticTexts.elementMatchingPredicate(search)
         XCTAssertTrue(found.exists)
@@ -42,6 +44,7 @@ class SettingsViewTest : XCTestCase {
         let app = XCUIApplication()
         table.swipeUp()
         table.staticTexts["Terms of Use"].tap()
+        sleep(1)
         let search = NSPredicate(format: "label contains[c] %@", "Please read these terms of use") // case insensitive
         let found = app.staticTexts.elementMatchingPredicate(search)
         XCTAssertTrue(found.exists)

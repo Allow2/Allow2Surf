@@ -79,17 +79,17 @@ class TabWidget : UIView {
         title.setTitle("", forState: .Normal)
         [close, title, separatorLine].forEach { addSubview($0) }
 
-        close.setImage(UIImage(named: "stop")!, forState: .Normal)
+        close.setImage(UIImage(named: "stop")?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         close.snp_makeConstraints(closure: { (make) in
             make.top.bottom.equalTo(self)
             make.left.equalTo(self).inset(4)
             make.width.equalTo(24)
         })
-        close.tintColor = UIColor.lightGrayColor()
+        close.tintColor = UIColor.blackColor()
 
         reinstallConstraints()
 
-        separatorLine.backgroundColor = UIColor.blackColor()
+        separatorLine.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
         separatorLine.snp_makeConstraints { (make) in
             make.left.equalTo(self)
             make.width.equalTo(1)
@@ -137,10 +137,11 @@ class TabWidget : UIView {
     }
 
     func deselect() {
-        backgroundColor = UIColor.init(white: 90/255, alpha: 1.0)
-        title.titleLabel!.font = UIFont.systemFontOfSize(11)
-        title.setTitleColor(UIColor.init(white: 230/255, alpha: 1.0), forState: .Normal)
+        backgroundColor = UIColor.init(white: 0.0, alpha: 0.1)
+        title.titleLabel!.font = UIFont.systemFontOfSize(12)
+        title.setTitleColor(PrivateBrowsing.singleton.isOn ? UIColor(white: 1.0, alpha: 0.4) : UIColor(white: 0.0, alpha: 0.4), forState: .Normal)
         close.hidden = true
+        close.tintColor = PrivateBrowsing.singleton.isOn ? UIColor.whiteColor() : UIColor.blackColor()
     }
 
     func selected() {
@@ -148,10 +149,11 @@ class TabWidget : UIView {
     }
 
     func setStyleToSelected() {
-        title.titleLabel!.font = UIFont.systemFontOfSize(11, weight: UIFontWeightSemibold)
-        title.setTitleColor(UIColor.init(white: 255/255, alpha: 1.0), forState: .Normal)
+        title.titleLabel!.font = UIFont.systemFontOfSize(12, weight: UIFontWeightSemibold)
+        title.setTitleColor(PrivateBrowsing.singleton.isOn ? UIColor.whiteColor() : UIColor.blackColor(), forState: .Normal)
         backgroundColor = UIColor.clearColor()
         close.hidden = false
+        
     }
 
     func isSelectedStyle() -> Bool {

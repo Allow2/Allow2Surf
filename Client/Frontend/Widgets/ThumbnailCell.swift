@@ -6,20 +6,21 @@ import UIKit
 import Shared
 
 struct ThumbnailCellUX {
+    // TODO: Clean up unused constants
+    
     /// Ratio of width:height of the thumbnail image.
     static let ImageAspectRatio: Float = 1.0
-    static let BorderColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
-    static let BorderWidth: CGFloat = 1
+    static let BorderColor = UIColor.blackColor().colorWithAlphaComponent(0.15)
+    static let BorderWidth: CGFloat = 0.5
     static let LabelColor = UIAccessibilityDarkerSystemColorsEnabled() ? UIColor.blackColor() : UIColor(rgb: 0x353535)
-    static let LabelBackgroundColor = UIColor(white: 1.0, alpha: 0.7)
     static let LabelAlignment: NSTextAlignment = .Center
     static let SelectedOverlayColor = UIColor(white: 0.0, alpha: 0.25)
-//    static let InsetSize: CGFloat = 20
-//    static let InsetSizeCompact: CGFloat = 6
-#if BRAVE
     static let InsetSize: CGFloat = 10
     static let InsetSizeCompact: CGFloat = 3
-#endif
+    static let ImagePaddingWide: CGFloat = 4
+    static let ImagePaddingCompact: CGFloat = 2
+    
+    // TODO: This is absurd, remove it
     static func insetsForCollectionViewSize(size: CGSize, traitCollection: UITraitCollection) -> UIEdgeInsets {
         let largeInsets = UIEdgeInsets(
                 top: ThumbnailCellUX.InsetSize,
@@ -40,10 +41,8 @@ struct ThumbnailCellUX {
             return largeInsets
         }
     }
-#if BRAVE
-    static let ImagePaddingWide: CGFloat = 4
-    static let ImagePaddingCompact: CGFloat = 2
-#endif
+
+    // TODO: Remove
     static func imageInsetsForCollectionViewSize(size: CGSize, traitCollection: UITraitCollection) -> UIEdgeInsets {
         let largeInsets = UIEdgeInsets(
                 top: ThumbnailCellUX.ImagePaddingWide,
@@ -89,26 +88,8 @@ class ThumbnailCell: UICollectionViewCell {
     var imageInsets: UIEdgeInsets = UIEdgeInsetsZero
     var cellInsets: UIEdgeInsets = UIEdgeInsetsZero
 
-    var imagePadding: CGFloat = 0 {
-        didSet {
-            // Find out if our image is going to have fractional pixel width.
-            // If so, we inset by a tiny extra amount to get it down to an integer for better
-            // image scaling.
-            let parentWidth = self.imageWrapper.frame.width
-            let width = (parentWidth - imagePadding)
-            let fractionalW = width - floor(width)
-            let additionalW = fractionalW / 2
-
-            imageView.snp_remakeConstraints { make in
-                let insets = UIEdgeInsets(top: imagePadding, left: imagePadding, bottom: imagePadding, right: imagePadding)
-                make.top.equalTo(self.imageWrapper).inset(insets.top)
-                make.bottom.equalTo(textWrapper.snp_top).offset(-imagePadding)
-                make.left.equalTo(self.imageWrapper).inset(insets.left + additionalW)
-                make.right.equalTo(self.imageWrapper).inset(insets.right + additionalW)
-            }
-            imageView.setNeedsUpdateConstraints()
-        }
-    }
+    // TODO: Remove
+    var imagePadding: CGFloat = 0
 
     static func imageWithSize(image: UIImage, size:CGSize, maxScale: CGFloat) -> UIImage {
         var scaledImageRect = CGRect.zero;
@@ -169,16 +150,10 @@ class ThumbnailCell: UICollectionViewCell {
         return UILongPressGestureRecognizer(target: self, action: #selector(ThumbnailCell.SELdidLongPress))
     }()
 
-    lazy var textWrapper: UIView = {
-        let wrapper = UIView()
-        wrapper.backgroundColor = ThumbnailCellUX.LabelBackgroundColor
-        return wrapper
-    }()
-
     lazy var textLabel: UILabel = {
         let textLabel = UILabel()
         textLabel.setContentHuggingPriority(1000, forAxis: UILayoutConstraintAxis.Vertical)
-        textLabel.font = DynamicFontHelper.defaultHelper.ExtraSmallFont
+        textLabel.font = DynamicFontHelper.defaultHelper.DefaultSmallFont
         textLabel.textColor = ThumbnailCellUX.LabelColor
         textLabel.textAlignment = ThumbnailCellUX.LabelAlignment
         return textLabel
@@ -190,12 +165,14 @@ class ThumbnailCell: UICollectionViewCell {
 
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = ThumbnailCellUX.CornerRadius
+        imageView.layer.borderColor = ThumbnailCellUX.BorderColor.CGColor
         imageView.layer.minificationFilter = kCAFilterTrilinear
         imageView.layer.magnificationFilter = kCAFilterNearest
         return imageView
     }()
 
 
+    // TODO: Remove
     lazy var imageWrapper: UIView = {
         let imageWrapper = UIView()
         imageWrapper.layer.cornerRadius = ThumbnailCellUX.CornerRadius
@@ -217,12 +194,14 @@ class ThumbnailCell: UICollectionViewCell {
         removeButton.center = CGPoint(x: buttonCenterX, y: buttonCenterY)
         return removeButton    }()
 
+    // TODO: Should be no longer needed
     lazy var backgroundImage: UIImageView = {
         let backgroundImage = UIImageView()
         backgroundImage.contentMode = UIViewContentMode.ScaleAspectFill
         return backgroundImage
     }()
 
+    // TODO: Remove
     lazy var selectedOverlay: UIView = {
         let selectedOverlay = UIView()
         selectedOverlay.backgroundColor = ThumbnailCellUX.SelectedOverlayColor
@@ -231,9 +210,11 @@ class ThumbnailCell: UICollectionViewCell {
     }()
 
     override var selected: Bool {
-        didSet {
-            self.selectedOverlay.hidden = !selected
-        }
+        didSet { updateSelectedHighlightedState() }
+    }
+    
+    override var highlighted: Bool {
+        didSet { updateSelectedHighlightedState() }
     }
 
     override init(frame: CGRect) {
@@ -245,30 +226,14 @@ class ThumbnailCell: UICollectionViewCell {
         isAccessibilityElement = true
         addGestureRecognizer(longPressGesture)
 
-        contentView.addSubview(imageWrapper)
-//#if !BRAVE
-        imageWrapper.addSubview(backgroundImage)
-        backgroundImage.snp_remakeConstraints { make in
-            make.top.bottom.left.right.equalTo(self.imageWrapper)
-        }
-//#endif
-        imageWrapper.addSubview(imageView)
-        imageWrapper.addSubview(textWrapper)
-        imageWrapper.addSubview(selectedOverlay)
-        textWrapper.addSubview(textLabel)
+        contentView.addSubview(imageView)
+        contentView.addSubview(textLabel)
         contentView.addSubview(removeButton)
 
-        textWrapper.snp_makeConstraints { make in
-            make.bottom.equalTo(self.imageWrapper.snp_bottom) // .offset(ThumbnailCellUX.BorderWidth)
-            make.left.right.equalTo(self.imageWrapper) // .offset(ThumbnailCellUX.BorderWidth)
-        }
-
-        selectedOverlay.snp_makeConstraints { make in
-            make.edges.equalTo(self.imageWrapper)
-        }
-
         textLabel.snp_remakeConstraints { make in
-            make.edges.equalTo(self.textWrapper).inset(ThumbnailCellUX.LabelInsets) // TODO swift-2.0 I changes insets to inset - how can that be right?
+            // TODO: relook at insets
+            make.left.right.equalTo(self.contentView).inset(ThumbnailCellUX.LabelInsets)
+            make.top.equalTo(imageView.snp_bottom).offset(5)
         }
 
         // Prevents the textLabel from getting squished in relation to other view priorities.
@@ -283,8 +248,13 @@ class ThumbnailCell: UICollectionViewCell {
         super.prepareForReuse()
         backgroundImage.image = nil
         removeButton.hidden = true
-        imageWrapper.backgroundColor = UIColor.clearColor()
         textLabel.font = DynamicFontHelper.defaultHelper.DefaultSmallFont
+        textLabel.textColor = PrivateBrowsing.singleton.isOn ? UIColor(rgb: 0xDBDBDB) : UIColor(rgb: 0x2D2D2D)
+    }
+    
+    private func updateSelectedHighlightedState() {
+        let activated = selected || highlighted
+        self.imageView.alpha = activated ? 0.7 : 1.0
     }
 
     func SELdidRemove() {
@@ -322,14 +292,7 @@ class ThumbnailCell: UICollectionViewCell {
     }
     
     func showBorder(show: Bool) {
-        if show {
-            imageWrapper.layer.borderColor = ThumbnailCellUX.BorderColor.CGColor
-            imageWrapper.layer.borderWidth = ThumbnailCellUX.BorderWidth
-        }
-        else {
-            imageWrapper.layer.borderColor = UIColor.clearColor().CGColor
-            imageWrapper.layer.borderWidth = 0
-        }
+        imageView.layer.borderWidth = show ? ThumbnailCellUX.BorderWidth : 0
     }
 
     /**
@@ -338,30 +301,21 @@ class ThumbnailCell: UICollectionViewCell {
      - parameter size: Size of the container collection view
      */
     func updateLayoutForCollectionViewSize(size: CGSize, traitCollection: UITraitCollection, forSuggestedSite: Bool) {
-        let cellInsets = ThumbnailCellUX.insetsForCollectionViewSize(size,
-            traitCollection: traitCollection)
-        let imageInsets = ThumbnailCellUX.imageInsetsForCollectionViewSize(size,
-            traitCollection: traitCollection)
-
-        if cellInsets != self.cellInsets {
-            self.cellInsets = cellInsets
-            imageWrapper.snp_remakeConstraints { make in
-                make.edges.equalTo(self.contentView).inset(cellInsets)
-            }
+        
+        // Find out if our image is going to have fractional pixel width.
+        // If so, we inset by a tiny extra amount to get it down to an integer for better
+        // image scaling.
+        let parentWidth = self.imageWrapper.frame.width
+        let width = (parentWidth - imagePadding)
+        let fractionalW = width - floor(width)
+        let additionalW = fractionalW / 2
+        
+        // TODO: Should not remade on every layout call
+        imageView.snp_remakeConstraints { make in
+            make.top.equalTo(self.contentView).inset(8)
+            make.right.left.equalTo(self.contentView).inset(16 + additionalW)
+            make.height.equalTo(imageView.snp_width)
         }
-
-        if forSuggestedSite {
-            self.imagePadding = 0.0
-            return
-        }
-
-        if imageInsets != self.imageInsets {
-            imageView.snp_remakeConstraints { make in
-                make.top.equalTo(self.imageWrapper).inset(imageInsets.top)
-                make.left.right.equalTo(self.imageWrapper).inset(imageInsets.left)
-                make.right.equalTo(self.imageWrapper).inset(imageInsets.right)
-                make.bottom.equalTo(textWrapper.snp_top).offset(-imageInsets.top)
-            }
-        }
+        imageView.setNeedsUpdateConstraints()
     }
 }

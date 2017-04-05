@@ -13,6 +13,14 @@ sed -e "s/APPGROUP_PLACEHOLDER/group.$app_id/" Brave.entitlements.template > Bra
 
 # if a brave build, setup fabric and mixpanel
 if [[ $app_id == com.brave.ios.browser* ]]; then
+    if [ ! -f ~/.brave-fabric-keys ]; then
+       echo "Missing ~/.brave-fabric-keys"
+       exit 1
+    fi
+    if [ ! -f ~/.brave-mixpanel-key ]; then
+       echo "Missing ~/.brave-mixpanel-key"
+       exit 1
+    fi
     dev_team_id="KL8N8XSYF4"
     sed -i '' -e "s/KEYCHAIN_PLACEHOLDER/$dev_team_id.$app_id/" Brave.entitlements
     echo "DEVELOPMENT_TEAM=$dev_team_id" >> xcconfig/local-def.xcconfig
@@ -28,7 +36,9 @@ else
     echo "// DEVELOPMENT_TEAM=" >> xcconfig/local-def.xcconfig
 fi
 
-echo GENERATED_BUILD_ID=`date +"%y.%m.%d.%H"` >> xcconfig/local-def.xcconfig
+echo GENERATED_BUILD_ID=`date +"%y.%m.%d.%H"` >> xcconfig/build-id.xcconfig
 
 npm update
+
+node -e "require('./node_modules/ad-block/lib/regions.js').forEach((x) =>{ if (x.lang) {console.log(x.lang + ',' + x.uuid)} } )" > adblock-regions.txt
 

@@ -136,5 +136,23 @@
    <ArchiveAction
       buildConfiguration = "Release"
       revealArchiveInOrganizer = "YES">
+      <PostActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "ident=${PRODUCT_BUNDLE_IDENTIFIER}&#10;if [ $ident == &quot;com.brave.ios.browser&quot; ]&#10;then&#10;osascript $PROJECT_DIR/brave/build-system/ad-hoc-export.applescript; osascript $PROJECT_DIR/brave/build-system/upload-to-app-store.applescript;&#10;fi">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "F84B21BD1A090F8100AAB793"
+                     BuildableName = "Client.app"
+                     BlueprintName = "Client"
+                     ReferencedContainer = "container:Client.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PostActions>
    </ArchiveAction>
 </Scheme>

@@ -84,9 +84,9 @@ class BraveScrollController: NSObject {
     // This added check is a secondary validator of the scroll direction
     private var scrollViewWillBeginDragPoint: CGFloat = 0
 
-    func setContentInset(top top: CGFloat, bottom: CGFloat) {
-        scrollView?.contentInset = UIEdgeInsetsMake(top, 0, bottom, 0)
-        scrollView?.scrollIndicatorInsets = UIEdgeInsetsMake(top, 0, bottom, 0)
+    func setBottomInset(bottom: CGFloat) {
+        scrollView?.contentInset = UIEdgeInsetsMake(0, 0, bottom, 0)
+        scrollView?.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, bottom, 0)
     }
 
     override init() {
@@ -132,34 +132,46 @@ class BraveScrollController: NSObject {
         }
     }
 
+    // Struct used to prevent inset adjustment based on runtime scenarios
+    struct RuntimeInsetChecks {
+        // If inset adjustment code is already being executed
+        static var isRunningCheck = false
+        
+        // Whether webview is currently being zoomed
+        // Should not update on zooming (e.g. issue #717)
+        static var isZoomingCheck = false
+    }
+    
     // This causes issue #216 if contentInset changed during a load
     func checkHeightOfPageAndAdjustWebViewInsets() {
-        struct StaticVar {
-            static var isRunningCheck = false
+
+        if RuntimeInsetChecks.isZoomingCheck {
+            return
         }
 
         if self.browser?.webView?.loading ?? false {
-            if StaticVar.isRunningCheck {
+            if RuntimeInsetChecks.isRunningCheck {
                 return
             }
-            StaticVar.isRunningCheck = true
+            RuntimeInsetChecks.isRunningCheck = true
             postAsyncToMain(0.2) {
-                StaticVar.isRunningCheck = false
+                RuntimeInsetChecks.isRunningCheck = false
                 self.checkHeightOfPageAndAdjustWebViewInsets()
             }
         } else {
-            StaticVar.isRunningCheck = false
+            RuntimeInsetChecks.isRunningCheck = false
 
             if !isScrollHeightIsLargeEnoughForScrolling() && !keyboardIsShowing {
                 let h = BraveApp.isIPhonePortrait() ? UIConstants.ToolbarHeight + BraveURLBarView.CurrentHeight : BraveURLBarView.CurrentHeight
-                setContentInset(top: 0, bottom: h)
+                setBottomInset(h)
             }
             else {
                 // Use offset of header and footer bar positions to determine contentInset and scrollIndicatorInsets
                 let top = max((CGRectGetMaxY(header?.frame ?? CGRectZero) - CGRectGetMaxY(UIApplication.sharedApplication().statusBarFrame)), 0)
                 let bottom = BraveApp.isIPhonePortrait() ? min((CGRectGetMaxY(UIApplication.sharedApplication().keyWindow?.frame ?? CGRectZero) - CGRectGetMinY(footer?.frame ?? CGRectZero)), 0) : 0
-                let h = keyboardIsShowing ? (header?.frame.height ?? 0) + (footer?.frame.height ?? 0)  : (top + bottom)
-                setContentInset(top: 0, bottom: h)
+                let oh = BraveApp.isIPhonePortrait() ? (header?.frame.height ?? 0) + (footer?.frame.height ?? 0) : (footer?.frame.height ?? 0)
+                let h = keyboardIsShowing ? oh : (top + bottom)
+                setBottomInset(h)
             }
         }
     }
@@ -375,8 +387,9 @@ extension BraveScrollController: UIScrollViewDelegate {
         if contentOffset.y < 0 && !isInRefreshQuietPeriod && !isRefreshBlockedDueToMomentumScroll && verticalTranslation == 0 && toolbarsShowing {
             if refreshControl == nil {
                 refreshControl = ODRefreshControl(inScrollView: getApp().rootViewController.view)
-                refreshControl?.backgroundColor = UIColor.blackColor()
             }
+            refreshControl?.backgroundColor = UIColor.clearColor()
+            refreshControl?.tintColor = BraveUX.BraveOrange
             refreshControl?.hidden = false
             refreshControl?.frame = CGRectMake(0, position, refreshControl?.frame.size.width ?? 0, -contentOffset.y)
 
@@ -450,6 +463,16 @@ extension BraveScrollController: UIScrollViewDelegate {
         footer?.layer.transform = CATransform3DIdentity
     }
 
+    func scrollViewWillBeginZooming(scrollView: UIScrollView, withView view: UIView?) {
+        // freeze
+        RuntimeInsetChecks.isZoomingCheck = true
+    }
+    
+    func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView?, atScale scale: CGFloat) {
+        // unfreeze
+        RuntimeInsetChecks.isZoomingCheck = false
+    }
+    
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         self.scrollViewWillBeginDragPoint = scrollView.contentOffset.y
     }

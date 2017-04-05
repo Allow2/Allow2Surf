@@ -466,6 +466,9 @@
 /* Context menu item for saving an image */
 "Save Image" = "Save Image";
 
+/* Context menu item for opeining image in new tab */
+"Open Image In New Tab" = "Open Image In New Tab";
+
 /* Setting to enable the built-in password manager */
 "Save Logins" = "Save Logins";
 

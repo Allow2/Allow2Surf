@@ -1230,9 +1230,8 @@ public class SQLiteBookmarkBufferStorage_Brave : SQLiteBookmarkBufferStorage {
 
     public func editBookmarkItem(bookmark:BookmarkNode, title:String, parentGUID:String) -> Success {
 
-        let updateQuery = "UPDATE '\(TableBookmarksLocal)' "
-            + "set title='\(title)', parentid='\(parentGUID)' "
-            +  "where guid='\(bookmark.guid)'"
+        let updateQuery = "UPDATE \(TableBookmarksLocal) " +
+            "SET parentid = ?, title = ? WHERE guid='\(bookmark.guid)'"
 
         let newIndex = "(SELECT (COALESCE(MAX(idx), -1) + 1) AS newIndex FROM \(TableBookmarksLocalStructure) WHERE parent = ?)"
         let structSQL = "UPDATE \(TableBookmarksLocalStructure) set parent=?, idx=" +
@@ -1240,7 +1239,7 @@ public class SQLiteBookmarkBufferStorage_Brave : SQLiteBookmarkBufferStorage {
         let structArgs: Args = [parentGUID, parentGUID]
 
 
-        let structureArgs = Args()
+        let structureArgs: Args = [parentGUID, title]
         var err: NSError?
 
         let result = Success()

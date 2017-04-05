@@ -88,7 +88,7 @@ class BraveSettingsView : AppSettingsTableViewController {
             if result {
                 postAsyncToMain(0) { // move from db thread back to main
                     generalSettings.append(PasswordManagerButtonSetting(profile: self.profile))
-                    self.settings[0] = SettingSection(title: NSAttributedString(string: Strings.General), children: generalSettings)
+                    self.settings[0] = SettingSection(title: NSAttributedString(string: Strings.General.uppercaseString), children: generalSettings)
                     let range = NSMakeRange(0, 1)
                     let section = NSIndexSet(indexesInRange: range)
                     self.tableView.reloadSections(section, withRowAnimation: .Automatic)
@@ -97,9 +97,22 @@ class BraveSettingsView : AppSettingsTableViewController {
         }
 
 
+        var shieldSettingsList = [BoolSetting(prefs: prefs, prefKey: AdBlocker.prefKey, defaultValue: true, titleText: Strings.Block_Ads_and_Tracking),
+                                  BoolSetting(prefs: prefs, prefKey: HttpsEverywhere.prefKey, defaultValue: true, titleText: Strings.HTTPS_Everywhere),
+                                  BoolSetting(prefs: prefs, prefKey: SafeBrowsing.prefKey, defaultValue: true, titleText: Strings.Block_Phishing_and_Malware),
+                                  BoolSetting(prefs: prefs, prefKey: kPrefKeyNoScriptOn, defaultValue: false, titleText: Strings.Block_Scripts),
+                                  BoolSetting(prefs: prefs, prefKey: kPrefKeyFingerprintProtection, defaultValue: false, titleText: Strings.Fingerprinting_Protection)
+                                  ]
+
+        let adblockRegionOption = AdBlocker.singleton.isRegionalAdblockPossible()
+        if adblockRegionOption.hasRegionalFile {
+            let defaultOn = adblockRegionOption.isDefaultSettingOn
+            shieldSettingsList.append(BoolSetting(prefs: prefs, prefKey: AdBlocker.prefKeyUseRegional, defaultValue: defaultOn, titleText: Strings.Use_regional_adblock))
+        }
+
         settings += [
-            SettingSection(title: NSAttributedString(string: Strings.General), children: generalSettings),
-            SettingSection(title: NSAttributedString(string: Strings.Privacy), children:
+            SettingSection(title: NSAttributedString(string: Strings.General.uppercaseString), children: generalSettings),
+            SettingSection(title: NSAttributedString(string: Strings.Privacy.uppercaseString), children:
                 [ClearPrivateDataSetting(settings: self), CookieSetting(profile: self.profile),
                     BoolSetting(prefs: prefs, prefKey: kPrefKeyPrivateBrowsingAlwaysOn, defaultValue: false, titleText: Strings.Private_Browsing_Only, statusText: nil, settingDidChange: { isOn in
                         if !isOn {
@@ -111,17 +124,11 @@ class BraveSettingsView : AppSettingsTableViewController {
                         }
                     })]
             ),
-            SettingSection(title: NSAttributedString(string: Strings.Brave_Shield_Defaults), children:
-                [BoolSetting(prefs: prefs, prefKey: AdBlocker.prefKey, defaultValue: true, titleText: Strings.Block_Ads_and_Tracking),
-                    BoolSetting(prefs: prefs, prefKey: HttpsEverywhere.prefKey, defaultValue: true, titleText: Strings.HTTPS_Everywhere),
-                    BoolSetting(prefs: prefs, prefKey: SafeBrowsing.prefKey, defaultValue: true, titleText: Strings.Block_Phishing_and_Malware),
-                    BoolSetting(prefs: prefs, prefKey: kPrefKeyNoScriptOn, defaultValue: false, titleText: Strings.Block_Scripts),
-                    BoolSetting(prefs: prefs, prefKey: kPrefKeyFingerprintProtection, defaultValue: false, titleText: Strings.Fingerprinting_Protection)
-                ])]
+            SettingSection(title: NSAttributedString(string: Strings.Brave_Shield_Defaults.uppercaseString), children: shieldSettingsList)]
 
         //#if !DISABLE_INTRO_SCREEN
         settings += [
-            SettingSection(title: NSAttributedString(string: Strings.Support), children: [
+            SettingSection(title: NSAttributedString(string: Strings.Support.uppercaseString), children: [
                 BoolSetting(prefs: prefs, prefKey: BraveUX.PrefKeyUserAllowsTelemetry, defaultValue: true, titleText: Strings.Opt_in_to_telemetry),
                 ShowIntroductionSetting(settings: self),
                 BraveSupportLinkSetting(),
@@ -129,7 +136,7 @@ class BraveSettingsView : AppSettingsTableViewController {
                 ])]
         //#endif
         settings += [
-            SettingSection(title: NSAttributedString(string: Strings.About), children: [
+            SettingSection(title: NSAttributedString(string: Strings.About.uppercaseString), children: [
                 VersionSetting(settings: self),
                 ])
         ]

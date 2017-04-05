@@ -19,7 +19,7 @@ class BraveShieldStatsView: UIView {
     lazy var trackersStatView: StatView = {
         let statView = StatView(frame: CGRectZero)
         statView.title = "Trackers \rBlocked"
-        statView.color = UIColor(red: 234/255.0, green: 90/255.0, blue: 45/255.0, alpha: 1.0)
+        statView.color = UIColor(red: 234/255.0, green: 58/255.0, blue: 58/255.0, alpha: 1.0)
         return statView
     }()
 
@@ -33,7 +33,8 @@ class BraveShieldStatsView: UIView {
     lazy var timeStatView: StatView = {
         let statView = StatView(frame: CGRectZero)
         statView.title = "Est. Time \rSaved"
-        statView.color = UIColor.blackColor()
+        // Color dynamically set in controller: TopSitesPanel, should be abstracted
+        statView.color = PrivateBrowsing.singleton.isOn ? .whiteColor() : .blackColor()
         return statView
     }()
     
@@ -143,7 +144,7 @@ class StatView: UIView {
         let label = UILabel()
         label.textAlignment = .Center
         label.numberOfLines = 0
-        label.font = UIFont.systemFontOfSize(24, weight: UIFontWeightHeavy)
+        label.font = UIFont.systemFontOfSize(24, weight: UIFontWeightBold)
         return label
     }()
     

@@ -15,11 +15,12 @@ class AppSettingsTableViewController: SettingsTableViewController {
         super.viewDidLoad()
 
         navigationItem.title = Strings.Settings
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: Strings.Done,
             style: UIBarButtonItemStyle.Done,
             target: navigationController, action: #selector(SettingsNavigationController.SELdone))
-        navigationItem.leftBarButtonItem?.accessibilityIdentifier = "AppSettingsTableViewController.navigationItem.leftBarButtonItem"
+        navigationItem.rightBarButtonItem?.accessibilityIdentifier = "AppSettingsTableViewController.navigationItem.leftBarButtonItem"
+        navigationItem.rightBarButtonItem?.tintColor = BraveUX.DefaultBlue
 
         tableView.accessibilityIdentifier = "AppSettingsTableViewController.tableView"
     }

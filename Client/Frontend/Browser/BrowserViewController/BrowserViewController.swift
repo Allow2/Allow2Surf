@@ -76,7 +76,6 @@ class BrowserViewController: UIViewController {
 
     // These views wrap the urlbar and toolbar to provide background effects on them
     var header: BlurWrapper!
-    var headerBackdrop: UIView!
     var footer: UIView!
     var footerBackdrop: UIView!
     var footerBackground: BlurWrapper?
@@ -88,6 +87,8 @@ class BrowserViewController: UIViewController {
     var scrollController = BraveScrollController()
 
     private var keyboardState: KeyboardState?
+    
+    private var currentThemeName: String?
 
     let WhiteListedUrls = ["\\/\\/itunes\\.apple\\.com\\/"]
 
@@ -152,10 +153,6 @@ class BrowserViewController: UIViewController {
         tabManager.addNavigationDelegate(self)
     }
 
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
-    }
-
     func shouldShowFooterForTraitCollection(previousTraitCollection: UITraitCollection) -> Bool {
         return previousTraitCollection.verticalSizeClass != .Compact &&
                previousTraitCollection.horizontalSizeClass != .Regular
@@ -174,6 +171,9 @@ class BrowserViewController: UIViewController {
         let bottomToolbarIsHidden = shouldShowFooterForTraitCollection(newCollection)
 
         urlBar.hideBottomToolbar(!bottomToolbarIsHidden)
+        
+        // TODO: (IMO) should be refactored to not destroy and recreate the toolbar all the time
+        // This would prevent theme knowledge from being retained as well
         toolbar?.removeFromSuperview()
         toolbar?.browserToolbarDelegate = nil
         footerBackground?.removeFromSuperview()
@@ -185,16 +185,12 @@ class BrowserViewController: UIViewController {
             toolbar?.browserToolbarDelegate = self
             footerBackground = BlurWrapper(view: toolbar!)
             footerBackground?.translatesAutoresizingMaskIntoConstraints = false
-
-#if !BRAVE
-            // Need to reset the proper blur style
-            if let selectedTab = tabManager.selectedTab  where selectedTab.isPrivate {
-                footerBackground!.blurStyle = .Dark
-            }
-#else
-            footerBackground!.blurStyle = .Dark
-#endif
             footer.addSubview(footerBackground!)
+            
+            // Since this is freshly created, theme needs to be applied
+            if let currentThemeName = self.currentThemeName {
+                self.applyTheme(currentThemeName)
+            }
         }
 
         view.setNeedsUpdateConstraints()
@@ -295,9 +291,6 @@ class BrowserViewController: UIViewController {
         footerBackdrop = UIView()
         footerBackdrop.backgroundColor = UIColor.whiteColor()
         view.addSubview(footerBackdrop)
-        headerBackdrop = UIView()
-        headerBackdrop.backgroundColor = UIColor.whiteColor()
-        view.addSubview(headerBackdrop)
 
         log.debug("BVC setting up webViewContainer…")
         webViewContainerBackdrop = UIView()
@@ -310,9 +303,8 @@ class BrowserViewController: UIViewController {
         view.addSubview(webViewContainer)
 
         log.debug("BVC setting up status bar…")
-        // Temporary work around for covering the non-clipped web view content
         statusBarOverlay = UIView()
-        statusBarOverlay.backgroundColor = BrowserViewControllerUX.BackgroundColor
+        statusBarOverlay.backgroundColor = BraveUX.ToolbarsBackgroundSolidColor
         view.addSubview(statusBarOverlay)
 
         log.debug("BVC setting up top touch area…")
@@ -372,21 +364,18 @@ class BrowserViewController: UIViewController {
         scrollController.header = header
         scrollController.footer = footer
         scrollController.snackBars = snackBars
-
-#if !BRAVE
-        log.debug("BVC updating toolbar state…")
-        self.updateToolbarStateForTraitCollection(self.traitCollection)
-
-        log.debug("BVC setting up constraints…")
-        setupConstraints()
-        log.debug("BVC done.")
-#endif
     }
 
     var headerHeightConstraint: Constraint?
     var webViewContainerTopOffset: Constraint?
 
     func setupConstraints() {
+        
+        statusBarOverlay.snp_makeConstraints { make in
+            make.top.right.left.equalTo(statusBarOverlay.superview!)
+            make.bottom.equalTo(topLayoutGuide)
+        }
+        
         header.snp_makeConstraints { make in
             scrollController.headerTopConstraint = make.top.equalTo(snp_topLayoutGuideBottom).constraint
             if let headerHeightConstraint = headerHeightConstraint {
@@ -400,10 +389,9 @@ class BrowserViewController: UIViewController {
                 make.left.right.equalTo(header.superview!)
             }
         }
-
-        headerBackdrop.snp_makeConstraints { make in
-            make.edges.equalTo(self.header)
-        }
+        
+        // webViewContainer constraints set in Brave subclass.
+        // TODO: This should be centralized
 
         webViewContainerBackdrop.snp_makeConstraints { make in
             make.edges.equalTo(webViewContainer)
@@ -418,12 +406,6 @@ class BrowserViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         log.debug("BVC viewDidLayoutSubviews…")
         super.viewDidLayoutSubviews()
-      #if !BRAVE
-        statusBarOverlay.snp_remakeConstraints { make in
-            make.top.left.right.equalTo(self.view)
-            make.height.equalTo(self.topLayoutGuide.length)
-        }
-      #endif
         log.debug("BVC done.")
     }
 
@@ -548,8 +530,7 @@ class BrowserViewController: UIViewController {
         [header,
             footer,
             readerModeBar,
-            footerBackdrop,
-            headerBackdrop].forEach { view in
+            footerBackdrop].forEach { view in
                 view?.transform = CGAffineTransformIdentity
         }
     }
@@ -567,31 +548,6 @@ class BrowserViewController: UIViewController {
             make.height.equalTo(BraveUX.ReaderModeBarHeight)
             make.leading.trailing.equalTo(self.view)
         }
-
-#if !BRAVE
-        webViewContainer.snp_remakeConstraints { make in
-            make.left.right.equalTo(self.view)
-
-            if let readerModeBarBottom = readerModeBar?.snp_bottom {
-                make.top.equalTo(readerModeBarBottom)
-            } else {
-                make.top.equalTo(self.header.snp_bottom)
-            }
-
-            let findInPageHeight = (findInPageBar == nil) ? 0 : UIConstants.ToolbarHeight
-            if let toolbar = self.toolbar {
-                make.bottom.equalTo(toolbar.snp_top).offset(-findInPageHeight)
-            } else {
-                make.bottom.equalTo(self.view).offset(-findInPageHeight)
-            }
-        }
-
-        // Setup the bottom toolbar
-        toolbar?.snp_remakeConstraints { make in
-            make.edges.equalTo(self.footerBackground!)
-            make.height.equalTo(UIConstants.ToolbarHeight)
-        }
-#endif
 
         footer.snp_remakeConstraints { make in
             scrollController.footerBottomConstraint = make.bottom.equalTo(self.view.snp_bottom).constraint
@@ -1291,16 +1247,22 @@ extension BrowserViewController: Themeable {
         toolbar?.applyTheme(themeName)
         //readerModeBar?.applyTheme(themeName)
 
+        // TODO: Check if blur is enabled
+        // Should be added to theme, instead of handled here
         switch(themeName) {
         case Theme.NormalMode:
-            header.blurStyle = .ExtraLight
-            footerBackground?.blurStyle = .ExtraLight
+            statusBarOverlay.backgroundColor = BraveUX.ToolbarsBackgroundSolidColor
+            header.blurStyle = .Light
+            footerBackground?.blurStyle = .Light
         case Theme.PrivateMode:
+            statusBarOverlay.backgroundColor = BraveUX.DarkToolbarsBackgroundSolidColor
             header.blurStyle = .Dark
             footerBackground?.blurStyle = .Dark
         default:
             log.debug("Unknown Theme \(themeName)")
         }
+        
+        self.currentThemeName = themeName
     }
 }
 

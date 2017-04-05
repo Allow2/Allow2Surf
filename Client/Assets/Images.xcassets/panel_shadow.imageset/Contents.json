@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "ios_panel_shadow_1x30.png",
+      "filename" : "panel-shadow.png",
       "scale" : "1x"
     },
     {

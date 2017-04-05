@@ -49,13 +49,8 @@ class Setting : NSObject {
         cell.selectionStyle = enabled ? .Default : .None
         cell.accessibilityIdentifier = accessibilityIdentifier
         if let title = title?.string {
-            if let detailText = cell.detailTextLabel?.text {
-                cell.accessibilityLabel = "\(title), \(detailText)"
-            } else if let status = status?.string {
-                cell.accessibilityLabel = "\(title), \(status)"
-            } else {
-                cell.accessibilityLabel = title
-            }
+            let detail = cell.detailTextLabel?.text ?? status?.string
+            cell.accessibilityLabel = title + (detail != nil ? ", \(detail!)" : "")
         }
         cell.accessibilityTraits = UIAccessibilityTraitButton
         cell.indentationWidth = 0
@@ -94,26 +89,12 @@ class SettingSection : Setting {
     }
 
     var count: Int {
-        var count = 0
-        for setting in children {
-            if !setting.hidden {
-                count += 1
-            }
-        }
-        return count
+        return children.filter { !$0.hidden }.count
     }
 
     subscript(val: Int) -> Setting? {
-        var i = 0
-        for setting in children {
-            if !setting.hidden {
-                if i == val {
-                    return setting
-                }
-                i += 1
-            }
-        }
-        return nil
+        let settings = children.filter { !$0.hidden }
+        return 0..<settings.count ~= val ? settings[val] : nil
     }
 }
 
@@ -222,11 +203,7 @@ class SettingsTableViewController: UITableViewController {
 
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: Identifier)
         tableView.registerClass(SettingsTableSectionHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: SectionHeaderIdentifier)
-        #if BRAVE
-            tableView.tableFooterView = UIView()
-        #else
-            tableView.tableFooterView = SettingsTableFooterView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 128))
-        #endif
+        tableView.tableFooterView = UIView()
 
         tableView.separatorColor = UIConstants.TableViewSeparatorColor
         tableView.backgroundColor = UIConstants.TableViewHeaderBackgroundColor
@@ -311,16 +288,7 @@ class SettingsTableViewController: UITableViewController {
             headerView.titleLabel.text = sectionTitle
         }
 
-#if BRAVE
         headerView.showTopBorder = false
-#else
-        // Hide the top border for the top section to avoid having a double line at the top
-        if section == 0 {
-            headerView.showTopBorder = false
-        } else {
-            headerView.showTopBorder = true
-        }
-#endif
         return headerView
     }
 

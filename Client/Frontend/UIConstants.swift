@@ -8,12 +8,12 @@ import Shared
 public struct UIConstants {
     static let DefaultHomePage = NSURL(string: "\(WebServer.sharedInstance.base)/about/home/#panel=0")!
 
-    static let AppBackgroundColor = UIColor.blackColor()
+    static let AppBackgroundColor = UIColor.whiteColor()
     static let PrivateModePurple = UIColor(red: 207 / 255, green: 104 / 255, blue: 255 / 255, alpha: 1)
     static let PrivateModeLocationBackgroundColor = UIColor(red: 31 / 255, green: 31 / 255, blue: 31 / 255, alpha: 1)
     static let PrivateModeLocationBorderColor = UIColor(red: 255, green: 255, blue: 255, alpha: 0.15)
     static let PrivateModeActionButtonTintColor = UIColor(red: 255, green: 255, blue: 255, alpha: 0.8)
-    static let PrivateModeTextHighlightColor = UIColor(red: 120 / 255, green: 120 / 255, blue: 165 / 255, alpha: 1)
+    static let PrivateModeTextHighlightColor = UIColor(white: 0.5, alpha: 1)
     static let PrivateModeReaderModeBackgroundColor = UIColor(red: 89 / 255, green: 89 / 255, blue: 89 / 255, alpha: 1)
 
     static let ToolbarHeight: CGFloat = 44
@@ -36,21 +36,21 @@ public struct UIConstants {
 
     static let PanelBackgroundColor = UIColor.whiteColor()
     static let SeparatorColor = UIColor(rgb: 0xcccccc)
-    static let HighlightBlue = UIColor(red:76/255, green:158/255, blue:255/255, alpha:1)
+    static let HighlightBlue = BraveUX.DefaultBlue
     static let DestructiveRed = UIColor(red: 255/255, green: 64/255, blue: 0/255, alpha: 1.0)
     static let BorderColor = UIColor.blackColor().colorWithAlphaComponent(0.25)
     static let BackgroundColor = UIColor(red: 0.21, green: 0.23, blue: 0.25, alpha: 1)
 
     // settings
-    static let TableViewHeaderBackgroundColor = UIColor(red: 242/255, green: 245/255, blue: 245/255, alpha: 1.0)
-    static let TableViewHeaderTextColor = UIColor(red: 130/255, green: 135/255, blue: 153/255, alpha: 1.0)
+    static let TableViewHeaderBackgroundColor = UIColor(red: 248/255, green: 248/255, blue: 248/255, alpha: 1.0)
+    static let TableViewHeaderTextColor = UIColor(red: 109/255, green: 109/255, blue: 109/255, alpha: 1.0)
     static let TableViewRowTextColor = UIColor(red: 53.55/255, green: 53.55/255, blue: 53.55/255, alpha: 1.0)
     static let TableViewDisabledRowTextColor = UIColor.lightGrayColor()
-    static let TableViewSeparatorColor = UIColor(rgb: 0xD1D1D4)
+    static let TableViewSeparatorColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1.0)
     static let TableViewHeaderFooterHeight = CGFloat(44)
 
-    // Firefox Orange
-    static let ControlTintColor = UIColor(red: 240.0 / 255, green: 105.0 / 255, blue: 31.0 / 255, alpha: 1)
+    // Brave Orange
+    static let ControlTintColor = BraveUX.BraveOrange
 
     // Passcode dot gray
     static let PasscodeDotColor = UIColor(rgb: 0x4A4A4A)

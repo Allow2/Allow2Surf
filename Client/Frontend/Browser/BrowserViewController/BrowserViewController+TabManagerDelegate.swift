@@ -39,8 +39,6 @@ extension BrowserViewController: TabManagerDelegate {
             //                webView.scrollView.hidden = false
             //            }
 
-            self.urlBar.locationView.showPrivateBrowsingIcon(tab.isPrivate)
-
             updateURLBarDisplayURL(tab)
 
             if tab.isPrivate {

@@ -44,12 +44,14 @@
 - (BOOL)isBlockedIgnoringType:(NSString *)url
                           mainDocumentUrl:(NSString *)mainDoc
 {
-    if (![self _isBlockedCommonSetup:&mainDoc]) {
-        return false;
-    }
+    @synchronized(self) {
+        if (![self _isBlockedCommonSetup:&mainDoc]) {
+            return false;
+        }
 
-    FilterOption option = FONoFilterOption;
-    return parser.matches(url.UTF8String, option, mainDoc.UTF8String);
+        FilterOption option = FONoFilterOption;
+        return parser.matches(url.UTF8String, option, mainDoc.UTF8String);
+    }
 }
 
 
@@ -57,35 +59,37 @@
               mainDocumentUrl:(NSString *)mainDoc
              acceptHTTPHeader:(NSString *)acceptHeader
 {
-    if (![self _isBlockedCommonSetup:&mainDoc]) {
-        return false;
-    }
+    @synchronized(self) {
+        if (![self _isBlockedCommonSetup:&mainDoc]) {
+            return false;
+        }
 
-    FilterOption option = FONoFilterOption;
-    if (acceptHeader) {
-        if ([acceptHeader rangeOfString:@"/css"].location != NSNotFound) {
-            option  = FOStylesheet;
+        FilterOption option = FONoFilterOption;
+        if (acceptHeader) {
+            if ([acceptHeader rangeOfString:@"/css"].location != NSNotFound) {
+                option  = FOStylesheet;
+            }
+            else if ([acceptHeader rangeOfString:@"image/"].location != NSNotFound) {
+                option  = FOImage;
+            }
+            else if ([acceptHeader rangeOfString:@"javascript"].location != NSNotFound) {
+                option  = FOScript;
+            }
         }
-        else if ([acceptHeader rangeOfString:@"image/"].location != NSNotFound) {
-            option  = FOImage;
+        if (option == FONoFilterOption) {
+            if ([url hasSuffix:@".js"]) {
+                option = FOScript;
+            }
+            else if ([url hasSuffix:@".png"] || [url hasSuffix:@".jpg"] || [url hasSuffix:@".jpeg"] || [url hasSuffix:@".gif"]) {
+                option = FOImage;
+            }
+            else if ([url hasSuffix:@".css"]) {
+                option = FOStylesheet;
+            }
         }
-        else if ([acceptHeader rangeOfString:@"javascript"].location != NSNotFound) {
-            option  = FOScript;
-        }
-    }
-    if (option == FONoFilterOption) {
-        if ([url hasSuffix:@".js"]) {
-            option = FOScript;
-        }
-        else if ([url hasSuffix:@".png"] || [url hasSuffix:@".jpg"] || [url hasSuffix:@".jpeg"] || [url hasSuffix:@".gif"]) {
-            option = FOImage;
-        }
-        else if ([url hasSuffix:@".css"]) {
-            option = FOStylesheet;
-        }
-    }
 
-    return parser.matches(url.UTF8String, option, mainDoc.UTF8String);
+        return parser.matches(url.UTF8String, option, mainDoc.UTF8String);
+    }
 }
 
 @end

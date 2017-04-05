@@ -1,4 +1,7 @@
+adblock-regions.txt
+
 *.mobileprovision
+*.playground
 xcuserdata/
 
 /fastlane/scripts/upload.sh

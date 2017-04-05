@@ -94,6 +94,7 @@ extension Strings {
     public static let Copy_Link = NSLocalizedString("Copy Link", comment: "Context menu item for copying a link URL to the clipboard")
     public static let Share_Link = NSLocalizedString("Share Link", comment: "Context menu item for sharing a link URL")
     public static let Save_Image = NSLocalizedString("Save Image", comment: "Context menu item for saving an image")
+    public static let Open_Image_In_Background_Tab = NSLocalizedString("Open Image In New Tab", comment: "Context menu for opening image in new tab")
     public static let This_allows_you_to_save_the_image_to_your_CameraRoll = NSLocalizedString("This allows you to save the image to your Camera Roll.", comment: "See http://mzl.la/1G7uHo7")
     public static let Open_Settings = NSLocalizedString("Open Settings", comment: "See http://mzl.la/1G7uHo7")
     public static let Copy_Image = NSLocalizedString("Copy Image", comment: "Context menu item for copying an image to the clipboard")
@@ -300,6 +301,7 @@ extension Strings {
     public static let Fingerprinting_Protection_wrapped = NSLocalizedString("Fingerprinting\nProtection", comment: "blocking stat title")
     public static let Shields_Overview = NSLocalizedString("Site Shields allow you to control when ads and trackers are blocked for each site that you visit. If you prefer to see ads on a specific site, you can enable them here.", comment: "shields overview message")
     public static let Shields_Overview_Footer = NSLocalizedString("Note: Some sites may require scripts to work properly so this shield is turned off by default.", comment: "shields overview footer message")
+    public static let Use_regional_adblock = NSLocalizedString("Use regional adblock", comment: "Setting to allow user in non-english locale to use adblock rules specifc to their language")
 }
 
 

@@ -19,47 +19,39 @@ class MainSidePanelViewController : SidePanelBaseViewController {
     let topButtonsView = UIView()
     let addBookmarkButton = UIButton()
 
-    let triangleView = UIImageView()
-
     let divider = UIView()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    // Buttons swap out the full page, meaning only one can be active at a time
+    var pageButtons: Dictionary<UIButton, UIViewController> {
+        return [
+            bookmarksButton: bookmarksNavController,
+            historyButton: history,
+        ]
     }
 
     override func setupUIElements() {
         super.setupUIElements()
         
-        //change the font used in the navigation controller header
-        let font = UIFont.boldSystemFontOfSize(14)
-        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName : font, NSForegroundColorAttributeName : UIColor.blackColor()];
         bookmarksNavController = UINavigationController(rootViewController: bookmarksPanel)
         bookmarksNavController.view.backgroundColor = UIColor.whiteColor()
         containerView.addSubview(topButtonsView)
 
-        topButtonsView.addSubview(triangleView)
         topButtonsView.addSubview(bookmarksButton)
         topButtonsView.addSubview(historyButton)
         topButtonsView.addSubview(addBookmarkButton)
         topButtonsView.addSubview(settingsButton)
         topButtonsView.addSubview(divider)
 
-        divider.backgroundColor = UIColor.grayColor()
-
-        triangleView.image = UIImage(named: "triangle-nub")
-        triangleView.contentMode = UIViewContentMode.Center
-        triangleView.alpha = 0.9
+        divider.backgroundColor = BraveUX.ColorForSidebarLineSeparators
 
         settingsButton.setImage(UIImage(named: "settings")?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         settingsButton.addTarget(self, action: #selector(onClickSettingsButton), forControlEvents: .TouchUpInside)
         settingsButton.accessibilityLabel = Strings.Settings
 
         bookmarksButton.setImage(UIImage(named: "bookmarklist"), forState: .Normal)
-        bookmarksButton.addTarget(self, action: #selector(MainSidePanelViewController.showBookmarks), forControlEvents: .TouchUpInside)
         bookmarksButton.accessibilityLabel = Strings.Show_Bookmarks
         
         historyButton.setImage(UIImage(named: "history"), forState: .Normal)
-        historyButton.addTarget(self, action: #selector(MainSidePanelViewController.showHistory), forControlEvents: .TouchUpInside)
         historyButton.accessibilityLabel = Strings.Show_History
 
         addBookmarkButton.addTarget(self, action: #selector(onClickBookmarksButton), forControlEvents: .TouchUpInside)
@@ -67,15 +59,16 @@ class MainSidePanelViewController : SidePanelBaseViewController {
         addBookmarkButton.setImage(UIImage(named: "bookmarkMarked"), forState: .Selected)
         addBookmarkButton.accessibilityLabel = Strings.Add_Bookmark
         
+        pageButtons.keys.forEach { $0.addTarget(self, action: #selector(onClickPageButton), forControlEvents: .TouchUpInside) }
+        
         settingsButton.tintColor = BraveUX.ActionButtonTintColor
-        bookmarksButton.tintColor = BraveUX.ActionButtonTintColor
-        historyButton.tintColor = BraveUX.ActionButtonTintColor
         addBookmarkButton.tintColor = BraveUX.ActionButtonTintColor
 
         containerView.addSubview(history.view)
         containerView.addSubview(bookmarksNavController.view)
         
-        showBookmarks()
+        // Setup the bookmarks button as default
+        onClickPageButton(bookmarksButton)
 
         bookmarksNavController.view.hidden = false
 
@@ -125,7 +118,7 @@ class MainSidePanelViewController : SidePanelBaseViewController {
         guard let url = tab.displayURL?.absoluteString else { return }
         
         //switch to bookmarks 'tab' in case we're looking at history and tapped the add/remove bookmark button
-        self.showBookmarks()
+        onClickPageButton(bookmarksButton)
 
         //TODO -- need to separate the knowledge of whether current site is bookmarked or not from this UI button
         //tracked in https://github.com/brave/browser-ios/issues/375
@@ -173,10 +166,9 @@ class MainSidePanelViewController : SidePanelBaseViewController {
 
         divider.snp_remakeConstraints {
             make in
-            make.bottom.equalTo(self.topButtonsView).inset(8.0)
-            make.height.equalTo(UIConstants.ToolbarHeight - 18.0)
-            make.width.equalTo(2.0)
-            make.centerX.equalTo(self.topButtonsView).multipliedBy(0.5)
+            make.bottom.equalTo(self.topButtonsView)
+            make.width.equalTo(self.topButtonsView)
+            make.height.equalTo(1.0)
         }
 
         historyButton.snp_remakeConstraints {
@@ -210,27 +202,21 @@ class MainSidePanelViewController : SidePanelBaseViewController {
             make.top.equalTo(topButtonsView.snp_bottom)
         }
     }
-
-    func showBookmarks() {
-        history.view.hidden = true
-        bookmarksNavController.view.hidden = false
-        moveTabIndicator(bookmarksButton)
-    }
-
-    func showHistory() {
-        bookmarksNavController.view.hidden = true
-        history.view.hidden = false
-        moveTabIndicator(historyButton)
-    }
-
-    func moveTabIndicator(button: UIButton) {
-        triangleView.snp_remakeConstraints {
-            make in
-            make.width.equalTo(button)
-            make.height.equalTo(6)
-            make.left.equalTo(button)
-            make.top.equalTo(button.snp_bottom)
+    
+    func onClickPageButton(sender: UIButton) {
+        guard let newView = self.pageButtons[sender]?.view else { return }
+        
+        // Hide all old views
+        self.pageButtons.forEach { (btn, controller) in
+            btn.selected = false
+            btn.tintColor = BraveUX.ActionButtonTintColor
+            controller.view.hidden = true
         }
+        
+        // Setup the new view
+        newView.hidden = false
+        sender.selected = true
+        sender.tintColor = BraveUX.ActionButtonSelectedTintColor
     }
 
     override func setHomePanelDelegate(delegate: HomePanelDelegate?) {

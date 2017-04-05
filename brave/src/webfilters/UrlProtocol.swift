@@ -151,8 +151,25 @@ class URLProtocol: NSURLProtocol {
         let shieldState = URLProtocol.getShields(request)
         let ua = request.allHTTPHeaderFields?["User-Agent"]
 
-        // HttpsEverywhere re-checking is O(1) due to internal cache,
-        if let url = request.URL, redirectedUrl = shieldState.isOnHTTPSE() ?? false ? HttpsEverywhere.singleton.tryRedirectingUrl(url) : nil {
+        if shieldState.isOnSafeBrowsing() ?? false && SafeBrowsing.singleton.shouldBlock(request) {
+            returnBlockedPageResponse()
+            return
+        } else if shieldState.isOnAdBlockAndTp() ?? false && (TrackingProtection.singleton.shouldBlock(request) || AdBlocker.singleton.shouldBlock(request)) {
+
+            if request.URL?.host?.contains("pcworldcommunication.d2.sc.omtrdc.net") ?? false || request.URL?.host?.contains("b.scorecardresearch.com") ?? false {
+                // sites such as macworld.com need this, or links are not clickable
+                returnBlankPixel()
+            } else {
+                returnEmptyResponse()
+            }
+            let isBlockedByTP = TrackingProtection.singleton.shouldBlock(request)
+            if let url = request.URL?.absoluteString {
+                postAsyncToMain(0.1) {
+                    BrowserTabToUAMapper.userAgentToBrowserTab(ua)?.webView?.shieldStatUpdate(isBlockedByTP ? .tpIncrement : .abIncrement, increment: 1, affectedUrl: url)
+                }
+            }
+            return
+        } else if let url = request.URL, redirectedUrl = shieldState.isOnHTTPSE() ?? false ? HttpsEverywhere.singleton.tryRedirectingUrl(url) : nil {
             // TODO handle https redirect loop
             newRequest.URL = redirectedUrl
             #if DEBUG
@@ -168,25 +185,6 @@ class URLProtocol: NSURLProtocol {
                 connection = NSURLConnection(request: newRequest, delegate: self)
                 postAsyncToMain(0.1) {
                     BrowserTabToUAMapper.userAgentToBrowserTab(ua)?.webView?.shieldStatUpdate(.httpseIncrement)
-                }
-            }
-            return
-        } else if shieldState.isOnSafeBrowsing() ?? false && SafeBrowsing.singleton.shouldBlock(request) {
-            
-            returnBlockedPageResponse()
-
-            return
-        } else if shieldState.isOnAdBlockAndTp() ?? false && (TrackingProtection.singleton.shouldBlock(request) || AdBlocker.singleton.shouldBlock(request)) {
-            if request.URL?.host?.contains("pcworldcommunication.d2.sc.omtrdc.net") ?? false || request.URL?.host?.contains("b.scorecardresearch.com") ?? false {
-                // sites such as macworld.com need this, or links are not clickable
-                returnBlankPixel()
-            } else {
-                returnEmptyResponse()
-            }
-            let isBlockedByTP = TrackingProtection.singleton.shouldBlock(request)
-            if let url = request.URL?.absoluteString {
-                postAsyncToMain(0.1) {
-                    BrowserTabToUAMapper.userAgentToBrowserTab(ua)?.webView?.shieldStatUpdate(isBlockedByTP ? .tpIncrement : .abIncrement, increment: 1, affectedUrl: url)
                 }
             }
             return

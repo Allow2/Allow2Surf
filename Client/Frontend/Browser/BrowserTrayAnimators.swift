@@ -66,7 +66,7 @@ private extension TrayToBrowserAnimator {
         bvc.urlBar.isTransitioning = true
 
         // Re-calculate the starting transforms for header/footer views in case we switch orientation
-        resetTransformsForViews([bvc.header, bvc.headerBackdrop, bvc.readerModeBar, bvc.footer, bvc.footerBackdrop])
+        resetTransformsForViews([bvc.header, bvc.readerModeBar, bvc.footer, bvc.footerBackdrop])
         transformHeaderFooterForBVC(bvc, toFrame: startingFrame, container: container)
 
         UIView.animateWithDuration(self.transitionDuration(transitionContext),
@@ -78,7 +78,7 @@ private extension TrayToBrowserAnimator {
             // Scale up the cell and reset the transforms for the header/footers
             cell.frame = finalFrame
             container.layoutIfNeeded()
-            cell.title.transform = CGAffineTransformMakeTranslation(0, -cell.title.frame.height)
+            cell.titleWrapper.transform = CGAffineTransformMakeTranslation(0, -cell.titleWrapper.frame.height)
 
             bvc.tabTrayDidDismiss(tabTray)
 
@@ -143,7 +143,6 @@ private extension BrowserToTrayAnimator {
 
         let cell = createTransitionCellFromBrowser(bvc.tabManager.selectedTab, withFrame: expandedFrame)
         cell.backgroundHolder.layer.cornerRadius = TabTrayControllerUX.CornerRadius
-        cell.innerStroke.hidden = true
 
         // Take a snapshot of the collection view to perform the scaling/alpha effect
         let tabCollectionViewSnapshot = tabTray.collectionView.snapshotViewAfterScreenUpdates(true)
@@ -154,7 +153,7 @@ private extension BrowserToTrayAnimator {
 
         container.addSubview(cell)
         cell.layoutIfNeeded()
-        cell.title.transform = CGAffineTransformMakeTranslation(0, -cell.title.frame.size.height)
+        cell.titleWrapper.transform = CGAffineTransformMakeTranslation(0, -cell.titleWrapper.frame.size.height)
 
         // Hide views we don't want to show during the animation in the BVC
         bvc.homePanelController?.view.hidden = true
@@ -177,7 +176,7 @@ private extension BrowserToTrayAnimator {
                 animations:
             {
                 cell.frame = finalFrame
-                cell.title.transform = CGAffineTransformIdentity
+                cell.titleWrapper.transform = CGAffineTransformIdentity
                 cell.layoutIfNeeded()
 
                 transformHeaderFooterForBVC(bvc, toFrame: finalFrame, container: container)
@@ -216,7 +215,6 @@ private func transformHeaderFooterForBVC(bvc: BrowserViewController, toFrame fin
     bvc.footerBackdrop.transform = footerForTransform
     bvc.header.transform = headerForTransform
     bvc.readerModeBar?.transform = headerForTransform
-    bvc.headerBackdrop.transform = headerForTransform
 }
 
 private func footerTransform( frame: CGRect, toFrame finalFrame: CGRect, container: UIView) -> CGAffineTransform {
@@ -303,11 +301,7 @@ private func transformToolbarsToFrame(toolbars: [UIView?], toRect endRect: CGRec
 private func createTransitionCellFromBrowser(browser: Browser?, withFrame frame: CGRect) -> TabCell {
     let cell = TabCell(frame: frame)
     cell.background.image = browser?.screenshot.image
-    cell.titleText.text = browser?.displayTitle
-
-    if let browser = browser where browser.isPrivate {
-        cell.style = .Dark
-    }
+    cell.titleLbl.text = browser?.displayTitle
 
     if let favIcon = browser?.displayFavicon {
         cell.favicon.sd_setImageWithURL(NSURL(string: favIcon.url)!)
