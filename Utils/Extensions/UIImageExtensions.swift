@@ -9,6 +9,12 @@ import WebImage
 private let imageLock = NSLock()
 
 extension UIImage {
+
+    /// Returns an AlwaysTemplate image. Setup as static function (as opposed to convenience init) for better name clarity
+    public static func templateImage(named name: String) -> UIImage? {
+        return UIImage(named: name)?.imageWithRenderingMode(.AlwaysTemplate)
+    }
+    
     /// Despite docs that say otherwise, UIImage(data: NSData) isn't thread-safe (see bug 1223132).
     /// As a workaround, synchronize access to this initializer.
     /// This fix requires that you *always* use this over UIImage(data: NSData)!

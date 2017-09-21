@@ -107,7 +107,7 @@ class BraveTopViewController : UIViewController {
     }
 
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+        return PrivateBrowsing.singleton.isOn ? .LightContent : .Default
     }
 
     func leftPanelShowing() -> Bool {

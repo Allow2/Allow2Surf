@@ -2,17 +2,16 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "listpanel_btn_open.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "listpanel_btn_open@2x.png",
+      "filename" : "panel-menu@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "listpanel_btn_open@3x.png",
+      "filename" : "panel-menu@3x.png",
       "scale" : "3x"
     }
   ],

@@ -10,38 +10,37 @@ import XCGLogger
 private let log = Logger.browserLogger
 
 struct TabsButtonUX {
-    static let TitleColor: UIColor = UIColor.blackColor()
-    static let TitleBackgroundColor: UIColor = UIColor.whiteColor()
     static let CornerRadius: CGFloat = 1
     static let TitleFont: UIFont = UIConstants.DefaultChromeSmallFontBold
     static let BorderStrokeWidth: CGFloat = 1
-    static let BorderColor: UIColor = UIColor.clearColor()
+    static let BorderColor = UIColor.clearColor()
+    static let HighlightButtonColor = UIColor.clearColor()
     static let TitleInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
 
     static let Themes: [String: Theme] = {
         var themes = [String: Theme]()
         var theme = Theme()
-        theme.borderColor = BraveUX.BraveButtonMessageInUrlBarColor
-        theme.borderWidth = 2
-        theme.font = UIConstants.DefaultChromeBoldFont
-        theme.backgroundColor = UIConstants.AppBackgroundColor
-        theme.textColor = BraveUX.BraveButtonMessageInUrlBarColor
-        theme.insets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        theme.highlightButtonColor = UIConstants.PrivateModePurple
-        theme.highlightTextColor = TabsButtonUX.TitleColor
-        theme.highlightBorderColor = UIConstants.PrivateModePurple
+        theme.borderColor = BorderColor
+        theme.borderWidth = BorderStrokeWidth
+        theme.font = TitleFont
+        theme.backgroundColor = .whiteColor()
+        theme.textColor = .blackColor()
+        theme.insets = TitleInsets
+        theme.highlightButtonColor = HighlightButtonColor
+        theme.highlightTextColor = .whiteColor()
+        theme.highlightBorderColor = .whiteColor()
         themes[Theme.PrivateMode] = theme
 
         theme = Theme()
         theme.borderColor = BorderColor
         theme.borderWidth = BorderStrokeWidth
         theme.font = TitleFont
-        theme.backgroundColor = TitleBackgroundColor
-        theme.textColor = TitleColor
+        theme.backgroundColor = .blackColor()
+        theme.textColor = .whiteColor()
         theme.insets = TitleInsets
-        theme.highlightButtonColor = TabsButtonUX.TitleColor
-        theme.highlightTextColor = TabsButtonUX.TitleBackgroundColor
-        theme.highlightBorderColor = TabsButtonUX.TitleBackgroundColor
+        theme.highlightButtonColor = HighlightButtonColor
+        theme.highlightTextColor = .blackColor()
+        theme.highlightBorderColor = .blackColor()
         themes[Theme.NormalMode] = theme
 
         return themes
@@ -67,8 +66,6 @@ class TabsButton: UIControl {
 
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = TabsButtonUX.TitleFont
-        label.layer.cornerRadius = TabsButtonUX.CornerRadius
         label.textAlignment = NSTextAlignment.Center
         label.userInteractionEnabled = false
         return label

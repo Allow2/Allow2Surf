@@ -53,7 +53,7 @@ class Toolbar : UIView {
         }
     }
 
-    func addButtons(buttons: UIButton...) {
+    func addButtons(buttons: [UIButton]) {
         for button in buttons {
             button.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
             button.setTitleColor(UIColor.grayColor(), forState: UIControlState.Disabled)

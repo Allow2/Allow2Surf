@@ -30,7 +30,7 @@ class SearchInputView: UIView {
 
     weak var delegate: SearchInputViewDelegate?
 
-    var showBottomBorder: Bool = true {
+    var showBottomBorder: Bool = false {
         didSet {
             bottomBorder.hidden = !showBottomBorder
         }

@@ -55,4 +55,33 @@ class WebViewTest: XCTestCase {
         found = app.staticTexts.elementMatchingPredicate(search)
         XCTAssert(found.exists, "didn't find UA for desktop")
     }
+
+    func testSafeBrowsing() {
+        UITestUtils.restart()
+        let app = XCUIApplication()
+        UITestUtils.loadSite(app, "excellentmovies.net")
+
+        let search = NSPredicate(format: "label contains[c] %@", "brave shield blocked page")
+        let found = app.staticTexts.elementMatchingPredicate(search)
+        XCTAssert(found.exists, "safe browsing failed")
+    }
+  
+    func testRegionalAdblock() {
+        UITestUtils.restart(["LOCALE=RU"])
+        let app = XCUIApplication()
+        UITestUtils.loadSite(app, "https://sputniknews.com/russia")
+
+        // waitForExpecation with `exists` predicate is randomly failing, sigh. do this instead
+        for _ in 0..<5 {
+            let blockedUrl = app.staticTexts["blocked-url"]
+            if !blockedUrl.exists {
+                sleep(1)
+                continue
+            }
+
+            let str = blockedUrl.value as? String
+            XCTAssert(str?.hasPrefix("ru ") ?? false)
+            break
+        }
+    }
 }

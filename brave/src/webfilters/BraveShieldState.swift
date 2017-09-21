@@ -17,7 +17,7 @@ class BraveShieldTable: GenericTable<BraveShieldTableRow> {
     static func initialize(db: BrowserDB) -> BraveShieldTable {
         let table = BraveShieldTable()
         table.db = db
-        switch db.createOrUpdate(BrowserTable()) {
+        switch db.createOrUpdate(BraveShieldTable()) {
         case .Failure:
             print("Failed to create/update DB schema for BraveShieldTable!")
             fatalError()

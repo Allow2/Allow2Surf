@@ -1,8 +1,8 @@
 {
   "name": "brave",
   "dependencies": {
-    "ad-block": "2.0.0",
+    "ad-block": "2.0.1",
     "node-gyp": "^3.2.1",
-    "tracking-protection": "1.1.5"
+    "tracking-protection": "1.1.6"
   }
 }

@@ -75,10 +75,19 @@ extension BrowserViewController: ContextMenuHelperDelegate {
             actionSheetController.addAction(shareAction)
         }
 
-        if let url = elements.image {
+        if let url = elements.image, let currentTab = tabManager.selectedTab {
             if dialogTitle == nil {
                 dialogTitle = url.absoluteString
             }
+            let isPrivate = currentTab.isPrivate
+            let openImageTitle = Strings.Open_Image_In_Background_Tab
+            let openImageAction = UIAlertAction(title: openImageTitle, style: UIAlertActionStyle.Default) { (action: UIAlertAction) in
+                self.scrollController.showToolbars(animated: !self.scrollController.toolbarsShowing, completion: { _ in
+                    self.tabManager.addTab(NSURLRequest(URL: url), isPrivate: isPrivate)
+                })
+                telemetry(action: "New tab", props: ["source" : "context menu"])
+            }
+            actionSheetController.addAction(openImageAction)
 
             let photoAuthorizeStatus = PHPhotoLibrary.authorizationStatus()
             let saveImageTitle = Strings.Save_Image

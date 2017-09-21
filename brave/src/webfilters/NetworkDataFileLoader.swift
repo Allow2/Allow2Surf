@@ -89,8 +89,12 @@ class NetworkDataFileLoader {
             }
             else {
                 if let data = data, response = response as? NSHTTPURLResponse {
-                    let etag = response.allHeaderFields["Etag"] as? String
-                    self.finishWritingToDisk(data, etag: etag)
+                    if 400...499 ~= response.statusCode { // error
+                        print("Failed to download, error: \(response.statusCode), URL:\(response.URL)")
+                    } else {
+                        let etag = response.allHeaderFields["Etag"] as? String
+                        self.finishWritingToDisk(data, etag: etag)
+                    }
                 }
             }
         }

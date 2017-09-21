@@ -89,6 +89,10 @@ class TopSitesPanel: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let statsHeight: CGFloat = 150.0
+        let statsBottomMargin: CGFloat = 25.0
+        
         let collection = TopSitesCollectionView(frame: self.view.frame, collectionViewLayout: layout)
         collection.backgroundColor = PrivateBrowsing.singleton.isOn ? BraveUX.BackgroundColorForTopSitesPrivate : BraveUX.BackgroundColorForBookmarksHistoryAndTopSites
         collection.delegate = self
@@ -96,7 +100,8 @@ class TopSitesPanel: UIViewController {
         collection.registerClass(ThumbnailCell.self, forCellWithReuseIdentifier: ThumbnailIdentifier)
         collection.keyboardDismissMode = .OnDrag
         collection.accessibilityIdentifier = "Top Sites View"
-        collection.contentInset = UIEdgeInsetsMake(120, 0, 0, 0)
+        // Entire site panel, including the stats view insets
+        collection.contentInset = UIEdgeInsetsMake(statsHeight, 0, 0, 0)
         view.addSubview(collection)
         collection.snp_makeConstraints { make in
             make.edges.equalTo(self.view)
@@ -112,10 +117,11 @@ class TopSitesPanel: UIViewController {
         // Auto-layout subview within collection doesn't work properly,
         // Quick-and-dirty layout here.
         var statsViewFrame: CGRect = braveShieldStatsView.frame
-        statsViewFrame.origin.x = 10
-        statsViewFrame.origin.y = -120
+        statsViewFrame.origin.x = 20
+        // Offset the stats view from the inset set above
+        statsViewFrame.origin.y = -(statsHeight + statsBottomMargin)
         statsViewFrame.size.width = CGRectGetWidth(collection.frame) - CGRectGetMinX(statsViewFrame) * 2
-        statsViewFrame.size.height = 120
+        statsViewFrame.size.height = statsHeight
         braveShieldStatsView.frame = statsViewFrame
         braveShieldStatsView.autoresizingMask = [.FlexibleWidth]
 
@@ -143,7 +149,10 @@ class TopSitesPanel: UIViewController {
             refreshTopSites(maxFrecencyLimit)
             break
         case NotificationPrivacyModeChanged:
+            // TODO: This entire blockshould be abstracted
+            //  to make code in this class DRY (duplicates from elsewhere)
             collection?.backgroundColor = PrivateBrowsing.singleton.isOn ? BraveUX.BackgroundColorForTopSitesPrivate : BraveUX.BackgroundColorForBookmarksHistoryAndTopSites
+            braveShieldStatsView?.timeStatView.color = PrivateBrowsing.singleton.isOn ? .whiteColor() : .blackColor()
             collection?.reloadData()
             break
         default:
@@ -448,7 +457,7 @@ class TopSitesLayout: UICollectionViewLayout {
     private var thumbnailHeight: CGFloat {
         assertIsMainThread("layout.thumbnailHeight interacts with UIKit components - cannot call from background thread.")
 
-        return floor(thumbnailWidth / CGFloat(ThumbnailCellUX.ImageAspectRatio))
+        return floor(thumbnailWidth / (CGFloat(ThumbnailCellUX.ImageAspectRatio) - 0.1))
     }
 
     // Used to calculate the height of the list.
@@ -562,42 +571,24 @@ private class TopSitesDataSource: NSObject, UICollectionViewDataSource {
     }
     
     private func setColorBackground(image: UIImage, withURL url: NSURL, forCell cell: ThumbnailCell) {
-        let colorKey = "\(url.absoluteString)!color"
-        if let backgroundImage = SDImageCache.sharedImageCache().imageFromMemoryCacheForKey(colorKey) {
-            cell.backgroundImage.image = backgroundImage
-            cell.backgroundImage.contentMode = .ScaleToFill
-            return
-        }
-        
-        guard let cgimage = image.CGImage else { return }
-        let contextImage: UIImage = UIImage(CGImage: cgimage)
-        let contextSize: CGSize = contextImage.size
+        // TODO:
+        // Currently just calculate the background image color everytime.
+        // This will be refactored when the switch to coredata happens (then the image color can be stored)
         
         let rgba = UnsafeMutablePointer<CUnsignedChar>.alloc(4)
-        let colorSpace: CGColorSpaceRef = CGColorSpaceCreateDeviceRGB()
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
         let info = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue)
         let context: CGContextRef = CGBitmapContextCreate(rgba, 1, 1, 8, 4, colorSpace, info.rawValue)!
 
-        guard let newImage = contextImage.CGImage else { return }
+        guard let newImage = image.CGImage else { return }
         CGContextDrawImage(context, CGRectMake(0, 0, 1, 1), newImage)
         
         let red = CGFloat(rgba[0]) / 255.0
         let green = CGFloat(rgba[1]) / 255.0
         let blue = CGFloat(rgba[2]) / 255.0
-        let alpha = CGFloat(1)
-        let colorFill: UIColor = UIColor(red: red, green: green, blue: blue, alpha: alpha)
+        let colorFill: UIColor = UIColor(red: red, green: green, blue: blue, alpha: 1.0)
         
-        let rect = CGRectMake(0, 0, contextSize.width, contextSize.height)
-        UIGraphicsBeginImageContextWithOptions(contextSize, false, 0)
-        colorFill.setFill()
-        UIRectFill(rect)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        SDImageCache.sharedImageCache().storeImage(image, forKey: colorKey, toDisk: false)
-        cell.backgroundImage.image = image
-        cell.backgroundImage.contentMode = .ScaleToFill
-        cell.backgroundImage.alpha = 1
+        cell.imageView.backgroundColor = colorFill
     }
 
     private func downloadFaviconsAndUpdateForSite(site: Site) {
@@ -667,7 +658,7 @@ private class TopSitesDataSource: NSObject, UICollectionViewDataSource {
 
     private func configureCell(cell: ThumbnailCell, forSuggestedSite site: SuggestedSite) {
         cell.textLabel.text = site.title.isEmpty ? NSURL(string: site.url)?.normalizedHostAndPath() : site.title.lowercaseString
-        cell.imageWrapper.backgroundColor = site.backgroundColor
+        cell.imageView.backgroundColor = site.backgroundColor
         cell.imageView.contentMode = .ScaleAspectFit
         cell.imageView.layer.minificationFilter = kCAFilterTrilinear
         cell.showBorder(!PrivateBrowsing.singleton.isOn)
@@ -682,6 +673,8 @@ private class TopSitesDataSource: NSObject, UICollectionViewDataSource {
 
         if icon.scheme == "asset" {
             if let image = UIImage(named: host) {
+                // TODO: Should no longer be needed
+                
                 // Brave hack. The images are too close to the top edge
                 UIGraphicsBeginImageContextWithOptions(image.size, false, 0)
                 image.drawInRect(CGRect(origin: CGPoint(x: 3, y: 6), size: CGSizeMake(image.size.width - 6, image.size.height - 6)))
@@ -779,22 +772,19 @@ private class TopSitesDataSource: NSObject, UICollectionViewDataSource {
         // Cells for the top site thumbnails.
         let site = self[indexPath.item]!
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ThumbnailIdentifier, forIndexPath: indexPath) as! ThumbnailCell
-
-        let traitCollection = collectionView.traitCollection
-
+        
+        // TODO: Can be refactored, currently used primarily for title differences
         if let site = site as? SuggestedSite {
             configureCell(cell, forSuggestedSite: site)
-            cell.updateLayoutForCollectionViewSize(collectionView.bounds.size, traitCollection: traitCollection, forSuggestedSite: true)
-            return cell
+        } else {
+            configureCell(cell, forSite: site, isEditing: editingThumbnails, profile: profile)
         }
 
-        configureCell(cell, forSite: site, isEditing: editingThumbnails, profile: profile)
-        cell.updateLayoutForCollectionViewSize(collectionView.bounds.size, traitCollection: traitCollection, forSuggestedSite: false)
+        cell.updateLayoutForCollectionViewSize(collectionView.bounds.size, traitCollection: collectionView.traitCollection, forSuggestedSite: false)
         return cell
     }
 }
 
-#if BRAVE
 extension TopSitesPanel : WindowTouchFilter {
     func filterTouch(touch: UITouch) -> Bool {
         if (touch.view as? UIButton) == nil && touch.phase == .Began {
@@ -803,5 +793,4 @@ extension TopSitesPanel : WindowTouchFilter {
         return false
     }
 }
-#endif
 

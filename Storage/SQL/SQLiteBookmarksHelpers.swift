@@ -23,17 +23,23 @@ public func titleForSpecialGUID(guid: GUID) -> String? {
 }
 
 extension SQLiteBookmarks: ShareToDestination {
-    public func addToMobileBookmarks(url: NSURL, title: String, favicon: Favicon?) -> Success {
-        return self.insertBookmark(url, title: title, favicon: favicon,
-                                   intoFolder: BookmarkRoots.MobileFolderGUID,
-                                   withTitle: Strings.BookmarksFolderTitleMobile)
+    public func addToMobileBookmarks(url: NSURL, title: String, intoFolder: GUID, folderName: String, favicon: Favicon?) -> Success {
+        return self.insertBookmark(url, title: title, favicon: favicon, intoFolder: intoFolder, withTitle: folderName)
     }
 
     public func shareItem(item: ShareItem) -> Success {
         // We parse here in anticipation of getting real URLs at some point.
         if let url = item.url.asURL {
             let title = item.title ?? url.absoluteString
-            return self.addToMobileBookmarks(url, title: title!, favicon: item.favicon)
+            var folderGUID = BookmarkRoots.MobileFolderGUID
+            var folderName = Strings.BookmarksFolderTitleMobile
+            if let folderId = item.folderId {
+                folderGUID = folderId
+                // Must always replace name to make sure default name doesn't exist with valid ID
+                folderName = item.folderTitle ?? ""
+            }
+            
+            return self.addToMobileBookmarks(url, title: title!, intoFolder: folderGUID, folderName: folderName, favicon: item.favicon)
         }
         return Success(value: Maybe(failure: DatabaseError(err: nil)))
     }

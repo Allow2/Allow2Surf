@@ -90,7 +90,7 @@ class ReaderModeBarView: UIView {
             make.centerX.centerY.equalTo(self)
 
         }
-        self.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.9)
+        self.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(1.0)
     }
 
     required init?(coder aDecoder: NSCoder) {

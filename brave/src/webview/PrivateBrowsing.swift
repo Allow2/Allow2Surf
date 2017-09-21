@@ -9,7 +9,11 @@ class PrivateBrowsing {
         return _singleton
     }
 
-    private(set) var isOn = false
+    private(set) var isOn = false {
+        didSet {
+            getApp().braveTopViewController.setNeedsStatusBarAppearanceUpdate()
+        }
+    }
 
     var nonprivateCookies = [NSHTTPCookie: Bool]()
 

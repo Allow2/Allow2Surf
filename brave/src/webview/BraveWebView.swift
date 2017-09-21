@@ -270,6 +270,8 @@ class BraveWebView: UIWebView {
         scalesPageToFit = true
         scrollView.showsHorizontalScrollIndicator = false
         allowsInlineMediaPlayback = true
+        opaque = false
+        backgroundColor = UIColor.whiteColor()
 
         let rate = UIScrollViewDecelerationRateFast + (UIScrollViewDecelerationRateNormal - UIScrollViewDecelerationRateFast) * 0.5;
             scrollView.setValue(NSValue(CGSize: CGSizeMake(rate, rate)), forKey: "_decelerationFactor")
@@ -415,7 +417,6 @@ class BraveWebView: UIWebView {
         print("loadingCompleted() ••••")
         progress?.setProgress(1.0)
         broadcastToPageStateDelegates()
-        backgroundColor = UIColor.lightGrayColor()
 
         navigationDelegate?.webViewDidFinishNavigation(self, url: URL)
 

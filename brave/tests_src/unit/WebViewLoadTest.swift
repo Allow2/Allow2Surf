@@ -83,4 +83,42 @@ class WebViewLoadTest: XCTestCase {
 
         XCTAssert(webview!.URL!.absoluteString!.contains("facebook"))
     }
+
+    func testTrackingProtection() {
+        let urls = ["scorecardresearch.com",
+                    "imrworldwide.com",
+                    "google-analytics.com",
+                    "googletagservices.com",
+                    "googlesyndication.com",
+                    "quantserve.com",
+                    "teads.tv",
+                    "netshelter.net",
+                    "viglink.com",
+                    "bluekai.com",
+                    "bkrtx.com",
+                    "tubemogul.com",
+                    "sitescout.com",]
+
+        for url in urls {
+            let req = NSMutableURLRequest(URL: NSURL(string: "http://" + url)!)
+            req.mainDocumentURL = NSURL(string: "http://www.example.com")
+            let b = TrackingProtection.singleton.shouldBlock(req)
+            XCTAssert(b, "TrackingProtection failed: \(url)")
+        }
+    }
+
+    func testAdblock() {
+        let urls = ["teads.tv",
+                    "netshelter.net",
+                    "tubemogul.com",
+                    "sitescout.com",
+                    "sharethrough.com",]
+
+        for url in urls {
+            let req = NSMutableURLRequest(URL: NSURL(string: "http://" + url)!)
+            req.mainDocumentURL = NSURL(string: "http://www.example.com")
+            let b = AdBlocker.singleton.shouldBlock(req)
+            XCTAssert(b)
+        }
+    }
 }

@@ -11,14 +11,12 @@ import XCGLogger
 private let log = Logger.browserLogger
 
 struct URLBarViewUX {
-    static let TextFieldBorderColor = UIColor(rgb: 0xBBBBBB)
-    static let TextFieldActiveBorderColor = UIColor(rgb: 0x4A90E2)
     static let TextFieldContentInset = UIOffsetMake(9, 5)
     static let LocationLeftPadding = 5
     static let LocationHeight = 28
     static let LocationContentOffset: CGFloat = 8
     static let TextFieldCornerRadius: CGFloat = 3
-    static let TextFieldBorderWidth: CGFloat = 0 // BRAVE mod
+    static let TextFieldBorderWidth: CGFloat = 0
     // offset from edge of tabs button
     static let URLBarCurveOffset: CGFloat = 14
     static let URLBarCurveOffsetLeft: CGFloat = -10
@@ -30,22 +28,20 @@ struct URLBarViewUX {
     static let TabsButtonHeight: CGFloat = 18.0
     static let ToolbarButtonInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 
-    static var Themes: [String: Theme] = {
+    static let Themes: [String: Theme] = {
         var themes = [String: Theme]()
         var theme = Theme()
-        theme.borderColor = UIConstants.PrivateModeLocationBorderColor
-        theme.activeBorderColor = UIConstants.PrivateModePurple
         theme.tintColor = UIConstants.PrivateModePurple
-        theme.textColor = UIColor.whiteColor()
+        theme.textColor = .whiteColor()
         theme.buttonTintColor = UIConstants.PrivateModeActionButtonTintColor
+        theme.backgroundColor = BraveUX.LocationContainerBackgroundColor_PrivateMode
         themes[Theme.PrivateMode] = theme
 
         theme = Theme()
-        theme.borderColor = TextFieldBorderColor
-        theme.activeBorderColor = TextFieldActiveBorderColor
-        theme.tintColor = ProgressTintColor
-        theme.textColor = UIColor.blackColor()
-        theme.buttonTintColor = UIColor.darkGrayColor()
+        theme.tintColor = URLBarViewUX.ProgressTintColor
+        theme.textColor = BraveUX.LocationBarTextColor
+        theme.buttonTintColor = BraveUX.ActionButtonTintColor
+        theme.backgroundColor = BraveUX.LocationContainerBackgroundColor
         themes[Theme.NormalMode] = theme
 
         return themes
@@ -64,7 +60,7 @@ protocol URLBarDelegate: class {
     func urlBarDidPressStop(urlBar: URLBarView)
     func urlBarDidPressReload(urlBar: URLBarView)
     func urlBarDidEnterSearchMode(urlBar: URLBarView)
-    func urlBarDidLeaveSearchMode(urlBar: URLBarView, didCancel: Bool)
+    func urlBarDidLeaveSearchMode(urlBar: URLBarView)
     func urlBarDidLongPressLocation(urlBar: URLBarView)
     func urlBarLocationAccessibilityActions(urlBar: URLBarView) -> [UIAccessibilityCustomAction]?
     func urlBarDidPressScrollToTop(urlBar: URLBarView)
@@ -74,21 +70,6 @@ protocol URLBarDelegate: class {
 }
 
 class URLBarView: UIView {
-    // Additional UIAppearance-configurable properties
-    dynamic var locationBorderColor: UIColor = URLBarViewUX.TextFieldBorderColor {
-        didSet {
-            if !inSearchMode {
-                locationContainer.layer.borderColor = locationBorderColor.CGColor
-            }
-        }
-    }
-    dynamic var locationActiveBorderColor: UIColor = URLBarViewUX.TextFieldActiveBorderColor {
-        didSet {
-            if inSearchMode {
-                locationContainer.layer.borderColor = locationActiveBorderColor.CGColor
-            }
-        }
-    }
 
     weak var delegate: URLBarDelegate?
     weak var browserToolbarDelegate: BrowserToolbarDelegate?
@@ -127,7 +108,6 @@ class URLBarView: UIView {
         // Enable clipping to apply the rounded edges to subviews.
         locationContainer.clipsToBounds = true
 
-        locationContainer.layer.borderColor = self.locationBorderColor.CGColor
         locationContainer.layer.cornerRadius = URLBarViewUX.TextFieldCornerRadius
         locationContainer.layer.borderWidth = URLBarViewUX.TextFieldBorderWidth
 
@@ -157,26 +137,27 @@ class URLBarView: UIView {
         return cancelButton
     }()
 
-    lazy var curveShape: CurveView = { return CurveView() }()
-
     lazy var scrollToTopButton: UIButton = {
         let button = UIButton()
         button.addTarget(self, action: #selector(URLBarView.SELtappedScrollToTopArea), forControlEvents: UIControlEvents.TouchUpInside)
         return button
     }()
 
+    // TODO: After protocol removal, check what is necessary here
+    
     lazy var shareButton: UIButton = { return UIButton() }()
     
     lazy var pwdMgrButton: UIButton = { return UIButton() }()
 
-    lazy var bookmarkButton: UIButton = { return UIButton() }()
-
     lazy var forwardButton: UIButton = { return UIButton() }()
 
     lazy var backButton: UIButton = { return UIButton() }()
+    
+    // Required solely for protocol conforming
+    lazy var addTabButton = { return UIButton() }()
 
     lazy var actionButtons: [UIButton] = {
-        return [self.shareButton, self.bookmarkButton, self.forwardButton, self.backButton, self.pwdMgrButton]
+        return [self.shareButton, self.forwardButton, self.backButton, self.pwdMgrButton, self.addTabButton]
     }()
 
     // Used to temporarily store the cloned button so we can respond to layout changes during animation
@@ -209,8 +190,7 @@ class URLBarView: UIView {
     }
 
     func commonInit() {
-        backgroundColor = URLBarViewUX.backgroundColorWithAlpha(0)
-        addSubview(curveShape)
+        backgroundColor = BraveUX.ToolbarsBackgroundSolidColor
         addSubview(scrollToTopButton)
 
         addSubview(tabsButton)
@@ -218,7 +198,6 @@ class URLBarView: UIView {
 
         addSubview(shareButton)
         addSubview(pwdMgrButton)
-        addSubview(bookmarkButton)
         addSubview(forwardButton)
         addSubview(backButton)
 
@@ -288,7 +267,6 @@ class URLBarView: UIView {
     func updateAlphaForSubviews(alpha: CGFloat) {
         self.tabsButton.alpha = alpha
         self.locationContainer.alpha = alpha
-        self.backgroundColor = URLBarViewUX.backgroundColorWithAlpha(1 - alpha)
         self.actionButtons.forEach { $0.alpha = alpha }
     }
 
@@ -401,7 +379,9 @@ class URLBarView: UIView {
         } else {
             // Copy the current URL to the editable text field, then activate it.
             self.locationTextField?.text = locationText
-            dispatch_async(dispatch_get_main_queue()) {
+
+            // something is resigning the first responder immediately after setting it. A short delay for events to process fixes it.
+            postAsyncToMain(0.1) {
                 self.locationTextField?.becomeFirstResponder()
             }
         }
@@ -410,7 +390,7 @@ class URLBarView: UIView {
     func leaveSearchMode(didCancel cancel: Bool = false) {
         locationTextField?.resignFirstResponder()
         animateToSearchState(searchMode: false, didCancel: cancel)
-        delegate?.urlBarDidLeaveSearchMode(self, didCancel: cancel)
+        delegate?.urlBarDidLeaveSearchMode(self)
     }
 
     func prepareSearchAnimation() {
@@ -418,7 +398,6 @@ class URLBarView: UIView {
         self.bringSubviewToFront(self.locationContainer)
         self.cancelButton.hidden = false
         self.shareButton.hidden = !self.bottomToolbarIsHidden
-        self.bookmarkButton.hidden = !self.bottomToolbarIsHidden
         self.forwardButton.hidden = !self.bottomToolbarIsHidden
         self.backButton.hidden = !self.bottomToolbarIsHidden
     }
@@ -426,12 +405,8 @@ class URLBarView: UIView {
     func transitionToSearch(didCancel: Bool = false) {
         self.cancelButton.alpha = inSearchMode ? 1 : 0
         self.shareButton.alpha = inSearchMode ? 0 : 1
-        self.bookmarkButton.alpha = inSearchMode ? 0 : 1
         self.forwardButton.alpha = inSearchMode ? 0 : 1
         self.backButton.alpha = inSearchMode ? 0 : 1
-
-        let borderColor = inSearchMode ? locationActiveBorderColor : locationBorderColor
-        locationContainer.layer.borderColor = borderColor.CGColor
 
         if inSearchMode {
             self.cancelButton.transform = CGAffineTransformIdentity
@@ -461,7 +436,6 @@ class URLBarView: UIView {
     func updateViewsForSearchModeAndToolbarChanges() {
         self.cancelButton.hidden = !inSearchMode
         self.shareButton.hidden = !self.bottomToolbarIsHidden || inSearchMode
-        self.bookmarkButton.hidden = !self.bottomToolbarIsHidden || inSearchMode
         self.forwardButton.hidden = !self.bottomToolbarIsHidden || inSearchMode
         self.backButton.hidden = !self.bottomToolbarIsHidden || inSearchMode
     }
@@ -509,7 +483,6 @@ extension URLBarView: BrowserToolbarProtocol {
     }
 
     func updateBookmarkStatus(isBookmarked: Bool) {
-        bookmarkButton.selected = isBookmarked
         getApp().braveTopViewController.updateBookmarkStatus(isBookmarked)
     }
 
@@ -518,7 +491,6 @@ extension URLBarView: BrowserToolbarProtocol {
     }
 
     func updatePageStatus(isWebPage isWebPage: Bool) {
-        bookmarkButton.enabled = isWebPage
         locationView.stopReloadButton.enabled = isWebPage
         shareButton.enabled = isWebPage
     }
@@ -530,7 +502,7 @@ extension URLBarView: BrowserToolbarProtocol {
                 return [locationTextField, cancelButton]
             } else {
                 if bottomToolbarIsHidden {
-                    return [backButton, forwardButton, locationView, shareButton, bookmarkButton, tabsButton]
+                    return [backButton, forwardButton, locationView, shareButton, tabsButton]
                 } else {
                     return [locationView, tabsButton]
                 }
@@ -624,10 +596,9 @@ extension URLBarView: Themeable {
         }
 
         currentTheme = themeName
-        locationBorderColor = theme.borderColor!
-        locationActiveBorderColor = theme.activeBorderColor!
         cancelTextColor = theme.textColor
         actionButtonTintColor = theme.buttonTintColor
+        locationContainer.backgroundColor = theme.backgroundColor
 
         tabsButton.applyTheme(themeName)
     }
@@ -637,18 +608,18 @@ extension URLBarView: Themeable {
 class CurveView: UIView {}
 
 class ToolbarTextField: AutocompleteTextField {
-    static var Themes: [String: Theme] = {
+    static let Themes: [String: Theme] = {
         var themes = [String: Theme]()
         var theme = Theme()
-        theme.backgroundColor = UIConstants.PrivateModeLocationBackgroundColor
-        theme.textColor = UIColor.whiteColor()
+        theme.backgroundColor = BraveUX.LocationBarEditModeBackgroundColor_Private
+        theme.textColor = BraveUX.LocationBarEditModeTextColor_Private
         theme.buttonTintColor = UIColor.whiteColor()
         theme.highlightColor = UIConstants.PrivateModeTextHighlightColor
         themes[Theme.PrivateMode] = theme
 
         theme = Theme()
-        theme.backgroundColor = UIColor.whiteColor()
-        theme.textColor = UIColor.blackColor()
+        theme.backgroundColor = BraveUX.LocationBarEditModeBackgroundColor
+        theme.textColor = BraveUX.LocationBarEditModeTextColor
         theme.highlightColor = AutocompleteTextFieldUX.HighlightColor
         themes[Theme.NormalMode] = theme
 
@@ -730,6 +701,6 @@ extension ToolbarTextField: Themeable {
         backgroundColor = theme.backgroundColor
         textColor = theme.textColor
         clearButtonTintColor = theme.buttonTintColor
-        // BRAVE: use default iOS: highlightColor = theme.highlightColor!
+        highlightColor = theme.highlightColor!
     }
 }

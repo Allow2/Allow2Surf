@@ -39,25 +39,6 @@ class BraveBrowserBottomToolbar : BrowserToolbar {
         return tabsButton
     }()
 
-    lazy var addTabButton: UIButton = {
-        let button = UIButton()
-        let image = UIImage(named: "add")
-        button.accessibilityLabel = Strings.Add_Tab
-        button.addTarget(self, action: #selector(BraveBrowserBottomToolbar.onClickAddTab), forControlEvents: UIControlEvents.TouchUpInside)
-
-        // Button is grey without upping the brightness
-        // TODO remove this when the icon changes
-        func hackToMakeWhite(image: UIImage) -> UIImage {
-            let brightnessFilter = CIFilter(name: "CIColorControls")!
-            brightnessFilter.setValue(1.0, forKey: "inputBrightness")
-            brightnessFilter.setValue(CIImage(image: image), forKey: kCIInputImageKey)
-            return UIImage(CGImage: CIContext(options:nil).createCGImage(brightnessFilter.outputImage!, fromRect:brightnessFilter.outputImage!.extent)!, scale: image.scale, orientation: .Up)
-        }
-
-        button.setImage(hackToMakeWhite(image!), forState: .Normal)
-        return button
-    }()
-
     var leftSpacer = UIView()
     var rightSpacer = UIView()
 
@@ -66,43 +47,28 @@ class BraveBrowserBottomToolbar : BrowserToolbar {
 
     private static weak var currentInstance: BraveBrowserBottomToolbar?
 
-    //let backForwardUnderlay = UIImageView(image: UIImage(named: "backForwardUnderlay"))
-
     override init(frame: CGRect) {
 
         super.init(frame: frame)
 
         BraveBrowserBottomToolbar.currentInstance = self
 
-        bookmarkButton.hidden = true
-
         tabsContainer.addSubview(tabsButton)
         addSubview(tabsContainer)
-        //addSubview(backForwardUnderlay)
-
-        //backForwardUnderlay.alpha = BraveUX.BackForwardEnabledButtonAlpha
 
         bringSubviewToFront(backButton)
         bringSubviewToFront(forwardButton)
-
-        addSubview(addTabButton)
 
         addSubview(leftSpacer)
         addSubview(rightSpacer)
         rightSpacer.userInteractionEnabled = false
         leftSpacer.userInteractionEnabled = false
 
-        if let img = forwardButton.imageView?.image {
-            forwardButton.setImage(img.alpha(BraveUX.BackForwardDisabledButtonAlpha), forState: .Disabled)
+        [backButton, forwardButton, shareButton].forEach {
+            if let img = $0.currentImage {
+                $0.setImage(img.alpha(BraveUX.BackForwardDisabledButtonAlpha), forState: .Disabled)
+            }
         }
-        if let img = backButton.imageView?.image {
-            backButton.setImage(img.alpha(BraveUX.BackForwardDisabledButtonAlpha), forState: .Disabled)
-        }
-
-        var theme = Theme()
-        theme.buttonTintColor = BraveUX.ActionButtonTintColor
-        theme.backgroundColor = UIColor.clearColor()
-        BrowserToolbar.Themes[Theme.NormalMode] = theme
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -121,22 +87,8 @@ class BraveBrowserBottomToolbar : BrowserToolbar {
                                   clonedTabsButton: &instance.clonedTabsButton, count: count, animated: animated)
     }
 
-    func onClickAddTab() {
-        telemetry(action: "add tab", props: ["bottomToolbar": "true"])
-        let app = UIApplication.sharedApplication().delegate as! AppDelegate
-        let isPrivate = PrivateBrowsing.singleton.isOn
-        if isPrivate {
-            app.tabManager.addTabAndSelect(nil, configuration: nil, isPrivate: true)
-        } else {
-            app.tabManager.addTabAndSelect()
-        }
-        app.browserViewController.urlBar.browserLocationViewDidTapLocation(app.browserViewController.urlBar.locationView)
-    }
-
     func setAlphaOnAllExceptTabButton(alpha: CGFloat) {
-        for item in [addTabButton, backButton, forwardButton, shareButton] {
-            item.alpha = alpha
-        }
+        actionButtons.forEach { $0.alpha = alpha }
     }
 
     func onClickShowTabs() {
@@ -148,15 +100,8 @@ class BraveBrowserBottomToolbar : BrowserToolbar {
         setAlphaOnAllExceptTabButton(1.0)
     }
 
-    // TODO find a way to do this properly with themes.
-    func styleHacks() {
-        tabsButton.labelBackground.backgroundColor = BraveUX.ActionButtonTintColor
-    }
-
     override func updateConstraints() {
         super.updateConstraints()
-
-        styleHacks()
 
         func common(make: ConstraintMaker, bottomInset: Int = 0) {
             make.top.equalTo(self)

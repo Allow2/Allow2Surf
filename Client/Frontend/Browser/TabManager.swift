@@ -257,24 +257,6 @@ class TabManager : NSObject {
         }
     }
 
-    func memoryWarning() {
-        debugNoteIfNotMainThread()
-        if (!NSThread.isMainThread()) { // system memory warnings are main-thread, guard against misuse in the code
-            return
-        }
-        objc_sync_enter(self); defer { objc_sync_exit(self) }
-
-        for browser in self.tabs.internalTabList {
-            if browser.webView == nil {
-                continue
-            }
-
-            if self.selectedTab != browser {
-                browser.deleteWebView(isTabDeleted: false)
-            }
-        }
-    }
-
     private func limitInMemoryTabs() {
         let maxInMemTabs = BraveUX.MaxTabsInMemory
         if tabs.internalTabList.count < maxInMemTabs {

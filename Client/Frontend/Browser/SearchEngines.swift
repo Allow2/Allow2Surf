@@ -191,6 +191,7 @@ class SearchEngines {
         let pluginBasePath: NSString = (NSBundle.mainBundle().resourcePath! as NSString).stringByAppendingPathComponent("SearchPlugins")
         let languageIdentifier = languageIdentifierForSearchEngines()
         let fallbackDirectory: NSString = pluginBasePath.stringByAppendingPathComponent("en")
+        let moreDirectory: NSString = pluginBasePath.stringByAppendingPathComponent("more")
 
         var directory: String?
         for path in directoriesForLanguageIdentifier(languageIdentifier, basePath: pluginBasePath, fallbackIdentifier: "en") {
@@ -206,10 +207,18 @@ class SearchEngines {
         }
 
         let index = (searchDirectory as NSString).stringByAppendingPathComponent("list.txt")
+        let moreIndex = (moreDirectory as NSString).stringByAppendingPathComponent("list.txt")
+        
         let listFile = try? String(contentsOfFile: index, encoding: NSUTF8StringEncoding)
         assert(listFile != nil, "Read the list of search engines")
+        
+        let moreFile = try? String(contentsOfFile: moreIndex, encoding: NSUTF8StringEncoding)
+        assert(moreFile != nil, "Read the list of more search engines")
 
         let engineNames = listFile!
+            .stringByTrimmingCharactersInSet(NSCharacterSet.newlineCharacterSet())
+            .componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet())
+        let moreEngineNames = moreFile!
             .stringByTrimmingCharactersInSet(NSCharacterSet.newlineCharacterSet())
             .componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet())
 
@@ -224,6 +233,23 @@ class SearchEngines {
             }
             assert(NSFileManager.defaultManager().fileExistsAtPath(fullPath), "\(fullPath) exists")
 
+            let engine = parser.parse(fullPath)
+            assert(engine != nil, "Engine at \(fullPath) successfully parsed")
+            if let engine = engine {
+                engines.append(engine)
+            }
+        }
+        
+        // Append more engines...
+        for engineName in moreEngineNames {
+            // Search the current localized search plugins directory for the search engine.
+            // If it doesn't exist, fall back to English.
+            var fullPath = (moreDirectory as NSString).stringByAppendingPathComponent("\(engineName).xml")
+            if !NSFileManager.defaultManager().fileExistsAtPath(fullPath) {
+                fullPath = fallbackDirectory.stringByAppendingPathComponent("\(engineName).xml")
+            }
+            assert(NSFileManager.defaultManager().fileExistsAtPath(fullPath), "\(fullPath) exists")
+            
             let engine = parser.parse(fullPath)
             assert(engine != nil, "Engine at \(fullPath) successfully parsed")
             if let engine = engine {

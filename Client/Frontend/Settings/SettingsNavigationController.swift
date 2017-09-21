@@ -7,6 +7,12 @@ import UIKit
 class SettingsNavigationController: UINavigationController {
     var popoverDelegate: PresentingModalViewControllerDelegate?
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.navigationBar.barTintColor = UIColor.whiteColor()
+    }
+    
     func SELdone() {
         if let delegate = popoverDelegate {
             delegate.dismissPresentedModalViewController(self, animated: true)

@@ -60,16 +60,11 @@ extension BrowserViewController: URLBarDelegate {
             screenshotHelper.takeScreenshot(t)
         }
 
-        //self.navigationController?.pushViewController(tabTrayController, animated: true)
-        #if BRAVE
-            tabTrayController.modalPresentationStyle = .OverCurrentContext
-            tabTrayController.modalTransitionStyle = .CrossDissolve
-            self.navigationController?.presentViewController(tabTrayController, animated: true, completion: nil)
-            UIView.animateWithDuration(0.2, animations: {
-                getApp().braveTopViewController.view.backgroundColor = UIColor.blackColor()
-                self.view.alpha = CGFloat(BraveUX.BrowserViewAlphaWhenShowingTabTray)
-            })
-        #endif
+        tabTrayController.modalPresentationStyle = .OverCurrentContext
+        tabTrayController.modalTransitionStyle = .CrossDissolve
+        // Allowing the tab tray to handle its own animation
+        self.navigationController?.presentViewController(tabTrayController, animated: false, completion: nil)
+        
         self.tabTrayController = tabTrayController
     }
 
@@ -195,11 +190,9 @@ extension BrowserViewController: URLBarDelegate {
         showHomePanelController(inline: false)
     }
 
-    func urlBarDidLeaveSearchMode(urlBar: URLBarView, didCancel: Bool) {
+    func urlBarDidLeaveSearchMode(urlBar: URLBarView) {
         hideSearchController()
-        if didCancel {
-            updateInContentHomePanel(tabManager.selectedTab?.url)
-        }
+        updateInContentHomePanel(tabManager.selectedTab?.url)
     }
 }
 

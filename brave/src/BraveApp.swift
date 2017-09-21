@@ -83,10 +83,6 @@ class BraveApp {
                 }
             }
        #endif
-
-        postAsyncToMain(10) {
-            updateDauStat()
-        }
     }
 
     // Be aware: the Prefs object has not been created yet
@@ -151,14 +147,19 @@ class BraveApp {
         if args.contains("BRAVE-UI-TEST") || AppConstants.IsRunningTestNonUI {
             // Maybe we will need a specific flag to keep tabs for restoration testing
             BraveApp.isSafeToRestoreTabs = false
-
+            AppConstants.IsRunningUITest = !AppConstants.IsRunningTestNonUI
+            
             if args.filter({ $0.startsWith("BRAVE") }).count == 1 || AppConstants.IsRunningTestNonUI { // only contains 1 arg
                 BraveApp.getPrefs()!.setInt(1, forKey: IntroViewControllerSeenProfileKey)
                 BraveApp.getPrefs()!.setInt(1, forKey: BraveUX.PrefKeyOptInDialogWasSeen)
             }
         }
 
-        AdBlocker.singleton.networkFileLoader.loadData()
+        if args.contains("LOCALE=RU") {
+            AdBlocker.singleton.currentLocaleCode = "ru"
+        }
+
+        AdBlocker.singleton.startLoading()
         SafeBrowsing.singleton.networkFileLoader.loadData()
         TrackingProtection.singleton.networkFileLoader.loadData()
         HttpsEverywhere.singleton.networkFileLoader.loadData()
@@ -198,7 +199,6 @@ class BraveApp {
     @objc func memoryWarning(_: NSNotification) {
         NSURLCache.sharedURLCache().memoryCapacity = 0
         BraveApp.setupCacheDefaults()
-        getApp().tabManager.memoryWarning()
     }
 
     @objc func didEnterBackground(_: NSNotification) {
@@ -209,6 +209,8 @@ class BraveApp {
     @objc func willEnterForeground(_ : NSNotification) {
         // check usage while in the foreground
         startAllow2Timer()
+        postAsyncToMain(10) {
+            BraveApp.updateDauStat()
     }
     
     @objc func startAllow2Timer() {

@@ -8,12 +8,12 @@ private let _singleton = SafeBrowsing()
 class SafeBrowsing {
     static let prefKey = "braveSafeBrowsing"
     static let prefKeyDefaultValue = true
-    static let dataVersion = "1"
+    static let dataVersion = "2"
 
     lazy var abpFilterLibWrapper: ABPFilterLibWrapper = { return ABPFilterLibWrapper() }()
 
     lazy var networkFileLoader: NetworkDataFileLoader = {
-        let dataUrl = NSURL(string: "https://s3.amazonaws.com/safe-browsing-data/\(dataVersion)/SafeBrowsingData.dat")!
+        let dataUrl = NSURL(string: "https://s3.amazonaws.com/adblock-data/\(dataVersion)/SafeBrowsingData.dat")!
         let dataFile = "safe-browsing-data-\(dataVersion).dat"
         let loader = NetworkDataFileLoader(url: dataUrl, file: dataFile, localDirName: "safe-browsing-data")
         loader.delegate = self

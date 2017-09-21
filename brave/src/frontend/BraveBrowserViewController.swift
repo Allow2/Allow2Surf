@@ -11,19 +11,10 @@ class BraveBrowserViewController : BrowserViewController {
         super.applyTheme(themeName)
 
         toolbar?.accessibilityLabel = "bottomToolbar"
-        headerBackdrop.accessibilityLabel = "headerBackdrop"
         webViewContainerBackdrop.accessibilityLabel = "webViewContainerBackdrop"
         webViewContainer.accessibilityLabel = "webViewContainer"
         statusBarOverlay.accessibilityLabel = "statusBarOverlay"
         urlBar.accessibilityLabel = "BraveUrlBar"
-
-        // TODO sorry, I am in a rush, but this needs to be removed from the view heirarchy properly
-        headerBackdrop.backgroundColor = UIColor.clearColor()
-        headerBackdrop.alpha = 0
-        headerBackdrop.hidden = true
-
-        header.blurStyle = .Dark
-        footerBackground?.blurStyle = .Dark
 
         toolbar?.applyTheme(themeName)
     }
@@ -49,6 +40,8 @@ class BraveBrowserViewController : BrowserViewController {
         }
 
         self.updateToolbarStateForTraitCollection(self.traitCollection)
+        
+        // TODO: Should never call setupConstraints multiple times, this can cause huge headaches. Constraints should mostly be static with adjustments made to those constraints.
         setupConstraints()
         if BraveApp.shouldRestoreTabs() {
             tabManager.restoreTabs()
@@ -60,10 +53,6 @@ class BraveBrowserViewController : BrowserViewController {
 
         footer.accessibilityLabel = "footer"
         footerBackdrop.accessibilityLabel = "footerBackdrop"
-
-        // With this color, it matches to default semi-transparent state of the toolbar
-        // The value is hand-picked to match the effect on the url bar, we don't have a color constant for this elsewhere
-        statusBarOverlay.backgroundColor = DeviceInfo.isBlurSupported() ? UIColor(white: 0.255, alpha: 1.0) : UIColor.blackColor()
     }
 
     func updateBraveShieldButtonState(animated animated: Bool) {
@@ -107,15 +96,13 @@ class BraveBrowserViewController : BrowserViewController {
     override func setupConstraints() {
         super.setupConstraints()
 
-        if heightConstraint == nil {
-            webViewContainer.snp_makeConstraints { make in
-                make.left.right.equalTo(self.view)
-                heightConstraint = make.height.equalTo(self.view.snp_height).constraint
-                webViewContainerTopOffset = make.top.equalTo(self.statusBarOverlay.snp_bottom).offset(BraveURLBarView.CurrentHeight).constraint
-            }
+        // TODO: Should be moved to parent class, but requires property moving too
+        webViewContainer.snp_remakeConstraints { make in
+            make.left.right.equalTo(self.view)
+            heightConstraint = make.height.equalTo(self.view.snp_height).constraint
+            webViewContainerTopOffset = make.top.equalTo(self.statusBarOverlay.snp_bottom).offset(BraveURLBarView.CurrentHeight).constraint
         }
 
-        heightConstraint?.updateOffset(-BraveApp.statusBarHeight())
     }
 
     override func updateViewConstraints() {
@@ -125,18 +112,13 @@ class BraveBrowserViewController : BrowserViewController {
         toolbar?.snp_remakeConstraints { make in
             make.edges.equalTo(self.footerBackground!)
         }
-
-        heightConstraint?.updateOffset(-BraveApp.statusBarHeight())
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
-        let h = BraveApp.isIPhoneLandscape() ? 0 : 20
-        statusBarOverlay.snp_remakeConstraints { make in
-            make.top.left.right.equalTo(self.view)
-            make.height.equalTo(h)
-        }
+        webViewContainerTopOffset?.updateOffset(BraveURLBarView.CurrentHeight)
+        heightConstraint?.updateOffset(-BraveApp.statusBarHeight())
     }
     
     override func updateToolbarStateForTraitCollection(newCollection: UITraitCollection) {

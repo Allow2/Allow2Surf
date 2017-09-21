@@ -13,7 +13,6 @@ struct ShieldBlockedStats {
 
 class BraveRightSidePanelViewController : SidePanelBaseViewController {
 
-    let heading = UILabel()
     let siteName = UILabel()
     let shieldToggle = UISwitch()
     let shieldToggleTitle = UILabel()
@@ -35,11 +34,12 @@ class BraveRightSidePanelViewController : SidePanelBaseViewController {
     var siteNameContainerHeightConstraint: LayoutConstraint?
     var shieldsOverviewContainerHeightConstraint: LayoutConstraint?
 
-    let togglesContainer = UIView()
     let headerContainer = UIView()
+    // Shield description container on new tab page
+    let shieldsOverviewContainer = UIView()
     let siteNameContainer = UIView()
     let statsContainer = UIView()
-    let shieldsOverviewContainer = UIView()
+    let togglesContainer = UIView()
 
     let statAdsBlocked = UILabel()
     let statHttpsUpgrades = UILabel()
@@ -50,7 +50,7 @@ class BraveRightSidePanelViewController : SidePanelBaseViewController {
     let ui_sectionTitleHeight = CGFloat(26)
     let ui_sectionTitleFontSize = CGFloat(15)
     let ui_siteNameSectionHeight = CGFloat(84)
-    let ui_togglesContainerRowHeight = CGFloat(48)
+    let ui_togglesContainerRowHeight = CGFloat(46)
 
     lazy var views_toggles: [UISwitch] = {
         return [self.toggleBlockAds, self.toggleHttpse, self.toggleBlockMalware, self.toggleBlockScripts, self.toggleBlockFingerprinting]
@@ -108,6 +108,22 @@ class BraveRightSidePanelViewController : SidePanelBaseViewController {
         }
         v.subviews.forEach { setGrayTextColor($0) }
     }
+    
+    // Creates a new divider pinned to bottom of the super view
+    private func newDivider(superView: UIView) -> UIView {
+
+        let divider = UIView()
+        superView.addSubview(divider)
+        
+        divider.backgroundColor = BraveUX.ColorForSidebarLineSeparators
+
+        divider.snp_makeConstraints { make in
+            make.right.bottom.left.equalTo(divider.superview!)
+            make.height.equalTo(1.0)
+        }
+        
+        return divider
+    }
 
     override func setupUIElements() {
         super.setupUIElements()
@@ -137,7 +153,6 @@ class BraveRightSidePanelViewController : SidePanelBaseViewController {
 
         let statsSectionTitle = makeSectionHeaderTitle(Strings.Blocking_Monitor, sectionHeight: titleSectionHeight)
 
-        let spacerLine = UIView()
         var sections = [headerContainer, shieldsOverviewContainer, siteNameContainer, statsSectionTitle, statsContainer]
         
         if let togglesSectionTitle = togglesSectionTitle {
@@ -174,34 +189,37 @@ class BraveRightSidePanelViewController : SidePanelBaseViewController {
                     let togglesHeight = CGFloat(views_toggles.count) * ui_togglesContainerRowHeight
                     let togglesContainerHeight = togglesSectionTitle != nil  ? togglesHeight + titleSectionHeight : togglesHeight
                     make.height.equalTo(togglesContainerHeight)
-                }else if section === spacerLine {
-                    make.height.equalTo(4)
                 }
             })
         }
 
-        headerContainer.backgroundColor = UIColor(white: 93/255.0, alpha: 1.0)
-        shieldsOverviewContainer.backgroundColor = UIColor.init(white: 252.0/255.0, alpha: 1.0)
-        siteNameContainer.backgroundColor = UIColor(white: 230/255.0, alpha: 1.0)
-        statsContainer.backgroundColor = UIColor(white: 244/255.0, alpha: 1.0)
-        togglesContainer.backgroundColor = UIColor.init(white: 252.0/255.0, alpha: 1.0)
+        view.backgroundColor = .whiteColor()
+        
+        let headerColor = BraveUX.BackgroundColorForSideToolbars
+        headerContainer.backgroundColor = headerColor
+        shieldsOverviewContainer.backgroundColor = headerColor
+        siteNameContainer.backgroundColor = headerColor
 
-        statsSectionTitle.backgroundColor = statsContainer.backgroundColor
-        togglesSectionTitle?.backgroundColor = togglesContainer.backgroundColor
-
+        let containerBackgroundColor = UIColor.clearColor()
+        containerView.backgroundColor = containerBackgroundColor
+        statsSectionTitle.backgroundColor = containerBackgroundColor
+        statsContainer.backgroundColor = containerBackgroundColor
+        togglesSectionTitle?.backgroundColor = containerBackgroundColor
+        togglesContainer.backgroundColor = containerBackgroundColor
+        
         viewAsScrollView().scrollEnabled = true
         viewAsScrollView().bounces = false
 
-        view.backgroundColor = togglesContainer.backgroundColor
-        containerView.backgroundColor = togglesContainer.backgroundColor
-
         func setupHeaderSection() {
+            let heading = UILabel()
+            
             headerContainer.addSubview(heading)
-
+            newDivider(headerContainer)
+            
             heading.text = Strings.Site_shield_settings
-            heading.textColor = UIColor.whiteColor()
+            heading.textColor = UIColor.blackColor()
             heading.font = UIFont.boldSystemFontOfSize(18)
-
+            
             heading.snp_makeConstraints { (make) in
                 make.right.equalTo(heading.superview!)
                 make.bottom.equalTo(heading.superview!).inset(12)
@@ -406,6 +424,8 @@ class BraveRightSidePanelViewController : SidePanelBaseViewController {
                 label.adjustsFontSizeToFitWidth = true
             }
         }
+        
+        newDivider(statsContainer)
         setupStatsSection()
 
         setGrayTextColor(togglesContainer)

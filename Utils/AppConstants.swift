@@ -15,6 +15,8 @@ public enum AppBuildChannel {
 public struct AppConstants {
 
     public static let IsRunningTestNonUI = NSClassFromString("XCTestCase") != nil
+    public static var IsRunningUITest = false
+    public static var IsRunningTest:Bool { return IsRunningTestNonUI || IsRunningUITest }
 
     // True if this process is executed as part of a Fastlane Snapshot test
     public static let IsRunningFastlaneSnapshot = NSProcessInfo.processInfo().arguments.contains("FASTLANE_SNAPSHOT")
@@ -37,15 +39,6 @@ public struct AppConstants {
 
     /// Whether we just mirror (false) or actively merge and upload (true).
     public static let shouldMergeBookmarks = false
-
-    /// Flag indiciating if we are running in Debug mode or not.
-    public static let isDebug: Bool = {
-#if MOZ_CHANNEL_DEBUG
-    return true
-#else
-    return false
-#endif
-    }()
 
 
     /// Enables/disables the Login manager UI by hiding the 'Logins' setting item.
