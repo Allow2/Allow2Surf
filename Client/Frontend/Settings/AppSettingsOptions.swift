@@ -34,11 +34,11 @@ class DeleteExportedDataSetting: HiddenSetting {
         return NSAttributedString(string: "Debug: delete exported databases", attributes: [NSForegroundColorAttributeName: UIConstants.TableViewRowTextColor])
     }
 
-    override func onClick(navigationController: UINavigationController?) {
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-        let fileManager = NSFileManager.defaultManager()
+    override func onClick(_ navigationController: UINavigationController?) {
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        let fileManager = FileManager.default
         do {
-            let files = try fileManager.contentsOfDirectoryAtPath(documentsPath)
+            let files = try fileManager.contentsOfDirectory(atPath: documentsPath)
             for file in files {
                 if file.startsWith("browser.") || file.startsWith("logins.") {
                     try fileManager.removeItemInDirectory(documentsPath, named: file)
@@ -56,8 +56,8 @@ class ExportBrowserDataSetting: HiddenSetting {
         return NSAttributedString(string: "Debug: copy databases to app container", attributes: [NSForegroundColorAttributeName: UIConstants.TableViewRowTextColor])
     }
 
-    override func onClick(navigationController: UINavigationController?) {
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+    override func onClick(_ navigationController: UINavigationController?) {
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         do {
             let log = Logger.syncLogger
             try self.settings.profile.files.copyMatching(fromRelativeDirectory: "", toAbsoluteDirectory: documentsPath) { file in
@@ -72,11 +72,11 @@ class ExportBrowserDataSetting: HiddenSetting {
 
 // Opens the the license page in a new tab
 class LicenseAndAcknowledgementsSetting: Setting {
-    override var url: NSURL? {
-        return NSURL(string: WebServer.sharedInstance.URLForResource("license", module: "about"))
+    override var url: URL? {
+        return URL(string: WebServer.sharedInstance.URLForResource("license", module: "about"))
     }
 
-    override func onClick(navigationController: UINavigationController?) {
+    override func onClick(_ navigationController: UINavigationController?) {
         setUpAndPushSettingsContentViewController(navigationController)
     }
 }
@@ -90,9 +90,9 @@ class ShowIntroductionSetting: Setting {
         super.init(title: NSAttributedString(string: Strings.ShowTour, attributes: [NSForegroundColorAttributeName: UIConstants.TableViewRowTextColor]))
     }
 
-    override func onClick(navigationController: UINavigationController?) {
-        navigationController?.dismissViewControllerAnimated(true, completion: {
-            if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
+    override func onClick(_ navigationController: UINavigationController?) {
+        navigationController?.dismiss(animated: true, completion: {
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
                 appDelegate.browserViewController.presentIntroViewController(true)
             }
         })
@@ -103,9 +103,9 @@ class ShowIntroductionSetting: Setting {
 class SearchSetting: Setting {
     let profile: Profile
 
-    override var accessoryType: UITableViewCellAccessoryType { return .DisclosureIndicator }
+    override var accessoryType: UITableViewCellAccessoryType { return .disclosureIndicator }
 
-    override var style: UITableViewCellStyle { return .Value1 }
+    override var style: UITableViewCellStyle { return .value1 }
 
     override var status: NSAttributedString { return NSAttributedString(string: profile.searchEngines.defaultEngine.shortName) }
 
@@ -116,7 +116,7 @@ class SearchSetting: Setting {
         super.init(title: NSAttributedString(string: Strings.DefaultSearchEngine, attributes: [NSForegroundColorAttributeName: UIConstants.TableViewRowTextColor]))
     }
 
-    override func onClick(navigationController: UINavigationController?) {
+    override func onClick(_ navigationController: UINavigationController?) {
         let viewController = SearchSettingsTableViewController()
         viewController.model = profile.searchEngines
         navigationController?.pushViewController(viewController, animated: true)
@@ -125,16 +125,14 @@ class SearchSetting: Setting {
 
 class LoginsSetting: Setting {
     let profile: Profile
-    ///var tabManager: TabManager!
     weak var navigationController: UINavigationController?
 
-    override var accessoryType: UITableViewCellAccessoryType { return .DisclosureIndicator }
+    override var accessoryType: UITableViewCellAccessoryType { return .disclosureIndicator }
 
     override var accessibilityIdentifier: String? { return "Logins" }
 
     init(settings: SettingsTableViewController, delegate: SettingsDelegate?) {
         self.profile = settings.profile
-        ///self.tabManager = settings.tabManager
         self.navigationController = settings.navigationController
 
         let loginsTitle = Strings.Logins
@@ -142,34 +140,107 @@ class LoginsSetting: Setting {
                    delegate: delegate)
     }
 
-    private func navigateToLoginsList() {
+    fileprivate func navigateToLoginsList() {
         let viewController = LoginListViewController(profile: profile)
         viewController.settingsDelegate = delegate
         navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
+class SyncDevicesSetting: Setting {
+    let profile: Profile
+    
+    override var accessoryType: UITableViewCellAccessoryType { return .disclosureIndicator }
+    
+    override var accessibilityIdentifier: String? { return "SyncDevices" }
+    
+    init(settings: SettingsTableViewController) {
+        self.profile = settings.profile
+        
+        let clearTitle = Strings.SyncDevices
+        super.init(title: NSAttributedString(string: clearTitle, attributes: [NSForegroundColorAttributeName: UIConstants.TableViewRowTextColor]))
+    }
+    
+    override func onClick(_ navigationController: UINavigationController?) {
+        
+        if Sync.shared.isInSyncGroup {
+            let settingsTableViewController = SyncSettingsViewController(style: .grouped)
+            settingsTableViewController.profile = getApp().profile
+            navigationController?.pushViewController(settingsTableViewController, animated: true)
+        } else {
+            navigationController?.pushViewController(SyncWelcomeViewController(), animated: true)
+        }
+    }
+}
+
+class SyncDeviceSetting: Setting {
+    let profile: Profile
+    
+    var onTap: (()->Void)?
+    internal var displayTitle: String!
+    
+    override var accessoryType: UITableViewCellAccessoryType { return .none }
+    
+    override var accessibilityIdentifier: String? { return "SyncDevice" }
+    
+    init(profile profile: Profile, title: String) {
+        self.profile = profile
+        self.displayTitle = title
+        super.init(title: NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName: UIConstants.TableViewRowTextColor]))
+    }
+    
+    override func onClick(_ navigationController: UINavigationController?) {
+        if onTap != nil {
+            onTap!()
+        }
+    }
+}
+
+class RemoveDeviceSetting: Setting {
+    let profile: Profile
+    
+    override var accessoryType: UITableViewCellAccessoryType { return .none }
+    
+    override var accessibilityIdentifier: String? { return "RemoveDeviceSetting" }
+    
+    override var textAlignment: NSTextAlignment { return .center }
+    
+    init(profile: Profile) {
+        self.profile = profile
+        let clearTitle = Strings.SyncRemoveThisDevice
+        super.init(title: NSAttributedString(string: clearTitle, attributes: [NSForegroundColorAttributeName: UIColor.red, NSFontAttributeName: UIFont.systemFont(ofSize: 17, weight: UIFontWeightRegular)]))
+    }
+    
+    override func onClick(_ navigationController: UINavigationController?) {
+        
+        let alert = UIAlertController(title: Strings.SyncRemoveThisDeviceQuestion, message: Strings.SyncRemoveThisDeviceQuestionDesc, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: Strings.Cancel, style: UIAlertActionStyle.cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: Strings.Remove, style: UIAlertActionStyle.destructive) { action in
+            Sync.shared.leaveSyncGroup()
+            navigationController?.popToRootViewController(animated: true)
+        })
+        
+        navigationController?.present(alert, animated: true, completion: nil)
+    }
+}
 
 class ClearPrivateDataSetting: Setting {
     let profile: Profile
-    //var tabManager: TabManager!
 
-    override var accessoryType: UITableViewCellAccessoryType { return .DisclosureIndicator }
+    override var accessoryType: UITableViewCellAccessoryType { return .disclosureIndicator }
 
     override var accessibilityIdentifier: String? { return "ClearPrivateData" }
 
     init(settings: SettingsTableViewController) {
         self.profile = settings.profile
-        //self.tabManager = settings.tabManager
 
         let clearTitle = Strings.ClearPrivateData
         super.init(title: NSAttributedString(string: clearTitle, attributes: [NSForegroundColorAttributeName: UIConstants.TableViewRowTextColor]))
     }
 
-    override func onClick(navigationController: UINavigationController?) {
+    override func onClick(_ navigationController: UINavigationController?) {
         let viewController = ClearPrivateDataTableViewController()
         viewController.profile = profile
-        //viewController.tabManager = tabManager
         navigationController?.pushViewController(viewController, animated: true)
     }
 }
@@ -179,11 +250,11 @@ class PrivacyPolicySetting: Setting {
         return NSAttributedString(string: Strings.Privacy_Policy, attributes: [NSForegroundColorAttributeName: UIConstants.TableViewRowTextColor])
     }
 
-    override var url: NSURL? {
-        return NSURL(string: "https://www.brave.com/ios_privacy.html")
+    override var url: URL? {
+        return URL(string: "https://www.brave.com/ios_privacy.html")
     }
 
-    override func onClick(navigationController: UINavigationController?) {
+    override func onClick(_ navigationController: UINavigationController?) {
         setUpAndPushSettingsContentViewController(navigationController)
     }
 }

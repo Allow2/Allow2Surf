@@ -14,8 +14,8 @@ class BackForwardListViewController: UIViewController, UITableViewDelegate, UITa
         let toolbar = UIToolbar()
         view.addSubview(toolbar)
 
-        let doneItem = UIBarButtonItem(title: Strings.Done, style: .Done, target: self, action: #selector(BackForwardListViewController.SELdidClickDone))
-        let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        let doneItem = UIBarButtonItem(title: Strings.Done, style: .done, target: self, action: #selector(BackForwardListViewController.SELdidClickDone))
+        let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         toolbar.items = [doneItem, spacer]
 
         let listTableView = UITableView()
@@ -23,38 +23,38 @@ class BackForwardListViewController: UIViewController, UITableViewDelegate, UITa
         listTableView.delegate = self
         view.addSubview(listTableView)
 
-        toolbar.snp_makeConstraints { make in
+        toolbar.snp.makeConstraints { make in
             let topLayoutGuide = self.topLayoutGuide as! UIView
-            make.top.equalTo(topLayoutGuide.snp_bottom)
+            make.top.equalTo(topLayoutGuide.snp.bottom)
             make.left.right.equalTo(self.view)
             return
         }
 
-        listTableView.snp_makeConstraints { make in
-            make.top.equalTo(toolbar.snp_bottom)
+        listTableView.snp.makeConstraints { make in
+            make.top.equalTo(toolbar.snp.bottom)
             make.left.right.bottom.equalTo(self.view)
         }
     }
 
     func SELdidClickDone() {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 
     // MARK: - Table view
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return listData?.count ?? 0
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         let item = listData![indexPath.item]
-        cell.textLabel?.text = item.title ?? item.URL.absoluteString
+        cell.textLabel?.text = item.title.isEmpty ? item.URL.absoluteString : item.title
         return cell
     }
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tabManager.selectedTab?.goToBackForwardListItem(listData![indexPath.item])
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }

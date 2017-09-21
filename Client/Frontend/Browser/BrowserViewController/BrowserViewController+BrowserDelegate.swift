@@ -11,26 +11,26 @@ private let KVOCanGoForward = "canGoForward"
 private let KVOContentSize = "contentSize"
 
 protocol BrowserTabStateDelegate: class {
-    func browserUrlChanged(browser: Browser)
-    func browserProgressChanged(browser: Browser)
+    func browserUrlChanged(_ browser: Browser)
+    func browserProgressChanged(_ browser: Browser)
 }
 
 extension BrowserViewController: WebPageStateDelegate {
-    func webView(webView: UIWebView, canGoBack: Bool) {
+    func webView(_ webView: UIWebView, canGoBack: Bool) {
         guard let tab = tabManager.tabForWebView(webView) else { return }
         if tab === tabManager.selectedTab {
             navigationToolbar.updateBackStatus(canGoBack)
         }
     }
     
-    func webView(webView: UIWebView, canGoForward: Bool) {
+    func webView(_ webView: UIWebView, canGoForward: Bool) {
         guard let tab = tabManager.tabForWebView(webView) else { return }
         if tab === tabManager.selectedTab {
             navigationToolbar.updateForwardStatus(canGoForward)
         }
     }
 
-    func webView(webView: UIWebView, urlChanged: String) {
+    func webView(_ webView: UIWebView, urlChanged: String) {
         guard let tab = tabManager.tabForWebView(webView) else { return }
 
         if let selected = tabManager.selectedTab {
@@ -44,14 +44,14 @@ extension BrowserViewController: WebPageStateDelegate {
         }
     }
 
-    func webView(webView: UIWebView, progressChanged: Float) {
+    func webView(_ webView: UIWebView, progressChanged: Float) {
         guard let tab = tabManager.tabForWebView(webView) else { return }
         if tab === tabManager.selectedTab {
             urlBar.updateProgressBar(progressChanged)
         }
     }
 
-    func webView(webView: UIWebView, isLoading: Bool) {
+    func webView(_ webView: UIWebView, isLoading: Bool) {
         guard let tab = tabManager.tabForWebView(webView) else { return }
 
         if tab === tabManager.selectedTab {
@@ -63,12 +63,12 @@ extension BrowserViewController: WebPageStateDelegate {
 }
 
 extension BrowserViewController: BrowserDelegate {
-    func browser(browser: Browser, didCreateWebView webView: BraveWebView) {
+    func browser(_ browser: Browser, didCreateWebView webView: BraveWebView) {
         if webView.removeBvcObserversOnDeinit != nil {
             return
         }
 
-        webView.scrollView.addObserver(self.scrollController, forKeyPath: KVOContentSize, options: .New, context: nil)
+        webView.scrollView.addObserver(self.scrollController, forKeyPath: KVOContentSize, options: .new, context: nil)
         webView.removeBvcObserversOnDeinit = {
             [weak sc = self.scrollController] (wv) in
             wv.scrollView.removeObserver(sc!, forKeyPath: KVOContentSize)
@@ -114,7 +114,7 @@ extension BrowserViewController: BrowserDelegate {
         let printHelper = PrintHelper(browser: browser)
         browser.addHelper(printHelper)
 
-        let openURL = {(url: NSURL) -> Void in
+        let openURL = {(url: URL) -> Void in
             self.switchToTabForURLOrOpen(url)
         }
         // TODO: Add spotlightHelper and test cases
@@ -132,7 +132,7 @@ extension BrowserViewController: BrowserDelegate {
         #endif
     }
 
-    func browser(browser: Browser, willDeleteWebView webView: BraveWebView) {
+    func browser(_ browser: Browser, willDeleteWebView webView: BraveWebView) {
         browser.cancelQueuedAlerts()
 
         #if !BRAVE // todo create a fake proxy for this. it is unused completely ATM
@@ -142,9 +142,9 @@ extension BrowserViewController: BrowserDelegate {
         webView.removeFromSuperview()
     }
 
-    private func findSnackbar(barToFind: SnackBar) -> Int? {
+    fileprivate func findSnackbar(_ barToFind: SnackBar) -> Int? {
         let bars = snackBars.subviews
-        for (index, bar) in bars.enumerate() {
+        for (index, bar) in bars.enumerated() {
             if bar === barToFind {
                 return index
             }
@@ -153,31 +153,31 @@ extension BrowserViewController: BrowserDelegate {
     }
 
     func updateSnackBarConstraints() {
-        snackBars.snp_remakeConstraints { make in
-            make.bottom.equalTo(findInPageContainer.snp_top)
+        snackBars.snp.remakeConstraints { make in
+            make.bottom.equalTo(findInPageContainer.snp.top)
 
             let bars = self.snackBars.subviews
             if bars.count > 0 {
                 let view = bars[bars.count-1]
-                make.top.equalTo(view.snp_top)
+                make.top.equalTo(view.snp.top)
             } else {
                 make.height.equalTo(0)
             }
 
-            if traitCollection.horizontalSizeClass != .Regular {
+            if traitCollection.horizontalSizeClass != .regular {
                 make.leading.trailing.equalTo(self.footer)
                 self.snackBars.layer.borderWidth = 0
             } else {
                 make.centerX.equalTo(self.footer)
                 make.width.equalTo(SnackBarUX.MaxWidth)
-                self.snackBars.layer.borderColor = UIConstants.BorderColor.CGColor
+                self.snackBars.layer.borderColor = UIConstants.BorderColor.cgColor
                 self.snackBars.layer.borderWidth = 1
             }
         }
     }
 
     // This removes the bar from its superview and updates constraints appropriately
-    private func finishRemovingBar(bar: SnackBar) {
+    fileprivate func finishRemovingBar(_ bar: SnackBar) {
         // If there was a bar above this one, we need to remake its constraints.
         if let index = findSnackbar(bar) {
             // If the bar being removed isn't on the top of the list
@@ -185,14 +185,14 @@ extension BrowserViewController: BrowserDelegate {
             if index < bars.count-1 {
                 // Move the bar above this one
                 let nextbar = bars[index+1] as! SnackBar
-                nextbar.snp_updateConstraints { make in
+                nextbar.snp.updateConstraints { make in
                     // If this wasn't the bottom bar, attach to the bar below it
                     if index > 0 {
                         let bar = bars[index-1] as! SnackBar
-                        nextbar.bottom = make.bottom.equalTo(bar.snp_top).constraint
+                        nextbar.bottom = make.bottom.equalTo(bar.snp.top).constraint
                     } else {
                         // Otherwise, we attach it to the bottom of the snackbars
-                        nextbar.bottom = make.bottom.equalTo(self.snackBars.snp_bottom).constraint
+                        nextbar.bottom = make.bottom.equalTo(self.snackBars.snp.bottom).constraint
                     }
                 }
             }
@@ -202,9 +202,9 @@ extension BrowserViewController: BrowserDelegate {
         bar.removeFromSuperview()
     }
 
-    private func finishAddingBar(bar: SnackBar) {
+    fileprivate func finishAddingBar(_ bar: SnackBar) {
         snackBars.addSubview(bar)
-        bar.snp_remakeConstraints { make in
+        bar.snp.remakeConstraints { make in
             // If there are already bars showing, add this on top of them
             let bars = self.snackBars.subviews
 
@@ -212,36 +212,36 @@ extension BrowserViewController: BrowserDelegate {
             // We're the new top bar in the stack, so make sure we ignore ourself
             if bars.count > 1 {
                 let view = bars[bars.count - 2]
-                bar.bottom = make.bottom.equalTo(view.snp_top).offset(0).constraint
+                bar.bottom = make.bottom.equalTo(view.snp.top).offset(0).constraint
             } else {
-                bar.bottom = make.bottom.equalTo(self.snackBars.snp_bottom).offset(0).constraint
+                bar.bottom = make.bottom.equalTo(self.snackBars.snp.bottom).offset(0).constraint
             }
             make.leading.trailing.equalTo(self.snackBars)
         }
     }
 
-    func showBar(bar: SnackBar, animated: Bool) {
+    func showBar(_ bar: SnackBar, animated: Bool) {
         finishAddingBar(bar)
         updateSnackBarConstraints()
 
         bar.hide()
         view.layoutIfNeeded()
-        UIView.animateWithDuration(animated ? 0.25 : 0, animations: { () -> Void in
+        UIView.animate(withDuration: animated ? 0.25 : 0, animations: { () -> Void in
             bar.show()
             self.view.layoutIfNeeded()
         })
     }
 
-    func removeBar(bar: SnackBar, animated: Bool) {
+    func removeBar(_ bar: SnackBar, animated: Bool) {
         if let _ = findSnackbar(bar) {
-            UIView.animateWithDuration(animated ? 0.25 : 0, animations: { () -> Void in
+            UIView.animate(withDuration: animated ? 0.25 : 0, animations: { () -> Void in
                 bar.hide()
                 self.view.layoutIfNeeded()
-            }) { success in
+            }, completion: { success in
                 // Really remove the bar
                 self.finishRemovingBar(bar)
                 self.updateSnackBarConstraints()
-            }
+            }) 
         }
     }
 
@@ -255,19 +255,19 @@ extension BrowserViewController: BrowserDelegate {
         self.updateSnackBarConstraints()
     }
 
-    func browser(browser: Browser, didAddSnackbar bar: SnackBar) {
+    func browser(_ browser: Browser, didAddSnackbar bar: SnackBar) {
         if tabManager.selectedTab !== browser {
             return
         }
         showBar(bar, animated: true)
     }
 
-    func browser(browser: Browser, didRemoveSnackbar bar: SnackBar) {
+    func browser(_ browser: Browser, didRemoveSnackbar bar: SnackBar) {
         removeBar(bar, animated: true)
     }
     
-    func browser(browser: Browser, didSelectFindInPageForSelection selection: String) {
-        updateFindInPageVisibility(visible: true)
+    func browser(_ browser: Browser, didSelectFindInPageForSelection selection: String) {
+        updateFindInPageVisibility(true)
         findInPageBar?.text = selection
     }
 }

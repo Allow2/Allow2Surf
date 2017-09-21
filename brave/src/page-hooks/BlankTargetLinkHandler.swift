@@ -6,19 +6,14 @@
  */
 
 class BlankTargetLinkHandler {
-//    private static var enabled = false
-//    static func updatedEnabledState() {
-//        if let profile = getApp().profile {
-//            enabled = !(profile.prefs.boolForKey("blockPopups") ?? true)
-//        }
-//    }
+    fileprivate var tapLocation = CGPoint.zero
 
     func isBrowserTopmost() -> Bool {
         return getApp().rootViewController.visibleViewController as? BraveTopViewController != nil
     }
 
-    func sendEvent(event: UIEvent, window: UIWindow) {
-        guard let touchView = event.allTouches()?.first?.view, braveWebView = BraveApp.getCurrentWebView() where touchView.isDescendantOfView(braveWebView) else {
+    func sendEvent(_ event: UIEvent, window: UIWindow) {
+        guard let touchView = event.allTouches?.first?.view, let braveWebView = BraveApp.getCurrentWebView(), touchView.isDescendant(of: braveWebView) else {
             return
         }
         
@@ -26,32 +21,38 @@ class BlankTargetLinkHandler {
             return
         }
 
-        if let touches = event.touchesForWindow(window), let touch = touches.first where touches.count == 1 {
-            guard let webView = BraveApp.getCurrentWebView(), webViewSuperview = webView.superview  else { return }
+        if let touches = event.touches(for: window), let touch = touches.first, touches.count == 1 {
+            guard let webView = BraveApp.getCurrentWebView(), let webViewSuperview = webView.superview  else { return }
             if !webView.blankTargetLinkDetectionOn {
                 return
             }
 
-            let globalRect = webViewSuperview.convertRect(webView.frame, toView: nil)
-            if !globalRect.contains(touch.locationInView(window)) {
+            let globalRect = webViewSuperview.convert(webView.frame, to: nil)
+            if !globalRect.contains(touch.location(in: window)) {
+                return
+            }
+
+            if touch.phase != .began && tapLocation == CGPoint.zero {
+                webView.blankTargetUrl = nil
                 return
             }
 
             switch touch.phase {
-            case .Began:  // A finger touched the screen
-                let tapLocation = touch.locationInView(window)
-                if let element = ElementAtPoint().getHit(tapLocation),
-                    url = element.url,
-                    t = element.urlTarget where t == "_blank"
-                {
-                    webView.urlBlankTargetTapped(url)
-                    print("LinkTargetBlankHandler \(element)")
+            case .began:
+                tapLocation = touch.location(in: window)
+                if let element = ElementAtPoint().getHit(tapLocation), let url = element.url,
+                    let t = element.urlTarget, t == "_blank" {
+                    webView.blankTargetUrl = url
+                } else {
+                    tapLocation = CGPoint.zero
                 }
 
-                break
-            case .Moved, .Stationary:
-                break
-            case .Ended, .Cancelled:
+            case .moved:
+                tapLocation = CGPoint.zero
+                webView.blankTargetUrl = nil
+            case .ended, .cancelled:
+                tapLocation = CGPoint.zero
+            case .stationary:
                 break
             }
         }
