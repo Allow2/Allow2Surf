@@ -89,3 +89,5 @@ Client/Info.plist
 project.xcworkspace/
 *xcuserdata
 /brave/xcconfig/*
+
+brave/yarn.lock

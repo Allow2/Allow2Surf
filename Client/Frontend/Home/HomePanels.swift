@@ -9,7 +9,7 @@ import Shared
  * Data for identifying and constructing a HomePanel.
  */
 struct HomePanelDescriptor {
-    let makeViewController: (profile: Profile) -> UIViewController
+    let makeViewController: (_ profile: Profile) -> UIViewController
     let imageName: String
     let accessibilityLabel: String
     let accessibilityIdentifier: String
@@ -18,8 +18,8 @@ struct HomePanelDescriptor {
 class HomePanels {
     let enabledPanels = [
         HomePanelDescriptor(
-            makeViewController: { profile in
-                TopSitesPanel(profile: profile)
+            makeViewController: { _ in
+                TopSitesPanel()
             },
             imageName: "TopSites",
             accessibilityLabel: Strings.Top_sites,
@@ -27,8 +27,8 @@ class HomePanels {
 
         HomePanelDescriptor(
             makeViewController: { profile in
-                let bookmarks = BookmarksPanel()
-                bookmarks.profile = profile
+                let bookmarks = BookmarksPanel(folder: nil)
+
                 let controller = UINavigationController(rootViewController: bookmarks)
                 controller.setNavigationBarHidden(true, animated: false)
                 // this re-enables the native swipe to pop gesture on UINavigationController for embedded, navigation bar-less UINavigationControllers
@@ -45,7 +45,6 @@ class HomePanels {
         HomePanelDescriptor(
             makeViewController: { profile in
                 let controller = HistoryPanel()
-                controller.profile = profile
                 return controller
             },
             imageName: "History",

@@ -2,216 +2,25 @@ import Foundation
 import Deferred
 import Shared
 import Storage
+import SwiftyJSON
 
-struct BraveShieldTableRow {
-    var normalizedDomain = ""
-    var shieldState = ""
-}
+// These override the setting in the prefs
+public struct BraveShieldState {
 
-class BraveShieldTable: GenericTable<BraveShieldTableRow> {
-    static let tableName = "brave_shield_per_domain"
-    static let colDomain = "domain"
-    static let colState = "state_json"
-
-    var db: BrowserDB!
-    static func initialize(db: BrowserDB) -> BraveShieldTable {
-        let table = BraveShieldTable()
-        table.db = db
-        switch db.createOrUpdate(BraveShieldTable()) {
-        case .Failure:
-            print("Failed to create/update DB schema for BraveShieldTable!")
-            fatalError()
-        case .Closed:
-            print("BraveShieldTable not created as the SQLiteConnection is closed.")
-        case .Success:
-            print("BraveShieldTable succesfully created/updated")
-        }
-
-        return table
-    }
-
-    override var version: Int { return 1 }
-    override var name: String { return BraveShieldTable.tableName }
-    override var rows: String { return "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-        " \(BraveShieldTable.colDomain) TEXT NOT NULL UNIQUE, " +
-        " \(BraveShieldTable.colState) TEXT " }
-
-    override func updateTable(db: SQLiteDBConnection, from: Int) -> Bool {
-        let to = self.version
-        print("Update table \(self.name) from \(from) to \(to)")
-        if from == 0 && to >= 1 {
-            // changed name/type of state to state_json
-            drop(db)
-            create(db)
-        }
-        return false
-    }
-
-    func getRows() -> Deferred<Maybe<[BraveShieldTableRow]>> {
-        var err: NSError?
-
-        let cursor = db.withReadableConnection(&err) { connection, _ -> Cursor<BraveShieldTableRow> in
-            return self.query(connection, options: nil)
-        }
-
-        if let err = err {
-            cursor.close()
-            return deferMaybe(DatabaseError(err: err))
-        }
-
-        let items = cursor.asArray()
-        cursor.close()
-        return deferMaybe(items)
-    }
-
-    func makeArgs(item: BraveShieldTableRow) -> [AnyObject?] {
-        var args = [AnyObject?]()
-        args.append(item.shieldState)
-        args.append(item.normalizedDomain)
-        return args
-    }
-
-    override func getInsertAndArgs( inout item: BraveShieldTableRow) -> (String, [AnyObject?])? {
-        return ("INSERT INTO \(BraveShieldTable.tableName) (\(BraveShieldTable.colState), \(BraveShieldTable.colDomain)) VALUES (?,?)", makeArgs(item))
-    }
-
-    override func getUpdateAndArgs(inout item: BraveShieldTableRow) -> (String, [AnyObject?])? {
-        return ("UPDATE \(BraveShieldTable.tableName) SET \(BraveShieldTable.colState) = ? WHERE \(BraveShieldTable.colDomain) = ?", makeArgs(item))
-    }
-
-    override func getDeleteAndArgs(inout item: BraveShieldTableRow?) -> (String, [AnyObject?])? {
-        var args = [AnyObject?]()
-        if let item = item {
-            args.append(item.normalizedDomain)
-            return ("DELETE FROM \(BraveShieldTable.tableName) WHERE \(BraveShieldTable.colDomain) = ?", args)
-        }
-        return ("DELETE FROM \(BraveShieldTable.tableName)", [])
-    }
-
-    override var factory: ((row: SDRow) -> BraveShieldTableRow)? {
-        return { row -> BraveShieldTableRow in
-            var item = BraveShieldTableRow()
-            if let domain = row[BraveShieldTable.colDomain] as? String, state = row[BraveShieldTable.colState] as? String {
-                item.normalizedDomain = domain
-                item.shieldState = state
-            }
-            return item
-        }
-    }
-
-    override func getQueryAndArgs(options: QueryOptions?) -> (String, [AnyObject?])? {
-        var args = [AnyObject?]()
-        if let filter: AnyObject = options?.filter {
-            args.append("%\(filter)%")
-            return ("SELECT \(BraveShieldTable.colState), \(BraveShieldTable.colDomain) FROM \(BraveShieldTable.tableName) WHERE \(BraveShieldTable.colDomain) LIKE ?", args)
-        }
-        return ("SELECT \(BraveShieldTable.colState), \(BraveShieldTable.colDomain) FROM \(BraveShieldTable.tableName)", args)
-    }
-}
-
-
-var braveShieldForDomainTable:BraveShieldTable? = nil
-
-extension BrowserProfile {
-    public func clearBraveShieldHistory() ->  Success {
-        let deferred = Success()
-
-        if braveShieldForDomainTable == nil {
-            deferred.fill(Maybe(success: ()))
-            return deferred
-        }
-
-        var err: NSError? = nil
-        db.transaction(&err) { (conn, err) -> Bool in
-            err = conn.executeChange("DROP TABLE IF EXISTS \(BraveShieldTable.tableName)", withArgs: nil)
-            if let err = err {
-                print("SQL operation failed: \(err.localizedDescription)")
-            }
-
-            err = conn.executeChange("DELETE FROM \(kSchemaTableName) WHERE name = '\(BraveShieldTable.tableName)'", withArgs: nil)
-            if let err = err {
-                print("SQL operation failed: \(err.localizedDescription)")
-            }
-            braveShieldForDomainTable = nil
-            BraveShieldState.perNormalizedDomain.removeAll()
-            deferred.fill(Maybe(success: ()))
-            return err == nil
-        }
-
-        return deferred
-    }
-
-    public func loadBraveShieldsPerBaseDomain() -> Deferred<Void> {
-        let deferred = Deferred<Void>()
-        succeed().upon() { _ in // move off main thread
-            BraveShieldState.perNormalizedDomain.removeAll()
-            braveShieldForDomainTable = BraveShieldTable.initialize(self.db)
-
-            if braveShieldForDomainTable == nil {
-                print("🌩 Failed to init BraveShieldTable")
-                deferred.fill()
-                return
-            }
-
-            braveShieldForDomainTable?.getRows().upon {
-                result in
-                if let rows = result.successValue {
-                    for item in rows {
-                        let jsonString = item.shieldState
-                        let json = JSON(string: jsonString)
-                        for (k, v) in json.asDictionary ?? [:] {
-                            if let on = v.asBool {
-                                BraveShieldState.forDomain(item.normalizedDomain, setState: (k, on))
-                            }
-                        }
-                    }
-                }
-                deferred.fill(())
-            }
-        }
-        return deferred
-    }
-
-    public func setBraveShieldForNormalizedDomain(domain: String, state: (String, Bool?)) {
-        BraveShieldState.forDomain(domain, setState: state)
+    public static func set(forDomain domain: String, state: (BraveShieldState.Shield, Bool?)) {
+        BraveShieldState.setInMemoryforDomain(domain, setState: state)
 
         if PrivateBrowsing.singleton.isOn {
             return
         }
 
-        let persistentState = BraveShieldState.getStateForDomain(domain)
-
-        succeed().upon() { _ in
-            if braveShieldForDomainTable == nil {
-                braveShieldForDomainTable = BraveShieldTable.initialize(self.db)
-            }
-
-            var t = BraveShieldTableRow()
-            t.normalizedDomain = domain
-            if let state = persistentState, jsonString = state.toJsonString() {
-                t.shieldState = jsonString
-            }
-            var err: NSError?
-            self.db.transaction(synchronous: true, err: &err) { (connection, inout err:NSError?) -> Bool in
-                if persistentState == nil {
-                    braveShieldForDomainTable?.delete(connection, item: t, err: &err)
-                    return true
-                }
-
-                let id = braveShieldForDomainTable?.insert(connection, item: t, err: &err)
-                if id < 0 {
-                    braveShieldForDomainTable?.update(connection, item: t, err: &err)
-                }
-                return true
-            }
+        let context = DataController.shared.workerContext
+        context.perform {
+            Domain.setBraveShield(forDomain: domain, state: state, context: context)
         }
     }
-}
 
-// These override the setting in the prefs
-public struct BraveShieldState {
-
-    enum Shield : String {
+    public enum Shield : String {
         case AllOff = "all_off"
         case AdblockAndTp = "adblock_and_tp"
         case HTTPSE = "httpse"
@@ -220,12 +29,12 @@ public struct BraveShieldState {
         case NoScript = "noscript"
     }
 
-    private var state = [Shield:Bool]()
+    fileprivate var state = [Shield:Bool]()
 
     typealias DomainKey = String
     static var perNormalizedDomain = [DomainKey: BraveShieldState]()
 
-    static func forDomain(domain: String, setState state:(String, Bool?)) {
+    public static func setInMemoryforDomain(_ domain: String, setState state:(BraveShieldState.Shield, Bool?)) {
         var shields = perNormalizedDomain[domain]
         if shields == nil {
             if state.1 == nil {
@@ -234,23 +43,19 @@ public struct BraveShieldState {
             shields = BraveShieldState()
         }
 
-        if let key = Shield(rawValue: state.0) {
-            shields!.setState(key, on: state.1)
-            perNormalizedDomain[domain] = shields!
-        } else {
-            assert(false, "db has bad brave shield state")
-        }
+        shields!.setState(state.0, on: state.1)
+        perNormalizedDomain[domain] = shields!
     }
 
-    static func getStateForDomain(domain: String) -> BraveShieldState? {
+    static func getStateForDomain(_ domain: String) -> BraveShieldState? {
         return perNormalizedDomain[domain]
     }
 
     public init(jsonStateFromDbRow: String) {
-        let js = JSON(string: jsonStateFromDbRow)
-        for (k,v) in (js.asDictionary ?? [:]) {
+        let js = JSON(parseJSON: jsonStateFromDbRow)
+        for (k,v) in (js.dictionary ?? [:]) {
             if let key = Shield(rawValue: k) {
-                setState(key, on: v.asBool)
+                setState(key, on: v.bool)
             } else {
                 assert(false, "db has bad brave shield state")
             }
@@ -269,14 +74,14 @@ public struct BraveShieldState {
         for (k, v) in state {
             _state[k.rawValue] = v
         }
-        return JSON(_state).toString()
+        return JSON(_state).rawString()
     }
 
-    mutating func setState(key: Shield, on: Bool?) {
+    mutating func setState(_ key: Shield, on: Bool?) {
         if let on = on {
             state[key] = on
         } else {
-            state.removeValueForKey(key)
+            state.removeValue(forKey: key)
         }
     }
 
@@ -308,7 +113,7 @@ public struct BraveShieldState {
         return state[.FpProtection] ?? nil
     }
 
-    mutating func setStateFromPerPageShield(pageState: BraveShieldState?) {
+    mutating func setStateFromPerPageShield(_ pageState: BraveShieldState?) {
         setState(.NoScript, on: pageState?.isOnScriptBlocking() ?? (BraveApp.getPrefs()?.boolForKey(kPrefKeyNoScriptOn) ?? false))
         setState(.AdblockAndTp, on: pageState?.isOnAdBlockAndTp() ?? AdBlocker.singleton.isNSPrefEnabled)
         setState(.SafeBrowsing, on: pageState?.isOnSafeBrowsing() ?? SafeBrowsing.singleton.isNSPrefEnabled)
@@ -317,39 +122,39 @@ public struct BraveShieldState {
     }
 }
 
-public class BraveGlobalShieldStats {
+open class BraveGlobalShieldStats {
     static let singleton = BraveGlobalShieldStats()
     static let DidUpdateNotification = "BraveGlobalShieldStatsDidUpdate"
     
-    private let prefs = NSUserDefaults.standardUserDefaults()
+    fileprivate let prefs = UserDefaults.standard
     
     var adblock: Int = 0 {
         didSet {
-            NSNotificationCenter.defaultCenter().postNotificationName(BraveGlobalShieldStats.DidUpdateNotification, object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: BraveGlobalShieldStats.DidUpdateNotification), object: nil)
         }
     }
 
     var trackingProtection: Int = 0 {
         didSet {
-            NSNotificationCenter.defaultCenter().postNotificationName(BraveGlobalShieldStats.DidUpdateNotification, object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: BraveGlobalShieldStats.DidUpdateNotification), object: nil)
         }
     }
 
     var httpse: Int = 0 {
         didSet {
-            NSNotificationCenter.defaultCenter().postNotificationName(BraveGlobalShieldStats.DidUpdateNotification, object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: BraveGlobalShieldStats.DidUpdateNotification), object: nil)
         }
     }
     
     var safeBrowsing: Int = 0 {
         didSet {
-            NSNotificationCenter.defaultCenter().postNotificationName(BraveGlobalShieldStats.DidUpdateNotification, object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: BraveGlobalShieldStats.DidUpdateNotification), object: nil)
         }
     }
     
     var fpProtection: Int = 0 {
         didSet {
-            NSNotificationCenter.defaultCenter().postNotificationName(BraveGlobalShieldStats.DidUpdateNotification, object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: BraveGlobalShieldStats.DidUpdateNotification), object: nil)
         }
     }
     
@@ -362,38 +167,38 @@ public class BraveGlobalShieldStats {
         case FpProtection = "fp_protection"
     }
     
-    private init() {
-        adblock += prefs.integerForKey(Shield.Adblock.rawValue)
-        trackingProtection += prefs.integerForKey(Shield.TrackingProtection.rawValue)
-        httpse += prefs.integerForKey(Shield.HTTPSE.rawValue)
-        safeBrowsing += prefs.integerForKey(Shield.SafeBrowsing.rawValue)
-        fpProtection += prefs.integerForKey(Shield.FpProtection.rawValue)
+    fileprivate init() {
+        adblock += prefs.integer(forKey: Shield.Adblock.rawValue)
+        trackingProtection += prefs.integer(forKey: Shield.TrackingProtection.rawValue)
+        httpse += prefs.integer(forKey: Shield.HTTPSE.rawValue)
+        safeBrowsing += prefs.integer(forKey: Shield.SafeBrowsing.rawValue)
+        fpProtection += prefs.integer(forKey: Shield.FpProtection.rawValue)
     }
 
     var bgSaveTask: UIBackgroundTaskIdentifier?
 
-    public func save() {
-        if let t = bgSaveTask where t != UIBackgroundTaskInvalid {
+    open func save() {
+        if let t = bgSaveTask, t != UIBackgroundTaskInvalid {
             return
         }
         
-        bgSaveTask = UIApplication.sharedApplication().beginBackgroundTaskWithName("brave-global-stats-save", expirationHandler: {
+        bgSaveTask = UIApplication.shared.beginBackgroundTask(withName: "brave-global-stats-save", expirationHandler: {
             if let task = self.bgSaveTask {
-                UIApplication.sharedApplication().endBackgroundTask(task)
+                UIApplication.shared.endBackgroundTask(task)
             }
             self.bgSaveTask = UIBackgroundTaskInvalid
         })
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
-            self.prefs.setInteger(self.adblock, forKey: Shield.Adblock.rawValue)
-            self.prefs.setInteger(self.trackingProtection, forKey: Shield.TrackingProtection.rawValue)
-            self.prefs.setInteger(self.httpse, forKey: Shield.HTTPSE.rawValue)
-            self.prefs.setInteger(self.safeBrowsing, forKey: Shield.SafeBrowsing.rawValue)
-            self.prefs.setInteger(self.fpProtection, forKey: Shield.FpProtection.rawValue)
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async { () -> Void in
+            self.prefs.set(self.adblock, forKey: Shield.Adblock.rawValue)
+            self.prefs.set(self.trackingProtection, forKey: Shield.TrackingProtection.rawValue)
+            self.prefs.set(self.httpse, forKey: Shield.HTTPSE.rawValue)
+            self.prefs.set(self.safeBrowsing, forKey: Shield.SafeBrowsing.rawValue)
+            self.prefs.set(self.fpProtection, forKey: Shield.FpProtection.rawValue)
             self.prefs.synchronize()
 
             if let task = self.bgSaveTask {
-                UIApplication.sharedApplication().endBackgroundTask(task)
+                UIApplication.shared.endBackgroundTask(task)
             }
             self.bgSaveTask = UIBackgroundTaskInvalid
         }

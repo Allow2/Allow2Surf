@@ -1,3 +1,5 @@
+#!/bin/bash
+
 [[ -e setup.sh  ]] || { echo 'setup.sh must be run from brave directory'; exit 1; }
 
 # Pro Tip for ad-hoc building: add your app id as an arg, like ./setup.sh org.foo.myapp
@@ -41,4 +43,10 @@ echo GENERATED_BUILD_ID=`date +"%y.%m.%d.%H"` >> xcconfig/build-id.xcconfig
 npm update
 
 node -e "require('./node_modules/ad-block/lib/regions.js').forEach((x) =>{ if (x.lang) {console.log(x.lang + ',' + x.uuid)} } )" > adblock-regions.txt
+
+## setup sync
+(cd ../Carthage/Checkouts/sync && brew install yarn; yarn install && yarn run build)
+
+# setup niceware
+(cd ../Carthage/Checkouts/niceware && brew install yarn; yarn install && yarn run build)
 

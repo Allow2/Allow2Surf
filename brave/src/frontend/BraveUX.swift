@@ -1,16 +1,16 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 struct BraveUX {
-    static let IsRelease = NSBundle.mainBundle().bundleIdentifier == "com.brave.ios.browser"
+    static let IsRelease = Bundle.main.bundleIdentifier == "com.brave.ios.browser"
 
-    static let BraveCommunityURL = NSURL(string: "https://community.brave.com/")!
-    static let BravePrivacyURL = NSURL(string: "https://www.brave.com/privacy_ios")!
+    static let BraveCommunityURL = URL(string: "https://community.brave.com/")!
+    static let BravePrivacyURL = URL(string: "https://www.brave.com/privacy_ios")!
     static let PrefKeyOptInDialogWasSeen = "OptInDialogWasSeen"
     static let PrefKeyUserAllowsTelemetry = "userallowstelemetry"
 
     static let MaxTabsInMemory = 9
 
-    static var PanelShadowWidth = 15
+    static var PanelShadowWidth = 11
 
     static let ReaderModeBarHeight = 28
 
@@ -18,14 +18,15 @@ struct BraveUX {
     static let BraveButtonMessageInUrlBarColor = BraveOrange
     static let BraveButtonMessageInUrlBarShowTime = 0.5
     static let BraveButtonMessageInUrlBarFadeTime = 0.7
+    
+    static let lockIconColor = UIColor.black
 
-    static let TabsBarPlusButtonWidth = (UIDevice.currentDevice().userInterfaceIdiom == .Pad) ? 40 : 0
+    static let TabsBarPlusButtonWidth = (UIDevice.current.userInterfaceIdiom == .pad) ? 40 : 0
     
     static let SwitchTintColor = UIColor(white: 0.8, alpha: 1.0)
     
-    static let ToolbarsBackgroundSolidColor = UIColor(red: 206/255.0, green: 206/255.0, blue: 206/255.0, alpha: 1.0)
+    static let ToolbarsBackgroundSolidColor = UIColor(red: 215/255.0, green: 215/255.0, blue: 215/255.0, alpha: 1.0)
     static let DarkToolbarsBackgroundSolidColor = UIColor(red: 63/255.0, green: 63/255.0, blue: 63/255.0, alpha: 1.0)
-    static let ToolbarsBackgroundColor = UIColor(white: 0.0, alpha: 0.19)
     static let DarkToolbarsBackgroundColor = UIColor(red: 57/255.0, green: 57/255.0, blue: 57/255.0, alpha: 0.8)
     
     static let TopSitesStatTitleColor = UIColor(white: 0.6, alpha: 1.0)
@@ -66,12 +67,12 @@ struct BraveUX {
     static let TopLevelBackgroundColor = UIColor(white: 0.67, alpha: 1.0)
 
     // LocationBar Coloring
-    static let LocationBarTextColor = UIColor.blackColor()
+    static let LocationBarTextColor = UIColor.black
     
     // Setting this to clearColor() and setting LocationContainerBackgroundColor to a definitive color
     //  with transparency (e.g. allwhile 0.3 alpha) is how to make a non-opaque URL bar (e.g. for blurring).
     // Not currently needed since top bar is entirely opaque
-    static let LocationBarBackgroundColor = UIColor(white: 221 / 255, alpha: 1.0)
+    static let LocationBarBackgroundColor = UIColor(white: 243/255.0, alpha: 1.0)
     static let LocationContainerBackgroundColor = LocationBarBackgroundColor
     
     // Editing colors same as standard coloring
@@ -81,7 +82,7 @@ struct BraveUX {
     // LocationBar Private Coloring
     // TODO: Add text coloring
     // See comment for LocationBarBackgroundColor is semi-transparent location bar is desired
-    static let LocationBarBackgroundColor_PrivateMode = UIColor.blackColor()
+    static let LocationBarBackgroundColor_PrivateMode = UIColor.black
     static let LocationContainerBackgroundColor_PrivateMode = LocationBarBackgroundColor_PrivateMode
 
     static let LocationBarEditModeBackgroundColor_Private = UIColor(white: 0/255.0, alpha: 1.0)
@@ -93,12 +94,12 @@ struct BraveUX {
     static let LocationBarTextColor_URLHostComponent = LocationBarTextColor
 
     static let TextFieldCornerRadius: CGFloat = 6.0
-    static let TextFieldBorderColor_HasFocus = UIColor.grayColor()
-    static let TextFieldBorderColor_NoFocus = UIColor.blackColor()
+    static let TextFieldBorderColor_HasFocus = UIColor.gray
+    static let TextFieldBorderColor_NoFocus = UIColor.black
 
     static let CancelTextColor = LocationBarTextColor
     // The toolbar button color (for the Normal state). Using default highlight color ATM
-    static let ActionButtonTintColor = UIColor.blackColor()
+    static let ActionButtonTintColor = UIColor.black
     
     // The toolbar button color when (for the Selected state).
     static let ActionButtonSelectedTintColor = BraveUX.DefaultBlue
@@ -109,9 +110,9 @@ struct BraveUX {
     static let BottomToolbarNumberButtonsToRightOfBackForward = 3
     static let BackForwardButtonLeftOffset = CGFloat(10)
 
-    static let ProgressBarColor = UIColor(white: 0.0, alpha: 0.2)
-    static let ProgressBarDarkColor = UIColor(white: 1.0, alpha: 0.3)
+    static let ProgressBarColor = UIColor(white: 0.0, alpha: 0.08)
+    static let ProgressBarDarkColor = UIColor(white: 1.0, alpha: 0.08)
     
     static let TabTrayCellCornerRadius = CGFloat(6.0)
-    static let TabTrayCellBackgroundColor = UIColor.whiteColor()
+    static let TabTrayCellBackgroundColor = UIColor.white
 }

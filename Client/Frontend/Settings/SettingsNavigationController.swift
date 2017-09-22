@@ -10,7 +10,21 @@ class SettingsNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationBar.barTintColor = UIColor.whiteColor()
+        self.navigationBar.barTintColor = UIColor.white
+        let value = UIInterfaceOrientation.portrait.rawValue
+        UIDevice.current.setValue(value, forKey: "orientation")
+    }
+    
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.portrait
+    }
+    
+    override var shouldAutorotate : Bool {
+        return false
+    }
+    
+    override var preferredInterfaceOrientationForPresentation : UIInterfaceOrientation {
+        return UIInterfaceOrientation.portrait
     }
     
     func SELdone() {
@@ -18,7 +32,7 @@ class SettingsNavigationController: UINavigationController {
             delegate.dismissPresentedModalViewController(self, animated: true)
             getApp().browserViewController.view.alpha = CGFloat(BraveUX.BrowserViewAlphaWhenShowingTabTray)
         } else {
-            self.dismissViewControllerAnimated(true, completion: {
+            self.dismiss(animated: true, completion: {
                 getApp().browserViewController.view.alpha = CGFloat(1.0)
             })
         }
@@ -29,5 +43,5 @@ class SettingsNavigationController: UINavigationController {
 }
 
 protocol PresentingModalViewControllerDelegate {
-    func dismissPresentedModalViewController(modalViewController: UIViewController, animated: Bool)
+    func dismissPresentedModalViewController(_ modalViewController: UIViewController, animated: Bool)
 }

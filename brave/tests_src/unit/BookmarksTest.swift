@@ -8,20 +8,6 @@ import Storage
 
 class BookmarksTest: XCTestCase {
     func testNewFolder() {
-        let expect = expectationWithDescription("folder-added")
-
-        if let sqllitbk = getApp().profile!.bookmarks as? MergedSQLiteBookmarks {
-            sqllitbk.createFolder("FOOFOO").upon { _ in
-                postAsyncToMain {
-                    expect.fulfill()
-                }
-            }
-        }
-
-        waitForExpectationsWithTimeout(20) { (error:NSError?) -> Void in
-            if let _ = error {
-                XCTAssert(false, "failed")
-            }
-        }
+        // Should be implemented for CD change (see history for past implementation)
     }
 }

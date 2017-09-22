@@ -4,7 +4,7 @@ import Shared
 private let log = Logger.browserLogger
 
 extension BrowserViewController: TabManagerDelegate {
-    func tabManager(tabManager: TabManager, didSelectedTabChange selected: Browser?) {
+    func tabManager(_ tabManager: TabManager, didSelectedTabChange selected: Browser?) {
         if (urlBar.inSearchMode) {
             urlBar.leaveSearchMode()
         }
@@ -32,14 +32,14 @@ extension BrowserViewController: TabManagerDelegate {
             prevWebView.removeFromSuperview()
         }
 
-        if let tab = selected, webView = tab.webView {
+        if let tab = selected, let webView = tab.webView {
             // if we have previously hidden this scrollview in order to make scrollsToTop work then
             // we should ensure that it is not hidden now that it is our foreground scrollView
             //            if webView.scrollView.hidden {
             //                webView.scrollView.hidden = false
             //            }
 
-            updateURLBarDisplayURL(tab)
+            updateURLBarDisplayURL(tab: tab)
 
             if tab.isPrivate {
                 readerModeCache = MemoryReaderModeCache.sharedInstance
@@ -61,26 +61,18 @@ extension BrowserViewController: TabManagerDelegate {
             #endif
             addOpenInViewIfNeccessary(webView.URL)
 
-            if let url = webView.URL?.absoluteString {
+            if let url = webView.URL {
                 // Don't bother fetching bookmark state for about/sessionrestore and about/home.
-                if AboutUtils.isAboutURL(webView.URL) {
+                if AboutUtils.isAboutURL(url) {
                     // Indeed, because we don't show the toolbar at all, don't even blank the star.
                 } else {
-                    profile.bookmarks.modelFactory >>== {
-                        $0.isBookmarked(url).uponQueue(dispatch_get_main_queue()) {
-                            guard let isBookmarked = $0.successValue else {
-                                log.error("Error getting bookmark status: \($0.failureValue).")
-                                return
-                            }
-
-                            self.urlBar.updateBookmarkStatus(isBookmarked)
-                        }
-                    }
+                    let isBookmarked = Bookmark.contains(url: url, context: DataController.shared.mainThreadContext)
+                    self.urlBar.updateBookmarkStatus(isBookmarked)
                 }
             } else {
                 // The web view can go gray if it was zombified due to memory pressure.
                 // When this happens, the URL is nil, so try restoring the page upon selection.
-                // tab.reload()
+                 tab.reload()
             }
         }
 
@@ -93,7 +85,7 @@ extension BrowserViewController: TabManagerDelegate {
             }
         }
 
-        updateFindInPageVisibility(visible: false)
+        updateFindInPageVisibility(false)
 
         navigationToolbar.updateReloadStatus(selected?.loading ?? false)
         navigationToolbar.updateBackStatus(selected?.canGoBack ?? false)
@@ -101,11 +93,6 @@ extension BrowserViewController: TabManagerDelegate {
 
         if let readerMode = selected?.getHelper(ReaderMode.self) {
             urlBar.updateReaderModeState(readerMode.state)
-            if readerMode.state == .Active {
-                showReaderModeBar(animated: false)
-            } else {
-                hideReaderModeBar(animated: false)
-            }
         } else {
             urlBar.updateReaderModeState(ReaderModeState.Unavailable)
         }
@@ -113,35 +100,31 @@ extension BrowserViewController: TabManagerDelegate {
         updateInContentHomePanel(selected?.url)
     }
 
-    func tabManager(tabManager: TabManager, didCreateWebView tab: Browser, url: NSURL?) {}
+    func tabManager(_ tabManager: TabManager, didCreateWebView tab: Browser, url: URL?, at: Int?) {}
 
-    func tabManager(tabManager: TabManager, didAddTab tab: Browser) {
+    func tabManager(_ tabManager: TabManager, didAddTab tab: Browser) {
         // If we are restoring tabs then we update the count once at the end
         if !tabManager.isRestoring {
             updateTabCountUsingTabManager(tabManager)
         }
         tab.browserDelegate = self
-
-        telemetry(action: "add tab", props: ["isPrivate" : "\(tab.isPrivate)"])
     }
 
-    func tabManager(tabManager: TabManager, didRemoveTab tab: Browser) {
+    func tabManager(_ tabManager: TabManager, didRemoveTab tab: Browser) {
         updateTabCountUsingTabManager(tabManager)
         // browserDelegate is a weak ref (and the tab's webView may not be destroyed yet)
         // so we don't expcitly unset it.
-
-        telemetry(action: "remove tab", props: ["isPrivate" : "\(tab.isPrivate)"])
     }
 
-    func tabManagerDidAddTabs(tabManager: TabManager) {
+    func tabManagerDidAddTabs(_ tabManager: TabManager) {
         updateTabCountUsingTabManager(tabManager)
     }
 
-    func tabManagerDidRestoreTabs(tabManager: TabManager) {
+    func tabManagerDidRestoreTabs(_ tabManager: TabManager) {
         updateTabCountUsingTabManager(tabManager)
     }
 
-    func updateTabCountUsingTabManager(tabManager: TabManager, animated: Bool = true) {
+    func updateTabCountUsingTabManager(_ tabManager: TabManager, animated: Bool = true) {
         let count = tabManager.tabs.displayedTabsForCurrentPrivateMode.count
         urlBar.updateTabCount(max(count, 1), animated: animated)
     }
