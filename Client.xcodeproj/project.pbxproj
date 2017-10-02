@@ -4849,6 +4849,7 @@
 				);
 				INFOPLIST_FILE = brave/BraveInfo.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.allow2.iOSSurf;
 				PRODUCT_MODULE_NAME = Client;
@@ -5400,6 +5401,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
+					"NO_FABRIC=1",
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -5443,6 +5445,7 @@
 				);
 				INFOPLIST_FILE = brave/BraveInfo.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.allow2.iOSSurf;
 				PRODUCT_MODULE_NAME = Client;

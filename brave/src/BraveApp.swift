@@ -252,6 +252,7 @@ class BraveApp {
         startAllow2Timer()
         postAsyncToMain(10) {
             BraveApp.updateDauStat()
+        }
     }
     
     @objc func startAllow2Timer() {
