@@ -1,3 +1,6 @@
 [submodule "ThirdParty/Allow2"]
 	path = ThirdParty/Allow2
 	url = git@github.com:Allow2/allow2iOS.git
+[submodule "ThirdParty/Allow2iOSRequest"]
+	path = ThirdParty/Allow2iOSRequest
+	url = git@github.com:Allow2/Allow2iOSRequest.git
