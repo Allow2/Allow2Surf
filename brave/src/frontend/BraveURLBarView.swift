@@ -92,7 +92,6 @@ class BraveURLBarView : URLBarView {
 
         braveButton.addTarget(self, action: #selector(onClickBraveButton) , for: UIControlEvents.touchUpInside)
         braveButton.setImage(UIImage(named: "bravePanelButton"), for: .normal)
-        braveButton.setImage(UIImage(named: "bravePanelButtonOff"), for: .selected)
         braveButton.accessibilityLabel = Strings.Brave_Panel
         braveButton.tintColor = BraveUX.ActionButtonTintColor
 
@@ -454,41 +453,8 @@ class BraveURLBarView : URLBarView {
         leftSidePanelButton.setStarImageBookmarked(isBookmarked)
     }
 
-    func setBraveButtonState(_ shieldsUp: Bool, animated: Bool) {
-        let selected = !shieldsUp
-        if braveButton.isSelected == selected {
-            return
-        }
-        
-        braveButton.isSelected = selected
-
-        if !animated {
-            return
-        }
-
-        let v = InsetLabel(frame: CGRect(x: 0, y: 0, width: locationContainer.frame.width, height: locationContainer.frame.height))
-        v.rightInset = CGFloat(40)
-        v.text = braveButton.isSelected ? Strings.Shields_Up : Strings.Shields_Down
-        if v.text!.endsWith(" Up") || v.text!.endsWith(" Down") {
-            // English translation gets bolded text
-            if let range = v.text!.range(of: " ", options:NSString.CompareOptions.backwards) {
-                let closedRange = range.lowerBound...v.text!.index(range.lowerBound, offsetBy: v.text!.characters.count)
-                v.bold(range: closedRange)
-            }
-        }
-
-        v.backgroundColor = braveButton.isSelected ? UIColor(white: 0.6, alpha: 1.0) : BraveUX.BraveButtonMessageInUrlBarColor
-        v.textAlignment = .right
-        locationContainer.addSubview(v)
-        v.alpha = 0.0
-        UIView.animate(withDuration: 0.25, animations: { v.alpha = 1.0 }, completion: {
-            finished in
-            UIView.animate(withDuration: BraveUX.BraveButtonMessageInUrlBarFadeTime, delay: BraveUX.BraveButtonMessageInUrlBarShowTime, options: [], animations: {
-                v.alpha = 0
-                }, completion: {
-                    finished in
-                    v.removeFromSuperview()
-            })
-        })
+    func setBraveButtonState(shieldsEnabled: Bool, animated: Bool) {
+        let buttonImageName = shieldsEnabled ? "bravePanelButton" : "bravePanelButtonOff"
+        braveButton.setImage(UIImage(named: buttonImageName), for: .normal)
     }
 }
