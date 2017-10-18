@@ -257,7 +257,7 @@ class Allow2Setting: Setting, Allow2PairingViewControllerDelegate {
         Choice<UInt> { (displayName: "Connected to Allow2", object: UInt(1), optionId: 1) }
     ]
     
-    override var accessoryType: UITableViewCellAccessoryType { return .DisclosureIndicator }
+    override var accessoryType: UITableViewCellAccessoryType { return .disclosureIndicator }
     
     override var accessibilityIdentifier: String? { return "SetupAllow2" }
     
@@ -269,12 +269,12 @@ class Allow2Setting: Setting, Allow2PairingViewControllerDelegate {
         super.init(title: NSAttributedString(string: allow2Title, attributes: [NSForegroundColorAttributeName: UIConstants.TableViewRowTextColor]))
     }
     
-    override func onClick(navigationController: UINavigationController?) {
+    override func onClick(_ navigationController: UINavigationController?) {
 
         if Allow2.shared.isPaired {
-            let alert = UIAlertController(title: "Paired", message: "Use your Allow2 account to disconnect this app.", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .Cancel) { (action) in })
-            navigationController?.presentViewController(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: "Paired", message: "Use your Allow2 account to disconnect this app.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel) { (action) in })
+            navigationController?.present(alert, animated: true, completion: nil)
             return
         }
         
@@ -286,20 +286,20 @@ class Allow2Setting: Setting, Allow2PairingViewControllerDelegate {
     }
     
     func Allow2PairingCompleted(result: Allow2Response) {
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             switch result {
             case .PairResult(let result):
                 print("paired")
-                self.navController?.popViewControllerAnimated(true)
+                self.navController?.popViewController(animated: true)
                 
                 //self.selectChild(result.children)
                 break
             case .Error(let error):
                 let err = error as NSError
-                let alert = UIAlertController(title: "Error", message: err.localizedDescription, preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
-                (UIApplication.sharedApplication().delegate as! AppDelegate).window?.rootViewController?.presentViewController( alert, animated: true, completion: nil )
-                self.navController?.presentViewController(alert, animated: true, completion: nil)
+                let alert = UIAlertController(title: "Error", message: err.localizedDescription, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.present( alert, animated: true, completion: nil )
+                self.navController?.present(alert, animated: true, completion: nil)
                 return
             default:
                 break // cannot happen
@@ -333,6 +333,31 @@ class PrivacyPolicySetting: Setting {
 
     override func onClick(_ navigationController: UINavigationController?) {
         setUpAndPushSettingsContentViewController(navigationController)
+    }
+}
+
+class ChangePinSetting: Setting {
+    let profile: Profile
+    
+    override var accessoryType: UITableViewCellAccessoryType { return .disclosureIndicator }
+    
+    override var accessibilityIdentifier: String? { return "ChangePin" }
+    
+    init(settings: SettingsTableViewController) {
+        self.profile = settings.profile
+        
+        let clearTitle = Strings.Change_Pin
+        super.init(title: NSAttributedString(string: clearTitle, attributes: [NSForegroundColorAttributeName: UIConstants.TableViewRowTextColor]))
+    }
+    
+    override func onClick(_ navigationController: UINavigationController?) {
+        if profile.prefs.boolForKey(kPrefKeyBrowserLock) == true {
+            getApp().requirePinIfNeeded(profile: profile)
+            getApp().securityViewController?.auth()
+        }
+        
+        let view = PinViewController()
+        navigationController?.pushViewController(view, animated: true)
     }
 }
 

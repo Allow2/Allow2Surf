@@ -69,7 +69,7 @@ class BrowserViewController: UIViewController {
     var pasteAction: AccessibleAction!
     var copyAddressAction: AccessibleAction!
 
-    weak var tabTrayController: TabTrayController!
+    weak var tabTrayController: TabTrayController?
 
     let profile: Profile
     let tabManager: TabManager
@@ -101,7 +101,7 @@ class BrowserViewController: UIViewController {
     }
 
     // allow2
-    var allow2CheckTimer : NSTimer?
+    var allow2CheckTimer : Timer?
     var allow2BlockViewController: Allow2BlockViewController!
 
     static var instanceAsserter = 0 // Brave: it is easy to get confused as to which fx classes are effectively singletons
@@ -155,13 +155,42 @@ class BrowserViewController: UIViewController {
         screenshotHelper = ScreenshotHelper(controller: self)
         tabManager.addDelegate(self)
         tabManager.addNavigationDelegate(self)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(leftSwipeToolbar), name: LeftSwipeToolbarNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(rightSwipeToolbar), name: RightSwipeToolbarNotification, object: nil)
     }
 
     func shouldShowFooterForTraitCollection(_ previousTraitCollection: UITraitCollection) -> Bool {
         return previousTraitCollection.verticalSizeClass != .compact &&
                previousTraitCollection.horizontalSizeClass != .regular
     }
-
+    
+    var swipeScheduled = false
+    func leftSwipeToolbar() {
+        if !swipeScheduled {
+            swipeScheduled = true
+            postAsyncToMain(0.1) {
+                if let browser = getApp().tabManager.selectedTab {
+                    self.screenshotHelper.takeScreenshot(browser)
+                }
+                self.swipeScheduled = false
+                getApp().tabManager.selectNextTab()
+            }
+        }
+    }
+    
+    func rightSwipeToolbar() {
+        if !swipeScheduled {
+            swipeScheduled = true
+            postAsyncToMain(0.1) {
+                if let browser = getApp().tabManager.selectedTab {
+                    self.screenshotHelper.takeScreenshot(browser)
+                }
+                self.swipeScheduled = false
+                getApp().tabManager.selectPreviousTab()
+            }
+        }
+    }
 
     func toggleSnackBarVisibility(_ show: Bool) {
         if show {
@@ -194,8 +223,7 @@ class BrowserViewController: UIViewController {
             footerBackground?.addSubview(toolbar!)
             footer.addSubview(footerBackground!)
             
-            footer.layer.shadowOffset = CGSize(width: 0, height: -1)
-            footer.layer.shadowColor = UIConstants.BorderColor.cgColor
+            footer.layer.shadowOffset = CGSize(width: 0, height: -0.5)
             footer.layer.shadowRadius = 0
             footer.layer.shadowOpacity = 1.0
             footer.layer.masksToBounds = false
@@ -282,7 +310,7 @@ class BrowserViewController: UIViewController {
     deinit {
         //NSNotificationCenter.defaultCenter().removeObserver(self, name: BookmarkStatusChangedNotification, object: nil)
         //NSNotificationCenter.defaultCenter().removeObserver(self, name: Allow2.PairingChangedNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: Allow2.CheckResultNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.allow2CheckResultNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
@@ -299,7 +327,7 @@ class BrowserViewController: UIViewController {
         log.debug("BVC super viewDidLoad called.")
         //NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BrowserViewController.SELBookmarkStatusDidChange(_:)), name: BookmarkStatusChangedNotification, object: nil)
         //NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BrowserViewController.Allow2PairingChangedNotification(_:)), name: Allow2.PairingChangedNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(BrowserViewController.Allow2CheckResultNotification(_:)), name: Allow2.CheckResultNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(BrowserViewController.Allow2CheckResultNotification(notification:)), name: NSNotification.Name.allow2CheckResultNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(BrowserViewController.SELappWillResignActiveNotification), name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(BrowserViewController.SELappDidBecomeActiveNotification), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(BrowserViewController.SELappDidEnterBackgroundNotification), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
@@ -307,12 +335,12 @@ class BrowserViewController: UIViewController {
 
         log.debug("BVC adding footer and header…")
         footerBackdrop = UIView()
-        footerBackdrop.backgroundColor = UIColor.white
+        footerBackdrop.backgroundColor = BrowserViewControllerUX.BackgroundColor
         view.addSubview(footerBackdrop)
 
         log.debug("BVC setting up webViewContainer…")
         webViewContainerBackdrop = UIView()
-        webViewContainerBackdrop.backgroundColor = UIColor.gray
+        webViewContainerBackdrop.backgroundColor = BrowserViewControllerUX.BackgroundColor
         webViewContainerBackdrop.alpha = 0
         view.addSubview(webViewContainerBackdrop)
 
@@ -322,7 +350,7 @@ class BrowserViewController: UIViewController {
 
         log.debug("BVC setting up allow2 blocking view…")
         allow2BlockViewController = Allow2.allow2BlockViewController
-        allow2BlockViewController.view.hidden = true
+        allow2BlockViewController.view.isHidden = true
         view.addSubview(allow2BlockViewController.view)
         
         log.debug("BVC setting up status bar…")
@@ -347,7 +375,6 @@ class BrowserViewController: UIViewController {
         view.addSubview(header)
     
         header.layer.shadowOffset = CGSize(width: 0, height: 1)
-        header.layer.shadowColor = UIConstants.BorderColor.cgColor
         header.layer.shadowRadius = 0
         header.layer.shadowOpacity = 1.0
         header.layer.masksToBounds = false
@@ -630,17 +657,6 @@ class BrowserViewController: UIViewController {
             view.addSubview(homePanelController!.view)
             homePanelController!.didMove(toParentViewController: self)
         }
-
-        let panelNumber = tabManager.selectedTab?.url?.fragment
-
-        // splitting this out to see if we can get better crash reports when this has a problem
-        var newSelectedButtonIndex = 0
-        if let numberArray = panelNumber?.components(separatedBy: "=") {
-            if let last = numberArray.last, let lastInt = Int(last) {
-                newSelectedButtonIndex = lastInt
-            }
-        }
-        homePanelController?.selectedButtonIndex = newSelectedButtonIndex
 
         // We have to run this animation, even if the view is already showing because there may be a hide animation running
         // and we want to be sure to override its results.
@@ -1049,12 +1065,12 @@ extension BrowserViewController {
         }
         print("\(result) received")
 
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             if (!result.allowed) {
                 // configure the block screen to explain the issue
-                self.allow2BlockViewController.checkResult(result)
+                self.allow2BlockViewController.checkResult(checkResult: result)
             }
-            self.allow2BlockViewController.view.hidden = result.allowed
+            self.allow2BlockViewController.view.isHidden = result.allowed
         }
     }
 }

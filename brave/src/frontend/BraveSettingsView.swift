@@ -6,10 +6,12 @@
 import Shared
 import MessageUI
 import SwiftyJSON
+import SwiftKeychainWrapper
 
 let kPrefKeyNoScriptOn = "noscript_on"
 let kPrefKeyFingerprintProtection = "fingerprintprotection_on"
 let kPrefKeyPrivateBrowsingAlwaysOn = "privateBrowsingAlwaysOn"
+let kPrefKeyBrowserLock = "browserLock"
 
 class BraveSettingsView : AppSettingsTableViewController {
 
@@ -101,6 +103,8 @@ class BraveSettingsView : AppSettingsTableViewController {
             let defaultOn = adblockRegionOption.isDefaultSettingOn
             shieldSettingsList.append(BoolSetting(prefs: prefs, prefKey: AdBlocker.prefKeyUseRegional, defaultValue: defaultOn, titleText: Strings.Use_regional_adblock))
         }
+        
+        weak var weakSelf = self
 
         settings += [
             SettingSection(title: NSAttributedString(string: Strings.General.uppercased()), children: generalSettings),
@@ -115,6 +119,34 @@ class BraveSettingsView : AppSettingsTableViewController {
                     })]
             ),
             SettingSection(title: NSAttributedString(string: "Allow2"), children: [ Allow2Setting(settings: self) ]),
+            SettingSection(title: NSAttributedString(string: Strings.Security.uppercased()), children:
+                [BoolSetting(prefs: prefs, prefKey: kPrefKeyBrowserLock, defaultValue: false, titleText: Strings.Browser_Lock, statusText: nil, settingDidChange: { isOn in
+                    if isOn {
+                        if KeychainWrapper.pinLockInfo() == nil {
+                            let view = PinViewController()
+                            view.delegate = weakSelf
+                            weakSelf?.navigationController?.pushViewController(view, animated: true)
+                        }
+                    }
+                    else {
+                        // Requires verification to turn off.
+                        if let profile = weakSelf?.profile {
+                            getApp().securityViewController?.start()
+                            getApp().securityWindow?.isHidden = false
+                            getApp().securityViewController?.successCallback = { (success) in
+                                // if we fail to auth user then we set back to ON
+                                profile.prefs.setBool(!success, forKey: kPrefKeyBrowserLock)
+                                postAsyncToMain {
+                                    weakSelf?.tableView.reloadData()
+                                    getApp().securityWindow?.isHidden = true
+                                }
+                            }
+                            getApp().securityViewController?.auth()
+                        }
+                    }
+                }),
+                 ChangePinSetting(settings: self)]
+            ),
             SettingSection(title: NSAttributedString(string: Strings.Brave_Shield_Defaults.uppercased()), children: shieldSettingsList)]
 
         
@@ -151,6 +183,16 @@ class BraveSettingsView : AppSettingsTableViewController {
         return settings
     }
 }
+
+extension BraveSettingsView : PinViewControllerDelegate {
+    func pinViewController(_ completed: Bool) {
+        if !completed {
+            profile.prefs.setBool(false, forKey: kPrefKeyBrowserLock)
+            tableView.reloadData()
+        }
+    }
+}
+
 
 class VersionSetting : Setting {
     let settings: SettingsTableViewController
@@ -359,7 +401,7 @@ class LoadTabsDebugSettings: Setting, XMLParserDelegate {
         
         for url in urls {
             let request = URLRequest(url: url)
-            _ = getApp().tabManager.addTab(request)
+            getApp().tabManager.addTab(request)
         }
         
     }

@@ -50,7 +50,7 @@ class BraveApp {
     // If app runs for this long, clear the saved pref that indicates it is safe to restore tabs
     static let kDelayBeforeDecidingAppHasBootedOk = (Int64(NSEC_PER_SEC) * 10) // 10 sec
 
-    var allow2Timer : NSTimer?
+    var allow2Timer : Timer?
     let allow2Activities = [ Allow2.Allow2Activity(activity: Allow2.Activity.Internet, log: true) ]    // just log internet usage = browser use
     
     class var singleton: BraveApp {
@@ -257,15 +257,15 @@ class BraveApp {
     
     @objc func startAllow2Timer() {
         if (allow2Timer == nil) {
-            allow2Timer = NSTimer.scheduledTimerWithTimeInterval(10.0, target: self, selector: #selector(BraveApp.checkAllow2), userInfo: nil, repeats: true)
-            Allow2.shared.check(allow2Activities)
+            allow2Timer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(BraveApp.checkAllow2), userInfo: nil, repeats: true)
+            Allow2.shared.check(activities: allow2Activities)
         }
     }
     
     @objc func checkAllow2() {
         // this is called every 10 seconds. On each call, we blindly ask permission, which will fail if there is no "default" child
         // on failure, we can check if we are actually paired, and if so, then we can prompt for the user to select WHO they are
-        Allow2.shared.check(allow2Activities, log: true) { (response) in
+        Allow2.shared.check(activities: allow2Activities, log: true) { (response) in
             //if case let .Error(error as? Allow2Error) = response {
             //    if error == Allow2Error.MissingChildId {
                     // special case,
