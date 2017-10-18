@@ -2284,6 +2284,7 @@
 			isa = PBXGroup;
 			children = (
 				EB8F566E1DD0FC2800679A78 /* Readability.js */,
+				EBDB7D4E1E1432E800D744C7 /* bundle.js */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -3147,7 +3148,6 @@
 				EBDB7D561E14337800D744C7 /* ios-sync.js */,
 				5D2B07EA1E6733B900244C39 /* niceware.js */,
 				EBDB7D511E14331900D744C7 /* polyfill */,
-				EBDB7D4C1E1432E800D744C7 /* bundles */,
 				5D2785991E70D7EF0066EC15 /* JSInjector.swift */,
 				EBDB7D461E14231900D744C7 /* Sync.swift */,
 				5D71B69A1E6885E00073621F /* Niceware.swift */,
@@ -3156,15 +3156,6 @@
 			name = sync;
 			path = brave/src/sync;
 			sourceTree = "<group>";
-		};
-		EBDB7D4C1E1432E800D744C7 /* bundles */ = {
-			isa = PBXGroup;
-			children = (
-				EBDB7D4E1E1432E800D744C7 /* bundle.js */,
-			);
-			name = bundles;
-			path = Carthage/Checkouts/sync/bundles;
-			sourceTree = SOURCE_ROOT;
 		};
 		EBDB7D511E14331900D744C7 /* polyfill */ = {
 			isa = PBXGroup;

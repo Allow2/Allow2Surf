@@ -101,7 +101,7 @@ class BrowserViewController: UIViewController {
     }
 
     // allow2
-    var allow2CheckTimer : NSTimer?
+    var allow2CheckTimer : Timer?
     var allow2BlockViewController: Allow2BlockViewController!
 
     static var instanceAsserter = 0 // Brave: it is easy to get confused as to which fx classes are effectively singletons
@@ -310,7 +310,7 @@ class BrowserViewController: UIViewController {
     deinit {
         //NSNotificationCenter.defaultCenter().removeObserver(self, name: BookmarkStatusChangedNotification, object: nil)
         //NSNotificationCenter.defaultCenter().removeObserver(self, name: Allow2.PairingChangedNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: Allow2.CheckResultNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.allow2CheckResultNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
@@ -327,7 +327,7 @@ class BrowserViewController: UIViewController {
         log.debug("BVC super viewDidLoad called.")
         //NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BrowserViewController.SELBookmarkStatusDidChange(_:)), name: BookmarkStatusChangedNotification, object: nil)
         //NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BrowserViewController.Allow2PairingChangedNotification(_:)), name: Allow2.PairingChangedNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(BrowserViewController.Allow2CheckResultNotification(_:)), name: Allow2.CheckResultNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(BrowserViewController.Allow2CheckResultNotification(notification:)), name: NSNotification.Name.allow2CheckResultNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(BrowserViewController.SELappWillResignActiveNotification), name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(BrowserViewController.SELappDidBecomeActiveNotification), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(BrowserViewController.SELappDidEnterBackgroundNotification), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
@@ -350,7 +350,7 @@ class BrowserViewController: UIViewController {
 
         log.debug("BVC setting up allow2 blocking view…")
         allow2BlockViewController = Allow2.allow2BlockViewController
-        allow2BlockViewController.view.hidden = true
+        allow2BlockViewController.view.isHidden = true
         view.addSubview(allow2BlockViewController.view)
         
         log.debug("BVC setting up status bar…")
@@ -1065,12 +1065,12 @@ extension BrowserViewController {
         }
         print("\(result) received")
 
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             if (!result.allowed) {
                 // configure the block screen to explain the issue
-                self.allow2BlockViewController.checkResult(result)
+                self.allow2BlockViewController.checkResult(checkResult: result)
             }
-            self.allow2BlockViewController.view.hidden = result.allowed
+            self.allow2BlockViewController.view.isHidden = result.allowed
         }
     }
 }
