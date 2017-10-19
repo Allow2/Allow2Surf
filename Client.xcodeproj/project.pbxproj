@@ -768,13 +768,6 @@
 			remoteGlobalIDString = A8580F741BCF5C5B00DA927B;
 			remoteInfo = "SwiftyJSON tvOS Tests";
 		};
-		5D75A1E91F1420F0003FB8C7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5CD164121EDFB7080037ECCC /* SQLite.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = EE247AD21C3F04ED00AE3E12;
-			remoteInfo = "SQLite iOS";
-		};
 		D30EBB631C75503800105AE9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D30EBB5A1C75503800105AE9 /* KIF.xcodeproj */;
@@ -2295,7 +2288,7 @@
 			isa = PBXGroup;
 			children = (
 				EB8F566E1DD0FC2800679A78 /* Readability.js */,
-				EBA11E191E2EB84800C964E0 /* adblock-regions.txt */
+				EBA11E191E2EB84800C964E0 /* adblock-regions.txt */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -4633,11 +4626,6 @@
 			target = 288A2D851AB8B3260023ABC3 /* Shared */;
 			targetProxy = 2FCAE23B1ABB520700877008 /* PBXContainerItemProxy */;
 		};
-		5D75A1EA1F1420F0003FB8C7 /* PBXTargetDependency */ = {
-                        isa = PBXTargetDependency;
-			name = "SQLite iOS";
-			targetProxy = 5D75A1E91F1420F0003FB8C7 /* PBXContainerItemProxy */;
-		};
 		496726171E29B77300F33018 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Allow2;
@@ -4886,7 +4874,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_ENTITLEMENTS = brave/Brave.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = L44G2T7U48;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5482,7 +5471,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_ENTITLEMENTS = brave/Brave.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = L44G2T7U48;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -5499,6 +5489,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.allow2.iOSSurf;
 				PRODUCT_MODULE_NAME = Client;
 				PRODUCT_NAME = Client;
+				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/Client-Bridging-Header.h";
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "Client-Bridging-Header.h";
