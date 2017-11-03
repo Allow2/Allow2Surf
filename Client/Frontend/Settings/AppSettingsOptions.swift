@@ -271,10 +271,14 @@ class Allow2Setting: Setting, Allow2PairingViewControllerDelegate {
     
     override func onClick(_ navigationController: UINavigationController?) {
 
-        if Allow2.shared.isPaired {
-            let alert = UIAlertController(title: "Paired", message: "Use your Allow2 account to disconnect this app.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .cancel) { (action) in })
-            navigationController?.present(alert, animated: true, completion: nil)
+        if true || Allow2.shared.isPaired {
+            let requestController = Allow2.allow2RequestViewController
+            //requestController.checkResult = self.checkResult
+            navigationController?.present(requestController, animated: true, completion: nil)
+
+//            let alert = UIAlertController(title: "Paired", message: "Use your Allow2 account to disconnect this app.", preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: "OK", style: .cancel) { (action) in })
+//            navigationController?.present(alert, animated: true, completion: nil)
             return
         }
         

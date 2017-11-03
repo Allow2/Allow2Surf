@@ -351,6 +351,16 @@ class BrowserViewController: UIViewController {
         log.debug("BVC setting up allow2 blocking view…")
         allow2BlockViewController = Allow2.allow2BlockViewController
         allow2BlockViewController.view.isHidden = true
+        if (true) {
+            let activities = JSON()
+            let dayTypes = JSON()
+            
+            let result = Allow2CheckResult(allowed: false,
+                                           activities: activities,
+                                           dayTypes: dayTypes)
+            self.allow2BlockViewController.checkResult(checkResult: result)
+            allow2BlockViewController.view.isHidden = false
+        }
         view.addSubview(allow2BlockViewController.view)
         
         log.debug("BVC setting up status bar…")
