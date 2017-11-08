@@ -351,7 +351,9 @@ class BrowserViewController: UIViewController {
         log.debug("BVC setting up allow2 blocking view…")
         allow2BlockViewController = Allow2.allow2BlockViewController
         allow2BlockViewController.view.isHidden = true
-        if (true) {
+        
+        // WARNING: need to implement immediate ban if the app is opened in an existing ban state
+        if (false) {
             let activities = JSON()
             let dayTypes = JSON()
             

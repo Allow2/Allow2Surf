@@ -265,13 +265,13 @@ class Allow2Setting: Setting, Allow2PairingViewControllerDelegate {
         self.profile = settings.profile
         // todo: self.status = ( Allow2.shared.isPaired ? "Connected" : "Tap to connect" )
         
-        let allow2Title = "Allow2"
+        let allow2Title = Allow2.shared.isPaired ? "New Request" : "Pair with Allow2"
         super.init(title: NSAttributedString(string: allow2Title, attributes: [NSForegroundColorAttributeName: UIConstants.TableViewRowTextColor]))
     }
     
     override func onClick(_ navigationController: UINavigationController?) {
 
-        if true || Allow2.shared.isPaired {
+        if Allow2.shared.isPaired {
             let requestController = Allow2.allow2RequestViewController
             //requestController.checkResult = self.checkResult
             navigationController?.present(requestController, animated: true, completion: nil)
