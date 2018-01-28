@@ -30,7 +30,7 @@ class AdBlocker {
     }
     fileprivate var isRegionalAdblockEnabled: Bool? = nil
     // From https://github.com/brave/browser-android-tabs/blob/master/chrome/android/java/src/org/chromium/chrome/browser/init/ChromeBrowserInitializer.java#L84
-    fileprivate let wellTestedAdblockRegions = ["ru", "uk", "be", "hi"]
+    fileprivate let wellTestedAdblockRegions = ["ru", "uk", "be", "hi", "sv"]
 
     fileprivate init() {
         NotificationCenter.default.addObserver(self, selector: #selector(AdBlocker.prefsChanged(_:)), name: UserDefaults.didChangeNotification, object: nil)
@@ -76,7 +76,6 @@ class AdBlocker {
     }
 
     func startLoading() {
-        print(networkLoaders)
         networkLoaders.forEach { $0.1.loadData() }
     }
 
