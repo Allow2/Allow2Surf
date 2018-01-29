@@ -256,9 +256,10 @@ class BraveApp {
     @objc func willEnterForeground(_ : NSNotification) {
         // check usage while in the foreground
         startAllow2Timer()
-        postAsyncToMain(10) {
-            BraveApp.updateDauStat()
-        }
+        //#warning: resolve updateDauStat
+//        postAsyncToMain(10) {
+//            BraveApp.updateDauStat()
+//        }
     }
     
     @objc func startAllow2Timer() {

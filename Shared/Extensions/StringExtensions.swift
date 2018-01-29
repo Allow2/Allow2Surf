@@ -89,10 +89,10 @@ public extension String {
     /// Adds a newline at the closest space from the middle of a string.
     /// Example turning "Mark as Read" into "Mark as\n Read"
     public func stringSplitWithNewline() -> String {
-        let mid = self.characters.count/2
+        let mid = self.count/2
 
-        let arr: [Int] = self.characters.indices.flatMap {
-            if self.characters[$0] == " " {
+        let arr: [Int] = self.indices.flatMap {
+            if self[$0] == " " {
                 return self.distance(from: startIndex, to: $0)
             }
 
@@ -102,7 +102,7 @@ public extension String {
             return self
         }
         var newString = self
-        newString.insert("\n", at: newString.characters.index(newString.characters.startIndex, offsetBy: closest.element))
+        newString.insert("\n", at: newString.index(newString.startIndex, offsetBy: closest.element))
         return newString
     }
     
