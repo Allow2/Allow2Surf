@@ -365,6 +365,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIViewControllerRestorati
         
         let profile = getProfile(application)
         requirePinIfNeeded(profile: profile)
+        
+        Allow2.shared.childId = nil
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

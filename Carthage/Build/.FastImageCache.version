@@ -2,8 +2,8 @@
   "commitish" : "2615d275abe6195f4a90a7b46593768b74b3b273",
   "iOS" : [
     {
-      "hash" : "ba9cf12589f78db43024f3307b9c6db215e3e58031be05a28ad0d07a5c447ac0",
-      "name" : "FastImageCache"
+      "name" : "FastImageCache",
+      "hash" : "2da0deb7b4f4dd6a3b2c04266fab94895e0c4ddc0e98dc08f566899127532a0b"
     }
   ]
 }

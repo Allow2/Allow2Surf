@@ -102,6 +102,7 @@ class BrowserViewController: UIViewController {
     // allow2
     var allow2CheckTimer : Timer?
     var allow2BlockViewController: Allow2BlockViewController!
+    var allow2LoginViewController: Allow2LoginViewController!
 
     static var instanceAsserter = 0 // Brave: it is easy to get confused as to which fx classes are effectively singletons
 
@@ -350,7 +351,9 @@ class BrowserViewController: UIViewController {
         webViewContainer.addSubview(webViewContainerToolbar)
         view.addSubview(webViewContainer)
 
-        log.debug("BVC setting up allow2 blocking view…")
+        log.debug("BVC setting up allow2 views…")
+        allow2LoginViewController = Allow2.allow2LoginViewController
+        allow2LoginViewController.view.isHidden = true
         allow2BlockViewController = Allow2.allow2BlockViewController
         allow2BlockViewController.view.isHidden = true
         
@@ -358,15 +361,18 @@ class BrowserViewController: UIViewController {
         if (false) {
             let activities = JSON()
             let dayTypes = JSON()
+            let children = JSON()
             
             let result = Allow2CheckResult(allowed: false,
                                            activities: activities,
-                                           dayTypes: dayTypes)
+                                           dayTypes: dayTypes,
+                                           children: children)
             self.allow2BlockViewController.checkResult(checkResult: result)
             allow2BlockViewController.view.isHidden = false
         }
+        view.addSubview(allow2LoginViewController.view)
         view.addSubview(allow2BlockViewController.view)
-        
+
         log.debug("BVC setting up status bar…")
         statusBarOverlay = UIView()
         statusBarOverlay.backgroundColor = BraveUX.ToolbarsBackgroundSolidColor
@@ -473,11 +479,11 @@ class BrowserViewController: UIViewController {
             make.edges.equalTo(webViewContainer)
         }
         
-        allow2BlockViewController.view.snp_makeConstraints { make in
+        allow2BlockViewController.view.snp.makeConstraints { make in
             make.edges.equalTo(webViewContainer)
         }
         
-        webViewContainerToolbar.snp_makeConstraints { make in
+        webViewContainerToolbar.snp.makeConstraints { make in
             make.left.right.top.equalTo(webViewContainer)
             make.height.equalTo(0)
         }
@@ -1158,7 +1164,11 @@ extension BrowserViewController {
                 // configure the block screen to explain the issue
                 self.allow2BlockViewController.checkResult(checkResult: result)
             }
-            self.allow2BlockViewController.view.isHidden = result.allowed
+            self.allow2BlockViewController.view.isHidden = (Allow2.shared.childId == nil) || result.allowed
+            self.allow2LoginViewController.view.isHidden = Allow2.shared.childId != nil
+            if (Allow2.shared.childId == nil) {
+                self.allow2LoginViewController.newChildren()
+            }
         }
     }
 }
