@@ -1164,8 +1164,8 @@ extension BrowserViewController {
                 // configure the block screen to explain the issue
                 self.allow2BlockViewController.checkResult(checkResult: result)
             }
-            self.allow2BlockViewController.view.isHidden = (Allow2.shared.childId == nil) || result.allowed
-            self.allow2LoginViewController.view.isHidden = Allow2.shared.childId != nil
+            self.allow2BlockViewController.view.isHidden = !Allow2.shared.isPaired || (Allow2.shared.childId == nil) || result.allowed
+            self.allow2LoginViewController.view.isHidden = !Allow2.shared.isPaired || (Allow2.shared.childId != nil)
             if (Allow2.shared.childId == nil) {
                 self.allow2LoginViewController.newChildren()
             }
