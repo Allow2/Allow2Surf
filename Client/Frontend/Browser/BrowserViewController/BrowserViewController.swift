@@ -368,6 +368,7 @@ class BrowserViewController: UIViewController {
                                            dayTypes: dayTypes,
                                            children: children)
             self.allow2BlockViewController.checkResult(checkResult: result)
+            // todo: addTouchFilter
             allow2BlockViewController.view.isHidden = false
         }
         view.addSubview(allow2LoginViewController.view)
@@ -1147,10 +1148,11 @@ extension BrowserViewController: ReaderModeDelegate {
 // MARK: - Allow2
 
 extension BrowserViewController {
+    
     func Allow2PairingChangedNotification(notification:NSNotification) {
         print(notification)
     }
-
+    
     func Allow2CheckResultNotification(notification:NSNotification) {
         guard let userInfo = notification.userInfo,
             let result  = userInfo["result"] as? Allow2CheckResult else {
