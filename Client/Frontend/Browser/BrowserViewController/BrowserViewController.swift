@@ -362,10 +362,12 @@ class BrowserViewController: UIViewController {
             let activities = JSON()
             let dayTypes = JSON()
             let children = JSON()
-            
+            let allDayTypes = JSON()
+
             let result = Allow2CheckResult(allowed: false,
                                            activities: activities,
                                            dayTypes: dayTypes,
+                                           allDayTypes: allDayTypes,
                                            children: children)
             self.allow2BlockViewController.checkResult(checkResult: result)
             // todo: addTouchFilter
