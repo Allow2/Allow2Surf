@@ -120,6 +120,7 @@
 		4649D0E412F24DB5EB918AD5 /* Visit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE7F2514D6093589F258163 /* Visit.swift */; };
 		479A31771C308868296EA8C3 /* table.cc in Sources */ = {isa = PBXBuildFile; fileRef = 35E413620EF5D1B803AF3D7D /* table.cc */; };
 		48C6EB7A9F5866B0EAD90E90 /* SearchEngines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BDFA099D42674F2B2CE3CC /* SearchEngines.swift */; };
+		49046C2C204C232200D2CA72 /* Allow2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49FA9783204B99C500A9EFD4 /* Allow2.xcassets */; };
 		491F00DB2043616A006973B3 /* builder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 537D2877A356B516D2AD8F3E /* builder.cc */; };
 		491F00DC2043616A006973B3 /* c.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3A17EA52E38E83395749035F /* c.cc */; };
 		491F00DD2043616A006973B3 /* Domain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C44C0D91E3EE42D00B1FD81 /* Domain.swift */; };
@@ -4331,6 +4332,9 @@
 						DevelopmentTeam = L44G2T7U48;
 						ProvisioningStyle = Automatic;
 					};
+					491F02AE20436DBC006973B3 = {
+						DevelopmentTeam = L44G2T7U48;
+					};
 					E4D567171ADECE2700F1EFE7 = {
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = L44G2T7U48;
@@ -4662,6 +4666,7 @@
 				491F01F02043616A006973B3 /* Licenses.html in Resources */,
 				491F01F12043616A006973B3 /* CertError.css in Resources */,
 				491F01F22043616A006973B3 /* CertError.html in Resources */,
+				49046C2C204C232200D2CA72 /* Allow2.xcassets in Resources */,
 				491F01F32043616A006973B3 /* FiraSans-UltraLight.ttf in Resources */,
 				491F01F42043616A006973B3 /* Favicons.js in Resources */,
 				491F01F52043616A006973B3 /* FindInPage.js in Resources */,
@@ -5929,6 +5934,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
 				CODE_SIGN_ENTITLEMENTS = brave/Brave.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -5963,6 +5969,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
 				CODE_SIGN_ENTITLEMENTS = brave/Brave.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
