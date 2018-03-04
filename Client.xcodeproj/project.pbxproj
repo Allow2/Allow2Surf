@@ -124,6 +124,7 @@
 		497D6B931E1F9A9C0021EAB8 /* Allow2.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 497D6B821E1F96CE0021EAB8 /* Allow2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		49B0DDB0C82A7C833ED598C0 /* atomic_pointer.h in Headers */ = {isa = PBXBuildFile; fileRef = 599EC63A8464C30F44D63B47 /* atomic_pointer.h */; };
 		49EC58027D98E205CF632DCF /* FirstPartyHost.h in Headers */ = {isa = PBXBuildFile; fileRef = 32454E9E39178D4B3CD31294 /* FirstPartyHost.h */; };
+		49FA9784204B99C600A9EFD4 /* Allow2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49FA9783204B99C500A9EFD4 /* Allow2.xcassets */; };
 		4A6B728ACF11D1753EB947C3 /* Clearables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05853EA6194DFB05DAD2C6FD /* Clearables.swift */; };
 		4AEC1270F1F51DE3120C8E86 /* LoginDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B84F4FD474C6D1B60735D7C /* LoginDetailViewController.swift */; };
 		4AF02687F2E5153D0D0632EF /* log_writer.cc in Sources */ = {isa = PBXBuildFile; fileRef = B783C09EE8C9FEC39FE966E3 /* log_writer.cc */; };
@@ -1055,6 +1056,7 @@
 		496A2069937D1214E5D088D8 /* testutil.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = testutil.h; path = ./brave/ThirdParty/leveldb/util/testutil.h; sourceTree = "<group>"; };
 		497D6B7C1E1F96CE0021EAB8 /* Allow2Framework.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Allow2Framework.xcodeproj; path = ThirdParty/Allow2/Allow2Framework.xcodeproj; sourceTree = "<group>"; };
 		49B46C33DD00B2A2DA25A97E /* UMTableViewCell.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = UMTableViewCell.h; path = ./ThirdParty/SWTableViewCell/UMTableViewCell.h; sourceTree = "<group>"; };
+		49FA9783204B99C500A9EFD4 /* Allow2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Allow2.xcassets; path = Client/Assets/Allow2.xcassets; sourceTree = "<group>"; };
 		4A01E0C243FA16CD4A8D1BB6 /* HomePanels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HomePanels.swift; path = ./Client/Frontend/Home/HomePanels.swift; sourceTree = "<group>"; };
 		4A3DBBA58E534C89EA119ABA /* UIConstants.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UIConstants.swift; path = ./Client/Frontend/UIConstants.swift; sourceTree = "<group>"; };
 		4A968F5D043E33C1866219E7 /* BraveApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BraveApp.swift; path = ./brave/src/BraveApp.swift; sourceTree = "<group>"; };
@@ -3268,6 +3270,7 @@
 				1C8FD3566C50CE373834F8B4 /* BraveShareTo */,
 				F2561B159976A43D01259D17 /* Client */,
 				0BB0AC9161A9CF9D96C7B547 /* Images.xcassets */,
+				49FA9783204B99C500A9EFD4 /* Allow2.xcassets */,
 				AA44EA103045B9E3603E2207 /* SearchPlugins */,
 				45E472D18112457D39A86291 /* Home.xcassets */,
 				B174C906ABCB1B2798AD538E /* Intro.xcassets */,
@@ -4049,6 +4052,7 @@
 				15172EAC2FF91D5014CAA0CB /* Licenses.html in Resources */,
 				4134197C39A4456007BCF42B /* CertError.css in Resources */,
 				E37145E30F71657D57F6747C /* CertError.html in Resources */,
+				49FA9784204B99C600A9EFD4 /* Allow2.xcassets in Resources */,
 				EB8F56A31DD13DF300679A78 /* FiraSans-UltraLight.ttf in Resources */,
 				0A14A8BA1997EFDD9BF4F08A /* Favicons.js in Resources */,
 				59D6B30954B53C907F022CA7 /* FindInPage.js in Resources */,
@@ -4506,7 +4510,6 @@
 				1FA81E870F3EAE5C8FB9269C /* BrowserViewController+ContextMenuHelperDelegate.swift in Sources */,
 				5C67126F8B355442E99D9EDB /* BrowserViewController+FindInPage.swift in Sources */,
 				49603E1E5183CDC3BD1C2D09 /* BrowserViewController+KeyCommands.swift in Sources */,
-				5C1A9E9B1F97E2F80071495E /* AlertPopupView.swift in Sources */,
 				5C2CD4481F72FA6C004AAB5D /* TopSite.swift in Sources */,
 				5D27859A1E70D7EF0066EC15 /* JSInjector.swift in Sources */,
 				C1F07A6A18FC4630EA937E6B /* BrowserViewController+ReaderModeDelegate.swift in Sources */,
@@ -4902,6 +4905,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = brave/Brave.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -5500,6 +5504,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = brave/Brave.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;

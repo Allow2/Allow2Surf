@@ -53,7 +53,7 @@ class BraveApp {
 
     var allow2Timer : Timer?
     let allow2Activities = [ Allow2.Allow2Activity(activity: Allow2.Activity.Internet, log: true) ]    // just log internet usage = browser use
-    let allow2ActivitiesNoLog = [ Allow2.Allow2Activity(activity: Allow2.Activity.Internet, log: false) ]
+    //let allow2ActivitiesNoLog = [ Allow2.Allow2Activity(activity: Allow2.Activity.Internet, log: false) ]
     
     class var singleton: BraveApp {
         return _singleton
