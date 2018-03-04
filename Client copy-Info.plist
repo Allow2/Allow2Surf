@@ -5,14 +5,16 @@
 	<key>Allow2</key>
 	<dict>
 		<key>DeviceToken</key>
-		<string>tx0hzvvgleEJ2uHZ</string>
+		<string>fkptV9fm4OCbhGv6</string>
+		<key>Environment</key>
+		<string>staging</string>
 	</dict>
 	<key>BuildID</key>
 	<string>$(MOZ_BUILD_ID)</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Allow2Surf</string>
+	<string>A2Surf Staging</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

@@ -120,6 +120,419 @@
 		4649D0E412F24DB5EB918AD5 /* Visit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE7F2514D6093589F258163 /* Visit.swift */; };
 		479A31771C308868296EA8C3 /* table.cc in Sources */ = {isa = PBXBuildFile; fileRef = 35E413620EF5D1B803AF3D7D /* table.cc */; };
 		48C6EB7A9F5866B0EAD90E90 /* SearchEngines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BDFA099D42674F2B2CE3CC /* SearchEngines.swift */; };
+		491F00DB2043616A006973B3 /* builder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 537D2877A356B516D2AD8F3E /* builder.cc */; };
+		491F00DC2043616A006973B3 /* c.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3A17EA52E38E83395749035F /* c.cc */; };
+		491F00DD2043616A006973B3 /* Domain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C44C0D91E3EE42D00B1FD81 /* Domain.swift */; };
+		491F00DE2043616A006973B3 /* db_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 956D5A8B62DE3039133550CF /* db_impl.cc */; };
+		491F00DF2043616A006973B3 /* db_iter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 66D18A8C8455B1E777D874DB /* db_iter.cc */; };
+		491F00E02043616A006973B3 /* dbformat.cc in Sources */ = {isa = PBXBuildFile; fileRef = 63385F88C43F167A141D6643 /* dbformat.cc */; };
+		491F00E12043616A006973B3 /* SyncSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AE6F71E83F3EC00BC274C /* SyncSite.swift */; };
+		491F00E22043616A006973B3 /* dumpfile.cc in Sources */ = {isa = PBXBuildFile; fileRef = A88DB45B196E00624A7B7B90 /* dumpfile.cc */; };
+		491F00E32043616A006973B3 /* filename.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5B7417C2784852C8AA016A94 /* filename.cc */; };
+		491F00E42043616A006973B3 /* log_reader.cc in Sources */ = {isa = PBXBuildFile; fileRef = 63E8EDD738DCC5576C50A0C9 /* log_reader.cc */; };
+		491F00E52043616A006973B3 /* log_writer.cc in Sources */ = {isa = PBXBuildFile; fileRef = B783C09EE8C9FEC39FE966E3 /* log_writer.cc */; };
+		491F00E62043616A006973B3 /* memtable.cc in Sources */ = {isa = PBXBuildFile; fileRef = 03E632C3081928FF6C86DEE4 /* memtable.cc */; };
+		491F00E72043616A006973B3 /* repair.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6EAABA8CA7B7C5801509E9D0 /* repair.cc */; };
+		491F00E82043616A006973B3 /* table_cache.cc in Sources */ = {isa = PBXBuildFile; fileRef = D59264E87AE2E178065BEACD /* table_cache.cc */; };
+		491F00E92043616A006973B3 /* version_edit.cc in Sources */ = {isa = PBXBuildFile; fileRef = D64F01206EDCB47C7ACB98F0 /* version_edit.cc */; };
+		491F00EA2043616A006973B3 /* version_set.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5A96238B8C31C177C5873A11 /* version_set.cc */; };
+		491F00EB2043616A006973B3 /* write_batch.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3A34CC3E591D2465D0000AAA /* write_batch.cc */; };
+		491F00EC2043616A006973B3 /* memenv.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50DC5BA8C28692176DFC4C46 /* memenv.cc */; };
+		491F00ED2043616A006973B3 /* TabMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD7F38F1E3FB7FA00A12BB9 /* TabMO.swift */; };
+		491F00EE2043616A006973B3 /* LICENSE in Sources */ = {isa = PBXBuildFile; fileRef = 36C647DC00749BCC944D6EC6 /* LICENSE */; };
+		491F00EF2043616A006973B3 /* port_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1B76A990D16A2AE724D9324E /* port_posix.cc */; };
+		491F00F02043616A006973B3 /* block.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7AA3F113A31F6DD6D7CAFEFC /* block.cc */; };
+		491F00F12043616A006973B3 /* block_builder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 42E7370C905EB0AE722AA0C5 /* block_builder.cc */; };
+		491F00F22043616A006973B3 /* filter_block.cc in Sources */ = {isa = PBXBuildFile; fileRef = C504B043B95B6E6E53B51F03 /* filter_block.cc */; };
+		491F00F32043616A006973B3 /* Niceware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D71B69A1E6885E00073621F /* Niceware.swift */; };
+		491F00F42043616A006973B3 /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1A9E841F97D6060071495E /* PopupView.swift */; };
+		491F00F52043616A006973B3 /* format.cc in Sources */ = {isa = PBXBuildFile; fileRef = 77ED3937A3D82C40D330F6A3 /* format.cc */; };
+		491F00F62043616A006973B3 /* BraveShieldStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE70E441E022FAB008B307A /* BraveShieldStatsView.swift */; };
+		491F00F72043616A006973B3 /* SyncRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2F109D1ECA40DC00CF0E0D /* SyncRecord.swift */; };
+		491F00F82043616A006973B3 /* iterator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0EBC2ADD319427C267D1BEAF /* iterator.cc */; };
+		491F00F92043616A006973B3 /* merger.cc in Sources */ = {isa = PBXBuildFile; fileRef = DEBBDB9EC3E17802A5D178D1 /* merger.cc */; };
+		491F00FA2043616A006973B3 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D11B1921F01A5F8007B1DF4 /* UIViewExtensions.swift */; };
+		491F00FB2043616A006973B3 /* table.cc in Sources */ = {isa = PBXBuildFile; fileRef = 35E413620EF5D1B803AF3D7D /* table.cc */; };
+		491F00FC2043616A006973B3 /* table_builder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 870EB988AA65C4BB4CD0BCE2 /* table_builder.cc */; };
+		491F00FD2043616A006973B3 /* two_level_iterator.cc in Sources */ = {isa = PBXBuildFile; fileRef = BED9E8295A95A1639164EC89 /* two_level_iterator.cc */; };
+		491F00FE2043616A006973B3 /* arena.cc in Sources */ = {isa = PBXBuildFile; fileRef = E74090B2DC9AACC275A23C78 /* arena.cc */; };
+		491F00FF2043616A006973B3 /* DAU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8053951FC59D82008D6822 /* DAU.swift */; };
+		491F01002043616A006973B3 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C44C0DD1E3EE47B00B1FD81 /* History.swift */; };
+		491F01012043616A006973B3 /* bloom.cc in Sources */ = {isa = PBXBuildFile; fileRef = CBF4E22AF178C4C42C998376 /* bloom.cc */; };
+		491F01022043616A006973B3 /* cache.cc in Sources */ = {isa = PBXBuildFile; fileRef = D67DB7F7781109349E0B3EDC /* cache.cc */; };
+		491F01032043616A006973B3 /* coding.cc in Sources */ = {isa = PBXBuildFile; fileRef = FAE5A15268DFC9514AC6551D /* coding.cc */; };
+		491F01042043616A006973B3 /* comparator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 64CFAD3123BF24C24EDA6133 /* comparator.cc */; };
+		491F01052043616A006973B3 /* crc32c.cc in Sources */ = {isa = PBXBuildFile; fileRef = FE353EC2DEF404A13E27C6FE /* crc32c.cc */; };
+		491F01062043616A006973B3 /* env.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4FF424D6BA9C9B0ED879E681 /* env.cc */; };
+		491F01072043616A006973B3 /* env_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 526055DC47C8027F95E5B650 /* env_posix.cc */; };
+		491F01082043616A006973B3 /* filter_policy.cc in Sources */ = {isa = PBXBuildFile; fileRef = E6649E63B1FC5323B1BFF2E3 /* filter_policy.cc */; };
+		491F01092043616A006973B3 /* hash.cc in Sources */ = {isa = PBXBuildFile; fileRef = C1EDEAAE020488481B5A4A1F /* hash.cc */; };
+		491F010A2043616A006973B3 /* histogram.cc in Sources */ = {isa = PBXBuildFile; fileRef = C8ED06F8D4F8DF4936BB88C5 /* histogram.cc */; };
+		491F010B2043616A006973B3 /* logging.cc in Sources */ = {isa = PBXBuildFile; fileRef = C3603756FF1A103E2F905E53 /* logging.cc */; };
+		491F010C2043616A006973B3 /* cosmetic_filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = EB00A6851E1C071000680DB8 /* cosmetic_filter.cc */; };
+		491F010D2043616A006973B3 /* AlertPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDC06281FC64EDA00E54C95 /* AlertPopupView.swift */; };
+		491F010E2043616A006973B3 /* options.cc in Sources */ = {isa = PBXBuildFile; fileRef = DC29FF03A5871143F549A37A /* options.cc */; };
+		491F010F2043616A006973B3 /* status.cc in Sources */ = {isa = PBXBuildFile; fileRef = C760C12370CD279FD30D83CF /* status.cc */; };
+		491F01102043616A006973B3 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2F106D1ECA0E3100CF0E0D /* Device.swift */; };
+		491F01112043616A006973B3 /* testharness.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5A00CD3C06748E570CF9958C /* testharness.cc */; };
+		491F01122043616A006973B3 /* testutil.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0FA8929C0D08EA248F350718 /* testutil.cc */; };
+		491F01132043616A006973B3 /* SyncBookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AE6F51E83F3EC00BC274C /* SyncBookmark.swift */; };
+		491F01142043616A006973B3 /* WebsitePresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D448B471EA1572A00F1BA98 /* WebsitePresentable.swift */; };
+		491F01152043616A006973B3 /* NSData+GZIP.m in Sources */ = {isa = PBXBuildFile; fileRef = 33FB8F3ADE3F46C30830F3C8 /* NSData+GZIP.m */; };
+		491F01162043616A006973B3 /* NSFileManager+Tar.m in Sources */ = {isa = PBXBuildFile; fileRef = 591A8B6147A5DEB22E75A873 /* NSFileManager+Tar.m */; };
+		491F01172043616A006973B3 /* BraveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A968F5D043E33C1866219E7 /* BraveApp.swift */; };
+		491F01182043616A006973B3 /* BraveUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8856E29DAA2D9EAC4F9A85 /* BraveUtil.swift */; };
+		491F01192043616A006973B3 /* BraveBrowserBottomToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE61BC5B8E404D11F5547F /* BraveBrowserBottomToolbar.swift */; };
+		491F011A2043616A006973B3 /* BraveBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C39A9721F0FECF98A48015E /* BraveBrowserViewController.swift */; };
+		491F011B2043616A006973B3 /* BraveMainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105A3ED2E6BEFE42CDC7E572 /* BraveMainWindow.swift */; };
+		491F011C2043616A006973B3 /* BraveScrollController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D1777F9AA8762221511A28 /* BraveScrollController.swift */; };
+		491F011D2043616A006973B3 /* BraveSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04648D50CD155900F6682BE /* BraveSettingsView.swift */; };
+		491F011E2043616A006973B3 /* BraveTopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6961928E2984A658CB03CC00 /* BraveTopViewController.swift */; };
+		491F011F2043616A006973B3 /* SyncWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0FCE4C1E5FB3810016DF0F /* SyncWelcomeViewController.swift */; };
+		491F01202043616A006973B3 /* BraveURLBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC3246EB07883A76BDD2DCC /* BraveURLBarView.swift */; };
+		491F01212043616A006973B3 /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F1D471891D777C7C007B443D /* OnePasswordExtension.m */; };
+		491F01222043616A006973B3 /* BraveUX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A3FF8C10C5708D9DAD03D /* BraveUX.swift */; };
+		491F01232043616A006973B3 /* filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = EB00A68B1E1C079800680DB8 /* filter.cc */; };
+		491F01242043616A006973B3 /* HistorySwiper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1081FC02756E52D6E7B045EC /* HistorySwiper.swift */; };
+		491F01252043616A006973B3 /* ODRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 153CFCBEC63A613A0699D370 /* ODRefreshControl.m */; };
+		491F01262043616A006973B3 /* PicklistSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6928610E288C47F9546A63E4 /* PicklistSetting.swift */; };
+		491F01272043616A006973B3 /* BraveRightSidePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED441214938259EBE2ACD8DF /* BraveRightSidePanel.swift */; };
+		491F01282043616A006973B3 /* MainSidePanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3646C785759BD2F9EDC310C7 /* MainSidePanelViewController.swift */; };
+		491F01292043616A006973B3 /* SidePanelBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209D7E86C279706A100E8D88 /* SidePanelBaseViewController.swift */; };
+		491F012A2043616A006973B3 /* SwizzlingToHideSharePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C51F13ADC0C2BC71D40BEF /* SwizzlingToHideSharePicker.m */; };
+		491F012B2043616A006973B3 /* TabsBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688FD5A6B7436E480B4E55E3 /* TabsBarViewController.swift */; };
+		491F012C2043616A006973B3 /* TabWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914E8DD963925C8047EC06A8 /* TabWidget.swift */; };
+		491F012D2043616A006973B3 /* BlankTargetLinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62AAE6F491DAD1591445A285 /* BlankTargetLinkHandler.swift */; };
+		491F012E2043616A006973B3 /* BraveContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2122B3144F9374D630138ED /* BraveContextMenu.swift */; };
+		491F012F2043616A006973B3 /* BravePageUnloadHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2B364C727B9A34AB89A2A0 /* BravePageUnloadHelper.swift */; };
+		491F01302043616A006973B3 /* ElementAtPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C6EEFFEC93440CA70F7A67 /* ElementAtPoint.swift */; };
+		491F01312043616A006973B3 /* FaviconMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD7F38D1E3EFBF100A12BB9 /* FaviconMO.swift */; };
+		491F01322043616A006973B3 /* SyncCodewordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0FCE611E63E1D90016DF0F /* SyncCodewordsView.swift */; };
+		491F01332043616A006973B3 /* FingerprintingProtection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA42171BC46246A6B974A34 /* FingerprintingProtection.swift */; };
+		491F01342043616A006973B3 /* HideEmptyImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CADC3E350A25BA3BC86931 /* HideEmptyImages.swift */; };
+		491F01352043616A006973B3 /* LoginsHelper+1PW.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56908D315724D806F9CC627A /* LoginsHelper+1PW.swift */; };
+		491F01362043616A006973B3 /* GeometryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC5CFBD1F0D4126009553C4 /* GeometryExtensions.swift */; };
+		491F01372043616A006973B3 /* InfoPlist.strings in Sources */ = {isa = PBXBuildFile; fileRef = 13E174F50F25AD3E32BBFFF8 /* InfoPlist.strings */; };
+		491F01382043616A006973B3 /* ABPFilterLibWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 44A1D7CEF39DC47354E3383E /* ABPFilterLibWrapper.mm */; };
+		491F01392043616A006973B3 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C44C0D11E384AE700B1FD81 /* DataController.swift */; };
+		491F013A2043616A006973B3 /* AdBlocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CC27D1519C3A454491A6F1 /* AdBlocker.swift */; };
+		491F013B2043616A006973B3 /* IntExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D48087B1F13C07D00E04833 /* IntExtensions.swift */; };
+		491F013C2043616A006973B3 /* UIWebViewSwizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = EB9CAB421DC2592700627A39 /* UIWebViewSwizzling.m */; };
+		491F013D2043616A006973B3 /* BraveShieldState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D47EEDBF68F4F4E9E88320A /* BraveShieldState.swift */; };
+		491F013E2043616A006973B3 /* binding.gyp in Sources */ = {isa = PBXBuildFile; fileRef = 0DD893DB0B65361DBB959310 /* binding.gyp */; };
+		491F013F2043616A006973B3 /* HttpsEverywhere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 741038B9CDCB128024B01FFA /* HttpsEverywhere.cpp */; };
+		491F01402043616A006973B3 /* HttpsEverywhereObjC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3C883D0122036ECFBAE221EB /* HttpsEverywhereObjC.mm */; };
+		491F01412043616A006973B3 /* LICENSE in Sources */ = {isa = PBXBuildFile; fileRef = 84234E9D923E84AF3E4E5FB3 /* LICENSE */; };
+		491F01422043616A006973B3 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 4BC23E768DAEB6A039B62C56 /* Makefile */; };
+		491F01432043616A006973B3 /* HttpsEverywhere.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DE82BEFE4A1706E4211F41 /* HttpsEverywhere.swift */; };
+		491F01442043616A006973B3 /* NetworkDataFileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3C112154BC4FDA280F05B0 /* NetworkDataFileLoader.swift */; };
+		491F01452043616A006973B3 /* SafeBrowsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3777B25D6E2DCFE76040F35 /* SafeBrowsing.swift */; };
+		491F01462043616A006973B3 /* TrackingProtection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8447DC2D14288124090AADAD /* TrackingProtection.swift */; };
+		491F01472043616A006973B3 /* TrackingProtectionCpp.mm in Sources */ = {isa = PBXBuildFile; fileRef = D9712AF4809BE509FFDBB4E3 /* TrackingProtectionCpp.mm */; };
+		491F01482043616A006973B3 /* UrlProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832562D9A827564459A77468 /* UrlProtocol.swift */; };
+		491F01492043616A006973B3 /* BraveWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DAE86EE9B954590E7537A5 /* BraveWebView.swift */; };
+		491F014A2043616A006973B3 /* LegacyJSContext.m in Sources */ = {isa = PBXBuildFile; fileRef = F322087D8EA0FBEBE2CC1B12 /* LegacyJSContext.m */; };
+		491F014B2043616A006973B3 /* PrivateBrowsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0A684D27A3A8B902FBBCBA /* PrivateBrowsing.swift */; };
+		491F014C2043616A006973B3 /* WebViewBackForward.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746EED2B1340B91CD6058A91 /* WebViewBackForward.swift */; };
+		491F014D2043616A006973B3 /* WebViewDocScale.m in Sources */ = {isa = PBXBuildFile; fileRef = E5287F4DC46DAD1154B404A5 /* WebViewDocScale.m */; };
+		491F014E2043616A006973B3 /* WebViewProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E56C0216FAEB62B2CDF5FE7 /* WebViewProgress.swift */; };
+		491F014F2043616A006973B3 /* WebViewScripting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F57A3BC5DC16D6451500BA /* WebViewScripting.swift */; };
+		491F01502043616A006973B3 /* SyncPairCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0FCE5B1E637C160016DF0F /* SyncPairCameraViewController.swift */; };
+		491F01512043616A006973B3 /* TPParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F90C6C6C21DCA3E0ED89E177 /* TPParser.cpp */; };
+		491F01522043616A006973B3 /* AdjustIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9584FB83BD374183DEA69E /* AdjustIntegration.swift */; };
+		491F01532043616A006973B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F94204C0EC007236424A86 /* AppDelegate.swift */; };
+		491F01542043616A006973B3 /* CrashReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AC60F738711305C6585EC4 /* CrashReporter.swift */; };
+		491F01552043616A006973B3 /* DebugSettingsBundleOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE39E512689513A2A395390 /* DebugSettingsBundleOptions.swift */; };
+		491F01562043616A006973B3 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE1D74E40F9E392FFCE9F2F /* main.swift */; };
+		491F01572043616A006973B3 /* QuickActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEB01189011D65668503900 /* QuickActions.swift */; };
+		491F01582043616A006973B3 /* TestAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACFD6CCE9B72D21CB2ADAD /* TestAppDelegate.swift */; };
+		491F01592043616A006973B3 /* WebServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91B6AED2ADFB9D742820133 /* WebServer.swift */; };
+		491F015A2043616A006973B3 /* NSAttributedStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3892D38D4A1AB5E4966CCB /* NSAttributedStringExtensions.swift */; };
+		491F015B2043616A006973B3 /* UIAlertControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD518CD61521727267829F7 /* UIAlertControllerExtensions.swift */; };
+		491F015C2043616A006973B3 /* UIImageViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1FB09C21B187C3C06E32BC /* UIImageViewExtensions.swift */; };
+		491F015D2043616A006973B3 /* UIPasteboardExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0673E6B0F226F20D46B220A9 /* UIPasteboardExtensions.swift */; };
+		491F015E2043616A006973B3 /* AboutHomeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC754FCC79857891055187B /* AboutHomeHandler.swift */; };
+		491F015F2043616A006973B3 /* BackForwardListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C922CCB2D8FDB2706B9269E7 /* BackForwardListViewController.swift */; };
+		491F01602043616A006973B3 /* Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A12D86BF942CEEDD82DF302 /* Browser.swift */; };
+		491F01612043616A006973B3 /* BrowserLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F2FC6AC3AFE5BD6E376F55 /* BrowserLocationView.swift */; };
+		491F01622043616A006973B3 /* BrowserPrintPageRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D345CE98628B405A96720773 /* BrowserPrintPageRenderer.swift */; };
+		491F01632043616A006973B3 /* BrowserPrompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0A4457AFC855E3DCE6B038 /* BrowserPrompts.swift */; };
+		491F01642043616A006973B3 /* BrowserScrollController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685E9059120FA15712A37853 /* BrowserScrollController.swift */; };
+		491F01652043616A006973B3 /* BrowserToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAF288D28E0EF3AAA607042 /* BrowserToolbar.swift */; };
+		491F01662043616A006973B3 /* BrowserTrayAnimators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F371D05B609063A51549E8 /* BrowserTrayAnimators.swift */; };
+		491F01672043616A006973B3 /* BrowserViewController+BrowserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9340801BD8388DEB00FEBA /* BrowserViewController+BrowserDelegate.swift */; };
+		491F01682043616A006973B3 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C94B8EC1F58A87800DE5FEE /* ImageCache.swift */; };
+		491F01692043616A006973B3 /* BrowserViewController+ContextMenuHelperDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D105CD957A7B38E9F1BAE848 /* BrowserViewController+ContextMenuHelperDelegate.swift */; };
+		491F016A2043616A006973B3 /* BrowserViewController+FindInPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA9175CB5140E6C4D47DC15 /* BrowserViewController+FindInPage.swift */; };
+		491F016B2043616A006973B3 /* BrowserViewController+KeyCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C528288360B38C934F38D /* BrowserViewController+KeyCommands.swift */; };
+		491F016C2043616A006973B3 /* TopSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2CD4471F72FA6C004AAB5D /* TopSite.swift */; };
+		491F016D2043616A006973B3 /* JSInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2785991E70D7EF0066EC15 /* JSInjector.swift */; };
+		491F016E2043616A006973B3 /* BrowserViewController+ReaderModeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6A73E84022322BA6158B2D /* BrowserViewController+ReaderModeDelegate.swift */; };
+		491F016F2043616A006973B3 /* BrowserViewController+TabManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154ABFEE676FAE0D12F2C7D5 /* BrowserViewController+TabManagerDelegate.swift */; };
+		491F01702043616A006973B3 /* BrowserViewController+ToolbarAndUrlbarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA2FD0C651BD36B4DFEE46F /* BrowserViewController+ToolbarAndUrlbarDelegate.swift */; };
+		491F01712043616A006973B3 /* HashSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB0097E31E1BF44000680DB8 /* HashSet.cpp */; };
+		491F01722043616A006973B3 /* BrowserViewController+WKNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10BF445F325FC67CA1BE469B /* BrowserViewController+WKNavigationDelegate.swift */; };
+		491F01732043616A006973B3 /* BrowserViewController+WKUIDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B38010CBB5F7DD8B2735223 /* BrowserViewController+WKUIDelegate.swift */; };
+		491F01742043616A006973B3 /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC7ABC3CB4B07DD065A185B /* BrowserViewController.swift */; };
+		491F01752043616A006973B3 /* ContextMenuHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123F09362D0AC9517D38B999 /* ContextMenuHelper.swift */; };
+		491F01762043616A006973B3 /* ErrorPageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F148E463456852B44DE863 /* ErrorPageHelper.swift */; };
+		491F01772043616A006973B3 /* MigrateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0293841E70D9AE00CA99D0 /* MigrateData.swift */; };
+		491F01782043616A006973B3 /* BraveBrowserToolbarButtonActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8D9CB1F82F469000BEE18 /* BraveBrowserToolbarButtonActions.swift */; };
+		491F01792043616A006973B3 /* hashFn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB009F391E1BF4CA00680DB8 /* hashFn.cpp */; };
+		491F017A2043616A006973B3 /* FaviconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394747630A3208C0183000C2 /* FaviconManager.swift */; };
+		491F017B2043616A006973B3 /* Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBDB7D461E14231900D744C7 /* Sync.swift */; };
+		491F017C2043616A006973B3 /* FindInPageBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02DAFE3F94EDC75EAB9C4F6 /* FindInPageBar.swift */; };
+		491F017D2043616A006973B3 /* FindInPageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6184965624CC221A1AEEDE /* FindInPageHelper.swift */; };
+		491F017E2043616A006973B3 /* LoginsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C992D1A2E874D87A41A9C53F /* LoginsHelper.swift */; };
+		491F017F2043616A006973B3 /* OpenPdfHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A8EBCF53BB0D14E34F6174 /* OpenPdfHelper.swift */; };
+		491F01802043616A006973B3 /* OpenSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDEF54F179B81FB069863662 /* OpenSearch.swift */; };
+		491F01812043616A006973B3 /* PrintHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F5A8D4175792F4A8242779 /* PrintHelper.swift */; };
+		491F01822043616A006973B3 /* ReaderModeBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA7DED2447BA5A4E6FE7C35 /* ReaderModeBarView.swift */; };
+		491F01832043616A006973B3 /* SyncDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0BD4031ED356B6003421CF /* SyncDevice.swift */; };
+		491F01842043616A006973B3 /* ScreenshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91344C46EFD16FE63ECA1664 /* ScreenshotHelper.swift */; };
+		491F01852043616A006973B3 /* SyncResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB199141E859F9100A851B6 /* SyncResponse.swift */; };
+		491F01862043616A006973B3 /* SearchEngines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BDFA099D42674F2B2CE3CC /* SearchEngines.swift */; };
+		491F01872043616A006973B3 /* SearchLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB991D7A481EEDB55783CEFC /* SearchLoader.swift */; };
+		491F01882043616A006973B3 /* SearchSuggestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E821DACFE5062DF30D1443 /* SearchSuggestClient.swift */; };
+		491F01892043616A006973B3 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE4AD12872C0C02E21DFC2C /* SearchViewController.swift */; };
+		491F018A2043616A006973B3 /* SessionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E155181FB66C692C8277B2 /* SessionData.swift */; };
+		491F018B2043616A006973B3 /* SessionRestoreHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EF65657121B82D0298261D /* SessionRestoreHandler.swift */; };
+		491F018C2043616A006973B3 /* SessionRestoreHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730D1C8B8EAD5A34A6E4AF0D /* SessionRestoreHelper.swift */; };
+		491F018D2043616A006973B3 /* SyncPairWordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0FCE631E63EA170016DF0F /* SyncPairWordsViewController.swift */; };
+		491F018E2043616A006973B3 /* BraveTermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFC706C1D9D9F30008A7B7A /* BraveTermsViewController.swift */; };
+		491F018F2043616A006973B3 /* PinController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C78D3E31F69DF5100E0C73B /* PinController.swift */; };
+		491F01902043616A006973B3 /* SwipeAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35E8E56BEC9DB2E1D4BD8C1 /* SwipeAnimator.swift */; };
+		491F01912043616A006973B3 /* TabManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C37EB043E611C439AA9768 /* TabManager.swift */; };
+		491F01922043616A006973B3 /* SyncCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0FCE651E63EB8B0016DF0F /* SyncCameraView.swift */; };
+		491F01932043616A006973B3 /* TabTrayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F8F9AA927469C395A01A8 /* TabTrayController.swift */; };
+		491F01942043616A006973B3 /* SyncBarcodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0FCE5F1E63E1790016DF0F /* SyncBarcodeView.swift */; };
+		491F01952043616A006973B3 /* URIFixup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E73012CDCAD318AC829281 /* URIFixup.swift */; };
+		491F01962043616A006973B3 /* URLBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1EC8C1DDF251BC04F959BC /* URLBarView.swift */; };
+		491F01972043616A006973B3 /* BloomFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB009F1E1E1BF4CA00680DB8 /* BloomFilter.cpp */; };
+		491F01982043616A006973B3 /* WindowCloseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0312A6613A6023990734CF /* WindowCloseHelper.swift */; };
+		491F01992043616A006973B3 /* BookmarksPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C80071AA062AE67BD5314D /* BookmarksPanel.swift */; };
+		491F019A2043616A006973B3 /* HistoryPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2BD742868BF371DEF34E82 /* HistoryPanel.swift */; };
+		491F019B2043616A006973B3 /* HomePanels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A01E0C243FA16CD4A8D1BB6 /* HomePanels.swift */; };
+		491F019C2043616A006973B3 /* HomePanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD27FD57D57C14AE7F1A5D6 /* HomePanelViewController.swift */; };
+		491F019D2043616A006973B3 /* ReaderPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8C87651157C51F01D4D96F /* ReaderPanel.swift */; };
+		491F019E2043616A006973B3 /* TopSitesPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4517EA1CA782F256C7DB897 /* TopSitesPanel.swift */; };
+		491F019F2043616A006973B3 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C1C8130DF9FA0A918B7891 /* IntroViewController.swift */; };
+		491F01A02043616A006973B3 /* LoginListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF6D7E2B35078DF1FE7BE68 /* LoginListViewController.swift */; };
+		491F01A12043616A006973B3 /* FSReadingList.m in Sources */ = {isa = PBXBuildFile; fileRef = F067E5532927BFEA1F8027E6 /* FSReadingList.m */; };
+		491F01A22043616A006973B3 /* ReadabilityBrowserHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D4544B27480EB0BE187D1B5 /* ReadabilityBrowserHelper.swift */; };
+		491F01A32043616A006973B3 /* ReadabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF55BD77888D4FCB23AA0A8 /* ReadabilityService.swift */; };
+		491F01A42043616A006973B3 /* ReaderMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54325619E7C2FF56A1E6471 /* ReaderMode.swift */; };
+		491F01A52043616A006973B3 /* ReaderModeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F6AF3AD51405F4E6DD7477 /* ReaderModeCache.swift */; };
+		491F01A62043616A006973B3 /* ReaderModeHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0B5E84787563E258467DE6 /* ReaderModeHandlers.swift */; };
+		491F01A72043616A006973B3 /* JSONSerializationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D11B1821F0195A7007B1DF4 /* JSONSerializationExtensions.swift */; };
+		491F01A82043616A006973B3 /* ReaderModeStyleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6D95C23337865036C98FDB /* ReaderModeStyleViewController.swift */; };
+		491F01A92043616A006973B3 /* ReaderModeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DE17DB3018F0630CCC1900 /* ReaderModeUtils.swift */; };
+		491F01AA2043616A006973B3 /* AppSettingsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8A4C274A1DE42346F4DADA /* AppSettingsOptions.swift */; };
+		491F01AB2043616A006973B3 /* AppSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DFABA7EF021729ECE808D1 /* AppSettingsTableViewController.swift */; };
+		491F01AC2043616A006973B3 /* Clearables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05853EA6194DFB05DAD2C6FD /* Clearables.swift */; };
+		491F01AD2043616A006973B3 /* ClearPrivateDataTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B92EC10DACFBFF5E890E54 /* ClearPrivateDataTableViewController.swift */; };
+		491F01AE2043616A006973B3 /* LoginDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B84F4FD474C6D1B60735D7C /* LoginDetailViewController.swift */; };
+		491F01AF2043616A006973B3 /* SyncSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0FCE5D1E6381B70016DF0F /* SyncSettingsViewController.swift */; };
+		491F01B02043616A006973B3 /* SearchEnginePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87678C04836F13BD02C57749 /* SearchEnginePicker.swift */; };
+		491F01B12043616A006973B3 /* SearchSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AECDC0CC95E3DB88A22B72 /* SearchSettingsTableViewController.swift */; };
+		491F01B22043616A006973B3 /* SettingsContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80019BA6EA272282E68FCA7C /* SettingsContentViewController.swift */; };
+		491F01B32043616A006973B3 /* Bookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C44C0D61E3C08B400B1FD81 /* Bookmark.swift */; };
+		491F01B42043616A006973B3 /* SettingsNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD12801C24B9F1BD0B2FDC1 /* SettingsNavigationController.swift */; };
+		491F01B52043616A006973B3 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED8720B8C08231F6A2FC090 /* SettingsTableViewController.swift */; };
+		491F01B62043616A006973B3 /* FindInPageActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5878D427F83867906A0A1F13 /* FindInPageActivity.swift */; };
+		491F01B72043616A006973B3 /* RequestDesktopSiteActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7213910FF51709F3F5E2C59 /* RequestDesktopSiteActivity.swift */; };
+		491F01B82043616A006973B3 /* ShareExtensionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB3BCCA0DFA377A04C8A79E /* ShareExtensionHelper.swift */; };
+		491F01B92043616A006973B3 /* TitleActivityItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6889A46373F182DFFDB59180 /* TitleActivityItemProvider.swift */; };
+		491F01BA2043616A006973B3 /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3DBBA58E534C89EA119ABA /* UIConstants.swift */; };
+		491F01BB2043616A006973B3 /* AuralProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A039A46D3958AB005BCBE545 /* AuralProgressBar.swift */; };
+		491F01BC2043616A006973B3 /* AutocompleteTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B60ED58454699DB9549B34B /* AutocompleteTextField.swift */; };
+		491F01BD2043616A006973B3 /* ChevronView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96D05B75A6150D1C3563901 /* ChevronView.swift */; };
+		491F01BE2043616A006973B3 /* ErrorToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F23E0D14B92A0A3784D5630 /* ErrorToast.swift */; };
+		491F01BF2043616A006973B3 /* InnerStrokedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15432E6C3B2273969569F01D /* InnerStrokedView.swift */; };
+		491F01C02043616A006973B3 /* InsetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBB2471B8BCB257B93C548B /* InsetButton.swift */; };
+		491F01C12043616A006973B3 /* LoginTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E0A7D9250B837EB95AF8E5 /* LoginTableViewCell.swift */; };
+		491F01C22043616A006973B3 /* SearchInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452C39CD747B928F9CF126B1 /* SearchInputView.swift */; };
+		491F01C32043616A006973B3 /* Punycode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB62B7FC1DB53F3D006FD479 /* Punycode.swift */; };
+		491F01C42043616A006973B3 /* SeparatorTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA85A2F9F4AF9C5BAB2EF608 /* SeparatorTableCell.swift */; };
+		491F01C52043616A006973B3 /* SiteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4EC7836B7D80B31285DCC6 /* SiteTableViewController.swift */; };
+		491F01C62043616A006973B3 /* SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0EF34FD8FF09F54B890AAD /* SnackBar.swift */; };
+		491F01C72043616A006973B3 /* TabsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DEF3C3476D68E9346DDABE9 /* TabsButton.swift */; };
+		491F01C82043616A006973B3 /* ad_block_client.cc in Sources */ = {isa = PBXBuildFile; fileRef = EB00A6831E1C071000680DB8 /* ad_block_client.cc */; };
+		491F01C92043616A006973B3 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F97764BF56AA792C3FCDCE /* Theme.swift */; };
+		491F01CA2043616A006973B3 /* ThumbnailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03435436D07EB2E82C401AA6 /* ThumbnailCell.swift */; };
+		491F01CB2043616A006973B3 /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AE5F9165CE40F4F87CC86A /* ToggleButton.swift */; };
+		491F01CC2043616A006973B3 /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509747D7D42AF963402467C2 /* Toolbar.swift */; };
+		491F01CD2043616A006973B3 /* SyncAddDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0FCE521E637B9D0016DF0F /* SyncAddDeviceViewController.swift */; };
+		491F01CE2043616A006973B3 /* TwoLineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9360BEADE369EB8BB4A7BBD /* TwoLineCell.swift */; };
+		491F01CF2043616A006973B3 /* SpotlightHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843FE3C79F6DF96D365FD7D6 /* SpotlightHelper.swift */; };
+		491F01D02043616A006973B3 /* NSUserDefaultsPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523D05ABFBD9436E6D8F2DB5 /* NSUserDefaultsPrefs.swift */; };
+		491F01D12043616A006973B3 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1FC165C17AD4E03F7BA9D8 /* Profile.swift */; };
+		491F01D22043616A006973B3 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 28642F23E2CE9D7D43B28CFA /* UIImage+ImageEffects.m */; };
+		491F01D32043616A006973B3 /* RXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B36C3F85252AC06EB2CEA7 /* RXMLElement.m */; };
+		491F01D42043616A006973B3 /* UIImageViewAligned.m in Sources */ = {isa = PBXBuildFile; fileRef = A2855E97F1A6BA46F570C2C2 /* UIImageViewAligned.m */; };
+		491F01D52043616A006973B3 /* AboutUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A31D3A52214549AEB2B3AF6 /* AboutUtils.swift */; };
+		491F01D62043616A006973B3 /* DynamicFontHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DE4CC5A534AD91F7BDD7C2 /* DynamicFontHelper.swift */; };
+		491F01D72043616A006973B3 /* ErrorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA05E2C1EFC4315001D7EDE /* ErrorExtensions.swift */; };
+		491F01D82043616A006973B3 /* FaviconFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADDAA844E92035E243155AA /* FaviconFetcher.swift */; };
+		491F01D92043616A006973B3 /* MenuHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044A09CA3AB626543290E03B /* MenuHelper.swift */; };
+		491F01DA2043616A006973B3 /* Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0161A70E588406035D9F53 /* Swizzling.m */; };
+		491F01DB2043616A006973B3 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5D3892531E98108F00F959E6 /* Model.xcdatamodeld */; };
+		491F01DC2043616A006973B3 /* Try.m in Sources */ = {isa = PBXBuildFile; fileRef = 2999273D53D63157E5CCE0F1 /* Try.m */; };
+		491F01DE2043616A006973B3 /* Readability.js in Resources */ = {isa = PBXBuildFile; fileRef = EB8F566E1DD0FC2800679A78 /* Readability.js */; };
+		491F01DF2043616A006973B3 /* Brave.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = B036144E80BFD02638E7E647 /* Brave.entitlements */; };
+		491F01E02043616A006973B3 /* adInfo-divquerytemplate.js in Resources */ = {isa = PBXBuildFile; fileRef = 6E4F971F06CCD5FE5475FF99 /* adInfo-divquerytemplate.js */; };
+		491F01E12043616A006973B3 /* FiraSans-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3EB5ABED5591BDD452C702A7 /* FiraSans-BoldItalic.ttf */; };
+		491F01E22043616A006973B3 /* adInfo-wrapper.js in Resources */ = {isa = PBXBuildFile; fileRef = A2805F59AFF335BB9E950000 /* adInfo-wrapper.js */; };
+		491F01E32043616A006973B3 /* adInfo.js in Resources */ = {isa = PBXBuildFile; fileRef = 8FFA045288C7CF6656937FC1 /* adInfo.js */; };
+		491F01E42043616A006973B3 /* adblock-regions.txt in Resources */ = {isa = PBXBuildFile; fileRef = EBA11E191E2EB84800C964E0 /* adblock-regions.txt */; };
+		491F01E52043616A006973B3 /* BlankTargetDetector.js in Resources */ = {isa = PBXBuildFile; fileRef = 72EAAB187C3C4D4963F67CD6 /* BlankTargetDetector.js */; };
+		491F01E62043616A006973B3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EB4E15DB1DB7F36600A4C7EA /* Localizable.strings */; };
+		491F01E72043616A006973B3 /* FiraSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AC1FEF85CBD43B0AB6FD7312 /* FiraSans-Light.ttf */; };
+		491F01E82043616A006973B3 /* ElementAtPoint.js in Resources */ = {isa = PBXBuildFile; fileRef = ADB79191D08021A6D529BF4D /* ElementAtPoint.js */; };
+		491F01E92043616A006973B3 /* FingerprintingProtection.js in Resources */ = {isa = PBXBuildFile; fileRef = D042E0F5F3F943C6FBC6D080 /* FingerprintingProtection.js */; };
+		491F01EA2043616A006973B3 /* CharisSILR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 09B26BBAC8D68EFA2A333975 /* CharisSILR.ttf */; };
+		491F01EB2043616A006973B3 /* FiraSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C228461239640F53947A0964 /* FiraSans-Bold.ttf */; };
+		491F01EC2043616A006973B3 /* FiraSans-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 50438081018B3AA0DE9E3FF9 /* FiraSans-Book.ttf */; };
+		491F01ED2043616A006973B3 /* HideEmptyImages.js in Resources */ = {isa = PBXBuildFile; fileRef = 63B327094DCD1CFF237021F3 /* HideEmptyImages.js */; };
+		491F01EE2043616A006973B3 /* PageUnload.js in Resources */ = {isa = PBXBuildFile; fileRef = 4D3874D9BE90A50CE9FD63DC /* PageUnload.js */; };
+		491F01EF2043616A006973B3 /* SafeBrowsingError.html in Resources */ = {isa = PBXBuildFile; fileRef = 4F16AEF9760886DB545D51B6 /* SafeBrowsingError.html */; };
+		491F01F02043616A006973B3 /* Licenses.html in Resources */ = {isa = PBXBuildFile; fileRef = 0E42E238F2AF15B6C9DD2B52 /* Licenses.html */; };
+		491F01F12043616A006973B3 /* CertError.css in Resources */ = {isa = PBXBuildFile; fileRef = 02C139BC9FA47F8C0F789FF0 /* CertError.css */; };
+		491F01F22043616A006973B3 /* CertError.html in Resources */ = {isa = PBXBuildFile; fileRef = 1A30431AEBBA142C2586BE85 /* CertError.html */; };
+		491F01F32043616A006973B3 /* FiraSans-UltraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5465B72EA414E035DEAE5667 /* FiraSans-UltraLight.ttf */; };
+		491F01F42043616A006973B3 /* Favicons.js in Resources */ = {isa = PBXBuildFile; fileRef = 9C0FE62111208C1C3C2CF16A /* Favicons.js */; };
+		491F01F52043616A006973B3 /* FindInPage.js in Resources */ = {isa = PBXBuildFile; fileRef = EA59A531812A82B1DAC03D72 /* FindInPage.js */; };
+		491F01F62043616A006973B3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BB0AC9161A9CF9D96C7B547 /* Images.xcassets */; };
+		491F01F72043616A006973B3 /* LoginsHelper.js in Resources */ = {isa = PBXBuildFile; fileRef = B6339DA63849AA7EBB1AD756 /* LoginsHelper.js */; };
+		491F01F82043616A006973B3 /* NetError.css in Resources */ = {isa = PBXBuildFile; fileRef = B68328D5B8841C75EC4CF248 /* NetError.css */; };
+		491F01F92043616A006973B3 /* CharisSILI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAE028C64B419AFDEEDD89C /* CharisSILI.ttf */; };
+		491F01FA2043616A006973B3 /* NetError.html in Resources */ = {isa = PBXBuildFile; fileRef = CCF5EA52A3A0DB9B90E811B7 /* NetError.html */; };
+		491F01FB2043616A006973B3 /* ios-sync.js in Resources */ = {isa = PBXBuildFile; fileRef = EBDB7D561E14337800D744C7 /* ios-sync.js */; };
+		491F01FC2043616A006973B3 /* PrintHelper.js in Resources */ = {isa = PBXBuildFile; fileRef = 77608A4209364B0714688815 /* PrintHelper.js */; };
+		491F01FD2043616A006973B3 /* default.txt in Resources */ = {isa = PBXBuildFile; fileRef = E0C5C6F1D13FCD5152DBBE33 /* default.txt */; };
+		491F01FE2043616A006973B3 /* FiraSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D5A0C238BFA68019EFA7599 /* FiraSans-Regular.ttf */; };
+		491F01FF2043616A006973B3 /* list.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4B73C56F03641D9502B6092C /* list.txt */; };
+		491F02002043616A006973B3 /* SearchPlugins in Resources */ = {isa = PBXBuildFile; fileRef = AA44EA103045B9E3603E2207 /* SearchPlugins */; };
+		491F02012043616A006973B3 /* FiraSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D51D3125DCE8021CF113B80 /* FiraSans-Medium.ttf */; };
+		491F02022043616A006973B3 /* SessionRestore.html in Resources */ = {isa = PBXBuildFile; fileRef = AD4E2E1A8967DFB81A5BCB99 /* SessionRestore.html */; };
+		491F02032043616A006973B3 /* FiraSans-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 15EC5680878673346481BD88 /* FiraSans-Italic.ttf */; };
+		491F02042043616A006973B3 /* niceware.js in Resources */ = {isa = PBXBuildFile; fileRef = 5D2B07EA1E6733B900244C39 /* niceware.js */; };
+		491F02052043616A006973B3 /* SpotlightHelper.js in Resources */ = {isa = PBXBuildFile; fileRef = E76112E70EDA47CD3A7F2845 /* SpotlightHelper.js */; };
+		491F02062043616A006973B3 /* CharisSILBI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 797B786D73B19443EE7AC18F /* CharisSILBI.ttf */; };
+		491F02072043616A006973B3 /* topdomains.txt in Resources */ = {isa = PBXBuildFile; fileRef = 15CBF8A3328920BDA39ACE03 /* topdomains.txt */; };
+		491F02082043616A006973B3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AFA596F1FA09D6B00E9F2EE /* LaunchScreen.storyboard */; };
+		491F02092043616A006973B3 /* WindowCloseHelper.js in Resources */ = {isa = PBXBuildFile; fileRef = 18CF882B686F0A49E665B882 /* WindowCloseHelper.js */; };
+		491F020A2043616A006973B3 /* Home.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45E472D18112457D39A86291 /* Home.xcassets */; };
+		491F020B2043616A006973B3 /* Intro.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B174C906ABCB1B2798AD538E /* Intro.xcassets */; };
+		491F020C2043616A006973B3 /* ReadabilityBrowserHelper.js in Resources */ = {isa = PBXBuildFile; fileRef = 85E716FFF91D45F8DBE93E59 /* ReadabilityBrowserHelper.js */; };
+		491F020D2043616A006973B3 /* Reader.css in Resources */ = {isa = PBXBuildFile; fileRef = 720790A29D8DD7451D408244 /* Reader.css */; };
+		491F020E2043616A006973B3 /* FiraSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2849F28840241B31DFD49F20 /* FiraSans-SemiBold.ttf */; };
+		491F020F2043616A006973B3 /* Reader.html in Resources */ = {isa = PBXBuildFile; fileRef = B390A064221CB58CACD977CA /* Reader.html */; };
+		491F02102043616A006973B3 /* Reader.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E40A01632FC93D27BE261DD /* Reader.xcassets */; };
+		491F02112043616A006973B3 /* ReaderMode.js in Resources */ = {isa = PBXBuildFile; fileRef = 9ED613EE9C7959D2189FB39F /* ReaderMode.js */; };
+		491F02122043616A006973B3 /* ReaderSettings.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAD93FEA70EC09EF2D95A298 /* ReaderSettings.xcassets */; };
+		491F02132043616A006973B3 /* ReaderViewLoading.html in Resources */ = {isa = PBXBuildFile; fileRef = F8B17D264514FF2D0EAF15EC /* ReaderViewLoading.html */; };
+		491F02142043616A006973B3 /* SiteTableViewControllerHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D8604C3CDEB6AEBCAC81B76 /* SiteTableViewControllerHeader.xib */; };
+		491F02152043616A006973B3 /* CharisSILB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 197FAAA7C19EE6AC040F4558 /* CharisSILB.ttf */; };
+		491F02172043616A006973B3 /* Allow2.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 497D6B821E1F96CE0021EAB8 /* Allow2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		491F02182043616A006973B3 /* ReadingList.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = E4D567181ADECE2700F1EFE7 /* ReadingList.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		491F02192043616A006973B3 /* Storage.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 2FCAE21A1ABB51F800877008 /* Storage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		491F021A2043616A006973B3 /* SQLite.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 5CD1641D1EDFB7090037ECCC /* SQLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		491F021B2043616A006973B3 /* Shared.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 288A2D861AB8B3260023ABC3 /* Shared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		491F021D2043616A006973B3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D39FA16B1A83E17800EE869C /* CoreGraphics.framework */; };
+		491F021E2043616A006973B3 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CD1641D1EDFB7090037ECCC /* SQLite.framework */; };
+		491F021F2043616A006973B3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C82452B1E68E95600D3CA09 /* AVFoundation.framework */; };
+		491F02202043616A006973B3 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6F1B1C1E67433F008B0ADD /* CoreImage.framework */; };
+		491F02212043616A006973B3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C44C0C21E38479200B1FD81 /* CoreData.framework */; };
+		491F02222043616A006973B3 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E6231C041B90A472005ABB0D /* libxml2.2.tbd */; };
+		491F02232043616A006973B3 /* libstdc++.6.0.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E6231C021B90A466005ABB0D /* libstdc++.6.0.9.tbd */; };
+		491F02242043616A006973B3 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E6231C001B90A44F005ABB0D /* libz.tbd */; };
+		491F02252043616A006973B3 /* Shared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288A2D861AB8B3260023ABC3 /* Shared.framework */; };
+		491F02262043616A006973B3 /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FCAE21A1ABB51F800877008 /* Storage.framework */; };
+		491F02272043616A006973B3 /* ReadingList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4D567181ADECE2700F1EFE7 /* ReadingList.framework */; };
+		491F02282043616A006973B3 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B8E0FF31A932BD500161DC3 /* ImageIO.framework */; };
+		491F02292043616A006973B3 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B844F80947392751D574C56A /* Fabric.framework */; };
+		491F022A2043616A006973B3 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1852F166F6BAB2154A8BEA92 /* Crashlytics.framework */; };
+		491F02302043616A006973B3 /* builder.h in Headers */ = {isa = PBXBuildFile; fileRef = B1D280EC8AAAB26C4BBB484C /* builder.h */; };
+		491F02312043616A006973B3 /* db_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D09BD4576555D874B5D0D4A /* db_impl.h */; };
+		491F02322043616A006973B3 /* db_iter.h in Headers */ = {isa = PBXBuildFile; fileRef = E6B96DA50B22FDA73E39FBBF /* db_iter.h */; };
+		491F02332043616A006973B3 /* dbformat.h in Headers */ = {isa = PBXBuildFile; fileRef = 78C221FEB531A8D07123FBA6 /* dbformat.h */; };
+		491F02342043616A006973B3 /* filename.h in Headers */ = {isa = PBXBuildFile; fileRef = 77EFB88EB71D5FFA5A679AC5 /* filename.h */; };
+		491F02352043616A006973B3 /* log_format.h in Headers */ = {isa = PBXBuildFile; fileRef = CD874D64F18795D5FDE53A9F /* log_format.h */; };
+		491F02362043616A006973B3 /* log_reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 9FEEC5779DCE986A2ADCC758 /* log_reader.h */; };
+		491F02372043616A006973B3 /* log_writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BBBD72900C0EEB46DEFD557 /* log_writer.h */; };
+		491F02382043616A006973B3 /* memtable.h in Headers */ = {isa = PBXBuildFile; fileRef = 00B90745791B75F3C766B545 /* memtable.h */; };
+		491F02392043616A006973B3 /* skiplist.h in Headers */ = {isa = PBXBuildFile; fileRef = 603F9DB2AF9BF800E8C52208 /* skiplist.h */; };
+		491F023A2043616A006973B3 /* snapshot.h in Headers */ = {isa = PBXBuildFile; fileRef = EF580DF3F5E52AC613B75662 /* snapshot.h */; };
+		491F023B2043616A006973B3 /* table_cache.h in Headers */ = {isa = PBXBuildFile; fileRef = 1853DEB0D5080049170E58F2 /* table_cache.h */; };
+		491F023C2043616A006973B3 /* version_edit.h in Headers */ = {isa = PBXBuildFile; fileRef = 3B425E955080FE76FD586900 /* version_edit.h */; };
+		491F023D2043616A006973B3 /* BloomFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = EB009F1F1E1BF4CA00680DB8 /* BloomFilter.h */; };
+		491F023E2043616A006973B3 /* version_set.h in Headers */ = {isa = PBXBuildFile; fileRef = E8BCB160EC64D1EA8086716C /* version_set.h */; };
+		491F023F2043616A006973B3 /* write_batch_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 3BB6CFD603F29620B7FDD72B /* write_batch_internal.h */; };
+		491F02402043616A006973B3 /* filter.h in Headers */ = {isa = PBXBuildFile; fileRef = EB0088981E1BF23800680DB8 /* filter.h */; };
+		491F02412043616A006973B3 /* memenv.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D9746805E2869918BFE1A92 /* memenv.h */; };
+		491F02422043616A006973B3 /* c.h in Headers */ = {isa = PBXBuildFile; fileRef = BDF9E0FC1CABCBBDD2276EFB /* c.h */; };
+		491F02432043616A006973B3 /* cache.h in Headers */ = {isa = PBXBuildFile; fileRef = CB5F1B5D88681643A9C0C7CF /* cache.h */; };
+		491F02442043616A006973B3 /* comparator.h in Headers */ = {isa = PBXBuildFile; fileRef = 375118584E8D0F8D403BD580 /* comparator.h */; };
+		491F02452043616A006973B3 /* db.h in Headers */ = {isa = PBXBuildFile; fileRef = 51BCF20655243A605CF61B2A /* db.h */; };
+		491F02462043616A006973B3 /* dumpfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 6158AD0BA2B975342CC2D557 /* dumpfile.h */; };
+		491F02472043616A006973B3 /* env.h in Headers */ = {isa = PBXBuildFile; fileRef = 04B2B929DA420D27682ACF82 /* env.h */; };
+		491F02482043616A006973B3 /* filter_policy.h in Headers */ = {isa = PBXBuildFile; fileRef = 29311D3AC154C483EAB3021A /* filter_policy.h */; };
+		491F02492043616A006973B3 /* iterator.h in Headers */ = {isa = PBXBuildFile; fileRef = E16365326F2615790F72965F /* iterator.h */; };
+		491F024A2043616A006973B3 /* options.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CB164FB4D60884D27DFCA0B /* options.h */; };
+		491F024B2043616A006973B3 /* slice.h in Headers */ = {isa = PBXBuildFile; fileRef = 38D2A7274015F5CFD209EA31 /* slice.h */; };
+		491F024C2043616A006973B3 /* status.h in Headers */ = {isa = PBXBuildFile; fileRef = F1D3A5A73426CF7D28DAB96E /* status.h */; };
+		491F024D2043616A006973B3 /* table.h in Headers */ = {isa = PBXBuildFile; fileRef = A55035C70518D7C18E6528AE /* table.h */; };
+		491F024E2043616A006973B3 /* table_builder.h in Headers */ = {isa = PBXBuildFile; fileRef = 392EA1C4570EF57722D166C3 /* table_builder.h */; };
+		491F024F2043616A006973B3 /* write_batch.h in Headers */ = {isa = PBXBuildFile; fileRef = 221C89002AFF8CAA7A46AED0 /* write_batch.h */; };
+		491F02502043616A006973B3 /* atomic_pointer.h in Headers */ = {isa = PBXBuildFile; fileRef = 599EC63A8464C30F44D63B47 /* atomic_pointer.h */; };
+		491F02512043616A006973B3 /* port.h in Headers */ = {isa = PBXBuildFile; fileRef = A7F8F5DEF756198CE9A08212 /* port.h */; };
+		491F02522043616A006973B3 /* port_example.h in Headers */ = {isa = PBXBuildFile; fileRef = 73A880B88D63BF5DFFF2AB28 /* port_example.h */; };
+		491F02532043616A006973B3 /* ad_block_client.h in Headers */ = {isa = PBXBuildFile; fileRef = EB00A6841E1C071000680DB8 /* ad_block_client.h */; };
+		491F02542043616A006973B3 /* port_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2DD2C9767F04D79BD241B0 /* port_posix.h */; };
+		491F02552043616A006973B3 /* thread_annotations.h in Headers */ = {isa = PBXBuildFile; fileRef = 421F3D5F398D03429D10C994 /* thread_annotations.h */; };
+		491F02562043616A006973B3 /* block_.h in Headers */ = {isa = PBXBuildFile; fileRef = 328648B91B53FB403160DF08 /* block_.h */; };
+		491F02572043616A006973B3 /* block_builder.h in Headers */ = {isa = PBXBuildFile; fileRef = E0916123D3F050C51F690CD8 /* block_builder.h */; };
+		491F02582043616A006973B3 /* filter_block.h in Headers */ = {isa = PBXBuildFile; fileRef = F0ECF41FB25F301AD2BAD62D /* filter_block.h */; };
+		491F02592043616A006973B3 /* format.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B1A17F5F0EE66790543A151 /* format.h */; };
+		491F025A2043616A006973B3 /* iterator_wrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 7394570E60761F3AC8F2667E /* iterator_wrapper.h */; };
+		491F025B2043616A006973B3 /* base.h in Headers */ = {isa = PBXBuildFile; fileRef = EB00886E1E1BF23800680DB8 /* base.h */; };
+		491F025C2043616A006973B3 /* merger.h in Headers */ = {isa = PBXBuildFile; fileRef = 859496CA1147745C5A79ACA5 /* merger.h */; };
+		491F025D2043616A006973B3 /* two_level_iterator.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E697ECEC4280D34946774F6 /* two_level_iterator.h */; };
+		491F025E2043616A006973B3 /* arena.h in Headers */ = {isa = PBXBuildFile; fileRef = C38C829D7A278B0AE23070C8 /* arena.h */; };
+		491F025F2043616A006973B3 /* coding.h in Headers */ = {isa = PBXBuildFile; fileRef = A83C690AD6456A027FB0BF6E /* coding.h */; };
+		491F02602043616A006973B3 /* crc32c.h in Headers */ = {isa = PBXBuildFile; fileRef = EAF179D957607D89D4BDC9A3 /* crc32c.h */; };
+		491F02612043616A006973B3 /* hash.h in Headers */ = {isa = PBXBuildFile; fileRef = B504A00429D49AE66EAB5918 /* hash.h */; };
+		491F02622043616A006973B3 /* histogram.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8EFB9D2EEECBBC4E226C3 /* histogram.h */; };
+		491F02632043616A006973B3 /* logging.h in Headers */ = {isa = PBXBuildFile; fileRef = 832E1DC75049B86680569B29 /* logging.h */; };
+		491F02642043616A006973B3 /* mutexlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AFF43C086A6180B2C1A5BF8 /* mutexlock.h */; };
+		491F02652043616A006973B3 /* posix_logger.h in Headers */ = {isa = PBXBuildFile; fileRef = EFE971F2D921832885989712 /* posix_logger.h */; };
+		491F02662043616A006973B3 /* random.h in Headers */ = {isa = PBXBuildFile; fileRef = F2024CD4F94FB00B6E677E44 /* random.h */; };
+		491F02672043616A006973B3 /* testharness.h in Headers */ = {isa = PBXBuildFile; fileRef = F9D3CABEF53998D2DA67C56A /* testharness.h */; };
+		491F02682043616A006973B3 /* HashSet.h in Headers */ = {isa = PBXBuildFile; fileRef = EB0097E41E1BF44000680DB8 /* HashSet.h */; };
+		491F02692043616A006973B3 /* testutil.h in Headers */ = {isa = PBXBuildFile; fileRef = 496A2069937D1214E5D088D8 /* testutil.h */; };
+		491F026A2043616A006973B3 /* NSData+GZIP.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FD32DFF23D2E6882260066D /* NSData+GZIP.h */; };
+		491F026B2043616A006973B3 /* NSFileManager+Tar.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F847EB375FCD6228AC6F2A3 /* NSFileManager+Tar.h */; };
+		491F026C2043616A006973B3 /* ODRefreshControl.h in Headers */ = {isa = PBXBuildFile; fileRef = C33D93B9B0CD0D4AD9E461AE /* ODRefreshControl.h */; };
+		491F026D2043616A006973B3 /* OnePasswordExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = F1D471881D777C7C007B443D /* OnePasswordExtension.h */; };
+		491F026E2043616A006973B3 /* HashItem.h in Headers */ = {isa = PBXBuildFile; fileRef = EB0097E21E1BF44000680DB8 /* HashItem.h */; };
+		491F026F2043616A006973B3 /* SwizzlingToHideSharePicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 430FDA25DAA3C35191998991 /* SwizzlingToHideSharePicker.h */; };
+		491F02702043616A006973B3 /* ABPFilterLibWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = CE26A0072322D258FA2595EB /* ABPFilterLibWrapper.h */; };
+		491F02712043616A006973B3 /* HttpsEverywhere.h in Headers */ = {isa = PBXBuildFile; fileRef = BAC1DC027204221273BF5341 /* HttpsEverywhere.h */; };
+		491F02722043616A006973B3 /* hashFn.h in Headers */ = {isa = PBXBuildFile; fileRef = EB009F3A1E1BF4CA00680DB8 /* hashFn.h */; };
+		491F02732043616A006973B3 /* cosmetic_filter.h in Headers */ = {isa = PBXBuildFile; fileRef = EB00A6861E1C071000680DB8 /* cosmetic_filter.h */; };
+		491F02742043616A006973B3 /* HttpsEverywhereObjC.h in Headers */ = {isa = PBXBuildFile; fileRef = 959071D5C08B03B8201CE7A9 /* HttpsEverywhereObjC.h */; };
+		491F02752043616A006973B3 /* JsonCpp.h in Headers */ = {isa = PBXBuildFile; fileRef = 6A648044FB6FE3E6891916CA /* JsonCpp.h */; };
+		491F02762043616A006973B3 /* RecentlyUsedCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 8C587E6A28C775E781C04E29 /* RecentlyUsedCache.h */; };
+		491F02772043616A006973B3 /* TrackingProtectionCpp.h in Headers */ = {isa = PBXBuildFile; fileRef = C42F17E905F4182862921627 /* TrackingProtectionCpp.h */; };
+		491F02782043616A006973B3 /* LegacyJSContext.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8D06D4069DB9F51B759924 /* LegacyJSContext.h */; };
+		491F02792043616A006973B3 /* WebViewDocScale.h in Headers */ = {isa = PBXBuildFile; fileRef = B26E6A052DA6287729B7113D /* WebViewDocScale.h */; };
+		491F027A2043616A006973B3 /* FirstPartyHost.h in Headers */ = {isa = PBXBuildFile; fileRef = 32454E9E39178D4B3CD31294 /* FirstPartyHost.h */; };
+		491F027B2043616A006973B3 /* TPParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AFA720AEE3F432355F29EEA /* TPParser.h */; };
+		491F02B020436DBC006973B3 /* ShareToBraveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920E53BE1E3B81364A9985D3 /* ShareToBraveViewController.swift */; };
+		491F02B320436DBC006973B3 /* Brave.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = B036144E80BFD02638E7E647 /* Brave.entitlements */; };
+		491F02B420436DBC006973B3 /* BraveShareToInfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EB4E15EF1DB7F3BA00A4C7EA /* BraveShareToInfoPlist.strings */; };
+		491F02BC20436E29006973B3 /* BraveShareToStaging.appex in copy app extension */ = {isa = PBXBuildFile; fileRef = 491F02B820436DBC006973B3 /* BraveShareToStaging.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		49603E1E5183CDC3BD1C2D09 /* BrowserViewController+KeyCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C528288360B38C934F38D /* BrowserViewController+KeyCommands.swift */; };
 		497D6B931E1F9A9C0021EAB8 /* Allow2.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 497D6B821E1F96CE0021EAB8 /* Allow2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		49B0DDB0C82A7C833ED598C0 /* atomic_pointer.h in Headers */ = {isa = PBXBuildFile; fileRef = 599EC63A8464C30F44D63B47 /* atomic_pointer.h */; };
@@ -632,6 +1045,41 @@
 			remoteGlobalIDString = 288A2D851AB8B3260023ABC3;
 			remoteInfo = Shared;
 		};
+		491F00D02043616A006973B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 497D6B7C1E1F96CE0021EAB8 /* Allow2Framework.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 497D6B611E1F962A0021EAB8;
+			remoteInfo = Allow2;
+		};
+		491F00D22043616A006973B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F84B21B61A090F8100AAB793 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 288A2D851AB8B3260023ABC3;
+			remoteInfo = Shared;
+		};
+		491F00D42043616A006973B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F84B21B61A090F8100AAB793 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2FCAE2191ABB51F800877008;
+			remoteInfo = Storage;
+		};
+		491F00D62043616A006973B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F84B21B61A090F8100AAB793 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E4D567171ADECE2700F1EFE7;
+			remoteInfo = ReadingList;
+		};
+		491F02BA20436DE6006973B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F84B21B61A090F8100AAB793 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 491F02AE20436DBC006973B3;
+			remoteInfo = BraveShareToStaging;
+		};
 		496726161E29B77300F33018 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 497D6B7C1E1F96CE0021EAB8 /* Allow2Framework.xcodeproj */;
@@ -859,6 +1307,41 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		491F02162043616A006973B3 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				491F02172043616A006973B3 /* Allow2.framework in Copy Frameworks */,
+				491F02182043616A006973B3 /* ReadingList.framework in Copy Frameworks */,
+				491F02192043616A006973B3 /* Storage.framework in Copy Frameworks */,
+				491F021A2043616A006973B3 /* SQLite.framework in Copy Frameworks */,
+				491F021B2043616A006973B3 /* Shared.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		491F022C2043616A006973B3 /* copy app extension */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				491F02BC20436E29006973B3 /* BraveShareToStaging.appex in copy app extension */,
+			);
+			name = "copy app extension";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		491F027C2043616A006973B3 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5C10DFC81EEAFAEE00203C93 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1053,6 +1536,10 @@
 		47F905FA4F0EF9F49CE8A3F7 /* yahoo.xml */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = yahoo.xml; path = ./Client/Assets/Search/SearchOverrides/en/yahoo.xml; sourceTree = "<group>"; };
 		48F5A8D4175792F4A8242779 /* PrintHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PrintHelper.swift; path = ./Client/Frontend/Browser/PrintHelper.swift; sourceTree = "<group>"; };
 		4910D433026D7E3ED997EDCB /* melinda_portrait.jpg */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.jpeg; name = melinda_portrait.jpg; path = ./ThirdParty/UIImageViewAligned/Example/ImageAlignment/melinda_portrait.jpg; sourceTree = "<group>"; };
+		491F02802043616A006973B3 /* Staging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Staging.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		491F02972043616A006973B3 /* Client copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Client copy-Info.plist"; path = "/Users/andrew/Projects-A2/brave/ios/Client copy-Info.plist"; sourceTree = "<absolute>"; };
+		491F02B820436DBC006973B3 /* BraveShareToStaging.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BraveShareToStaging.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		491F02B920436DBC006973B3 /* BraveShareTo copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "BraveShareTo copy-Info.plist"; path = "/Users/andrew/Projects-A2/brave/ios/BraveShareTo copy-Info.plist"; sourceTree = "<absolute>"; };
 		496A2069937D1214E5D088D8 /* testutil.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = testutil.h; path = ./brave/ThirdParty/leveldb/util/testutil.h; sourceTree = "<group>"; };
 		497D6B7C1E1F96CE0021EAB8 /* Allow2Framework.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Allow2Framework.xcodeproj; path = ThirdParty/Allow2/Allow2Framework.xcodeproj; sourceTree = "<group>"; };
 		49B46C33DD00B2A2DA25A97E /* UMTableViewCell.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = UMTableViewCell.h; path = ./ThirdParty/SWTableViewCell/UMTableViewCell.h; sourceTree = "<group>"; };
@@ -1653,6 +2140,34 @@
 			buildActionMask = 2147483647;
 			files = (
 				2FCAE2251ABB51F800877008 /* Storage.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		491F021C2043616A006973B3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				491F021D2043616A006973B3 /* CoreGraphics.framework in Frameworks */,
+				491F021E2043616A006973B3 /* SQLite.framework in Frameworks */,
+				491F021F2043616A006973B3 /* AVFoundation.framework in Frameworks */,
+				491F02202043616A006973B3 /* CoreImage.framework in Frameworks */,
+				491F02212043616A006973B3 /* CoreData.framework in Frameworks */,
+				491F02222043616A006973B3 /* libxml2.2.tbd in Frameworks */,
+				491F02232043616A006973B3 /* libstdc++.6.0.9.tbd in Frameworks */,
+				491F02242043616A006973B3 /* libz.tbd in Frameworks */,
+				491F02252043616A006973B3 /* Shared.framework in Frameworks */,
+				491F02262043616A006973B3 /* Storage.framework in Frameworks */,
+				491F02272043616A006973B3 /* ReadingList.framework in Frameworks */,
+				491F02282043616A006973B3 /* ImageIO.framework in Frameworks */,
+				491F02292043616A006973B3 /* Fabric.framework in Frameworks */,
+				491F022A2043616A006973B3 /* Crashlytics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		491F02B120436DBC006973B3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3284,6 +3799,8 @@
 				BC2DCFDD6DB6B358E06E8F09 /* ThirdParty */,
 				EAAD4BF9734BBE91C7A594D3 /* Utils */,
 				5C9689BB1F4CF97F003DDB67 /* Recovered References */,
+				491F02972043616A006973B3 /* Client copy-Info.plist */,
+				491F02B920436DBC006973B3 /* BraveShareTo copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -3300,6 +3817,8 @@
 				EB8E9B6B1C7CB4E1003AA90E /* brave-unit-KIF-tests.xctest */,
 				EB0F42511C9A46D800676650 /* BraveShareTo.appex */,
 				EB53D0FB1D9C2BB20093077A /* brave-ui-test.xctest */,
+				491F02802043616A006973B3 /* Staging.app */,
+				491F02B820436DBC006973B3 /* BraveShareToStaging.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3360,6 +3879,89 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C10E0001EEB2BF300203C93 /* Storage-Bridging-Header.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		491F022F2043616A006973B3 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				491F02302043616A006973B3 /* builder.h in Headers */,
+				491F02312043616A006973B3 /* db_impl.h in Headers */,
+				491F02322043616A006973B3 /* db_iter.h in Headers */,
+				491F02332043616A006973B3 /* dbformat.h in Headers */,
+				491F02342043616A006973B3 /* filename.h in Headers */,
+				491F02352043616A006973B3 /* log_format.h in Headers */,
+				491F02362043616A006973B3 /* log_reader.h in Headers */,
+				491F02372043616A006973B3 /* log_writer.h in Headers */,
+				491F02382043616A006973B3 /* memtable.h in Headers */,
+				491F02392043616A006973B3 /* skiplist.h in Headers */,
+				491F023A2043616A006973B3 /* snapshot.h in Headers */,
+				491F023B2043616A006973B3 /* table_cache.h in Headers */,
+				491F023C2043616A006973B3 /* version_edit.h in Headers */,
+				491F023D2043616A006973B3 /* BloomFilter.h in Headers */,
+				491F023E2043616A006973B3 /* version_set.h in Headers */,
+				491F023F2043616A006973B3 /* write_batch_internal.h in Headers */,
+				491F02402043616A006973B3 /* filter.h in Headers */,
+				491F02412043616A006973B3 /* memenv.h in Headers */,
+				491F02422043616A006973B3 /* c.h in Headers */,
+				491F02432043616A006973B3 /* cache.h in Headers */,
+				491F02442043616A006973B3 /* comparator.h in Headers */,
+				491F02452043616A006973B3 /* db.h in Headers */,
+				491F02462043616A006973B3 /* dumpfile.h in Headers */,
+				491F02472043616A006973B3 /* env.h in Headers */,
+				491F02482043616A006973B3 /* filter_policy.h in Headers */,
+				491F02492043616A006973B3 /* iterator.h in Headers */,
+				491F024A2043616A006973B3 /* options.h in Headers */,
+				491F024B2043616A006973B3 /* slice.h in Headers */,
+				491F024C2043616A006973B3 /* status.h in Headers */,
+				491F024D2043616A006973B3 /* table.h in Headers */,
+				491F024E2043616A006973B3 /* table_builder.h in Headers */,
+				491F024F2043616A006973B3 /* write_batch.h in Headers */,
+				491F02502043616A006973B3 /* atomic_pointer.h in Headers */,
+				491F02512043616A006973B3 /* port.h in Headers */,
+				491F02522043616A006973B3 /* port_example.h in Headers */,
+				491F02532043616A006973B3 /* ad_block_client.h in Headers */,
+				491F02542043616A006973B3 /* port_posix.h in Headers */,
+				491F02552043616A006973B3 /* thread_annotations.h in Headers */,
+				491F02562043616A006973B3 /* block_.h in Headers */,
+				491F02572043616A006973B3 /* block_builder.h in Headers */,
+				491F02582043616A006973B3 /* filter_block.h in Headers */,
+				491F02592043616A006973B3 /* format.h in Headers */,
+				491F025A2043616A006973B3 /* iterator_wrapper.h in Headers */,
+				491F025B2043616A006973B3 /* base.h in Headers */,
+				491F025C2043616A006973B3 /* merger.h in Headers */,
+				491F025D2043616A006973B3 /* two_level_iterator.h in Headers */,
+				491F025E2043616A006973B3 /* arena.h in Headers */,
+				491F025F2043616A006973B3 /* coding.h in Headers */,
+				491F02602043616A006973B3 /* crc32c.h in Headers */,
+				491F02612043616A006973B3 /* hash.h in Headers */,
+				491F02622043616A006973B3 /* histogram.h in Headers */,
+				491F02632043616A006973B3 /* logging.h in Headers */,
+				491F02642043616A006973B3 /* mutexlock.h in Headers */,
+				491F02652043616A006973B3 /* posix_logger.h in Headers */,
+				491F02662043616A006973B3 /* random.h in Headers */,
+				491F02672043616A006973B3 /* testharness.h in Headers */,
+				491F02682043616A006973B3 /* HashSet.h in Headers */,
+				491F02692043616A006973B3 /* testutil.h in Headers */,
+				491F026A2043616A006973B3 /* NSData+GZIP.h in Headers */,
+				491F026B2043616A006973B3 /* NSFileManager+Tar.h in Headers */,
+				491F026C2043616A006973B3 /* ODRefreshControl.h in Headers */,
+				491F026D2043616A006973B3 /* OnePasswordExtension.h in Headers */,
+				491F026E2043616A006973B3 /* HashItem.h in Headers */,
+				491F026F2043616A006973B3 /* SwizzlingToHideSharePicker.h in Headers */,
+				491F02702043616A006973B3 /* ABPFilterLibWrapper.h in Headers */,
+				491F02712043616A006973B3 /* HttpsEverywhere.h in Headers */,
+				491F02722043616A006973B3 /* hashFn.h in Headers */,
+				491F02732043616A006973B3 /* cosmetic_filter.h in Headers */,
+				491F02742043616A006973B3 /* HttpsEverywhereObjC.h in Headers */,
+				491F02752043616A006973B3 /* JsonCpp.h in Headers */,
+				491F02762043616A006973B3 /* RecentlyUsedCache.h in Headers */,
+				491F02772043616A006973B3 /* TrackingProtectionCpp.h in Headers */,
+				491F02782043616A006973B3 /* LegacyJSContext.h in Headers */,
+				491F02792043616A006973B3 /* WebViewDocScale.h in Headers */,
+				491F027A2043616A006973B3 /* FirstPartyHost.h in Headers */,
+				491F027B2043616A006973B3 /* TPParser.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3512,6 +4114,52 @@
 			productName = StorageTests;
 			productReference = 2FCAE2241ABB51F800877008 /* StorageTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		491F00CE2043616A006973B3 /* Staging */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 491F027D2043616A006973B3 /* Build configuration list for PBXNativeTarget "Staging" */;
+			buildPhases = (
+				491F00D92043616A006973B3 /* Copy Carthage Dependencies */,
+				491F00DA2043616A006973B3 /* Sources */,
+				491F01DD2043616A006973B3 /* Resources */,
+				491F02162043616A006973B3 /* Copy Frameworks */,
+				491F021C2043616A006973B3 /* Frameworks */,
+				491F022B2043616A006973B3 /* Conditionally Add Settings Bundle */,
+				491F022C2043616A006973B3 /* copy app extension */,
+				491F022E2043616A006973B3 /* Fabric key setup */,
+				491F022F2043616A006973B3 /* Headers */,
+				491F027C2043616A006973B3 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				491F00CF2043616A006973B3 /* PBXTargetDependency */,
+				491F00D12043616A006973B3 /* PBXTargetDependency */,
+				491F00D32043616A006973B3 /* PBXTargetDependency */,
+				491F00D52043616A006973B3 /* PBXTargetDependency */,
+				491F02BB20436DE6006973B3 /* PBXTargetDependency */,
+			);
+			name = Staging;
+			productName = Client;
+			productReference = 491F02802043616A006973B3 /* Staging.app */;
+			productType = "com.apple.product-type.application";
+		};
+		491F02AE20436DBC006973B3 /* BraveShareToStaging */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 491F02B520436DBC006973B3 /* Build configuration list for PBXNativeTarget "BraveShareToStaging" */;
+			buildPhases = (
+				491F02AF20436DBC006973B3 /* Sources */,
+				491F02B120436DBC006973B3 /* Frameworks */,
+				491F02B220436DBC006973B3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BraveShareToStaging;
+			productName = BraveShareTo;
+			productReference = 491F02B820436DBC006973B3 /* BraveShareToStaging.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		E4D567171ADECE2700F1EFE7 /* ReadingList */ = {
 			isa = PBXNativeTarget;
@@ -3679,6 +4327,10 @@
 						LastSwiftMigration = 0800;
 						TestTargetID = F84B21BD1A090F8100AAB793;
 					};
+					491F00CE2043616A006973B3 = {
+						DevelopmentTeam = L44G2T7U48;
+						ProvisioningStyle = Automatic;
+					};
 					E4D567171ADECE2700F1EFE7 = {
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = L44G2T7U48;
@@ -3783,13 +4435,15 @@
 			projectRoot = "";
 			targets = (
 				F84B21BD1A090F8100AAB793 /* Client */,
+				491F00CE2043616A006973B3 /* Staging */,
+				EB0F42501C9A46D800676650 /* BraveShareTo */,
+				491F02AE20436DBC006973B3 /* BraveShareToStaging */,
 				288A2D851AB8B3260023ABC3 /* Shared */,
 				2FCAE2191ABB51F800877008 /* Storage */,
 				2FCAE2231ABB51F800877008 /* StorageTests */,
 				E4D567171ADECE2700F1EFE7 /* ReadingList */,
 				E4D567211ADECE2700F1EFE7 /* ReadingListTests */,
 				E6F9650B1B2F1CF20034B023 /* SharedTests */,
-				EB0F42501C9A46D800676650 /* BraveShareTo */,
 				EB53D0FA1D9C2BB20093077A /* brave-ui-test */,
 				EB8E9B351C7CB4E1003AA90E /* brave-unit-KIF-tests */,
 			);
@@ -3983,6 +4637,78 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		491F01DD2043616A006973B3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				491F01DE2043616A006973B3 /* Readability.js in Resources */,
+				491F01DF2043616A006973B3 /* Brave.entitlements in Resources */,
+				491F01E02043616A006973B3 /* adInfo-divquerytemplate.js in Resources */,
+				491F01E12043616A006973B3 /* FiraSans-BoldItalic.ttf in Resources */,
+				491F01E22043616A006973B3 /* adInfo-wrapper.js in Resources */,
+				491F01E32043616A006973B3 /* adInfo.js in Resources */,
+				491F01E42043616A006973B3 /* adblock-regions.txt in Resources */,
+				491F01E52043616A006973B3 /* BlankTargetDetector.js in Resources */,
+				491F01E62043616A006973B3 /* Localizable.strings in Resources */,
+				491F01E72043616A006973B3 /* FiraSans-Light.ttf in Resources */,
+				491F01E82043616A006973B3 /* ElementAtPoint.js in Resources */,
+				491F01E92043616A006973B3 /* FingerprintingProtection.js in Resources */,
+				491F01EA2043616A006973B3 /* CharisSILR.ttf in Resources */,
+				491F01EB2043616A006973B3 /* FiraSans-Bold.ttf in Resources */,
+				491F01EC2043616A006973B3 /* FiraSans-Book.ttf in Resources */,
+				491F01ED2043616A006973B3 /* HideEmptyImages.js in Resources */,
+				491F01EE2043616A006973B3 /* PageUnload.js in Resources */,
+				491F01EF2043616A006973B3 /* SafeBrowsingError.html in Resources */,
+				491F01F02043616A006973B3 /* Licenses.html in Resources */,
+				491F01F12043616A006973B3 /* CertError.css in Resources */,
+				491F01F22043616A006973B3 /* CertError.html in Resources */,
+				491F01F32043616A006973B3 /* FiraSans-UltraLight.ttf in Resources */,
+				491F01F42043616A006973B3 /* Favicons.js in Resources */,
+				491F01F52043616A006973B3 /* FindInPage.js in Resources */,
+				491F01F62043616A006973B3 /* Images.xcassets in Resources */,
+				491F01F72043616A006973B3 /* LoginsHelper.js in Resources */,
+				491F01F82043616A006973B3 /* NetError.css in Resources */,
+				491F01F92043616A006973B3 /* CharisSILI.ttf in Resources */,
+				491F01FA2043616A006973B3 /* NetError.html in Resources */,
+				491F01FB2043616A006973B3 /* ios-sync.js in Resources */,
+				491F01FC2043616A006973B3 /* PrintHelper.js in Resources */,
+				491F01FD2043616A006973B3 /* default.txt in Resources */,
+				491F01FE2043616A006973B3 /* FiraSans-Regular.ttf in Resources */,
+				491F01FF2043616A006973B3 /* list.txt in Resources */,
+				491F02002043616A006973B3 /* SearchPlugins in Resources */,
+				491F02012043616A006973B3 /* FiraSans-Medium.ttf in Resources */,
+				491F02022043616A006973B3 /* SessionRestore.html in Resources */,
+				491F02032043616A006973B3 /* FiraSans-Italic.ttf in Resources */,
+				491F02042043616A006973B3 /* niceware.js in Resources */,
+				491F02052043616A006973B3 /* SpotlightHelper.js in Resources */,
+				491F02062043616A006973B3 /* CharisSILBI.ttf in Resources */,
+				491F02072043616A006973B3 /* topdomains.txt in Resources */,
+				491F02082043616A006973B3 /* LaunchScreen.storyboard in Resources */,
+				491F02092043616A006973B3 /* WindowCloseHelper.js in Resources */,
+				491F020A2043616A006973B3 /* Home.xcassets in Resources */,
+				491F020B2043616A006973B3 /* Intro.xcassets in Resources */,
+				491F020C2043616A006973B3 /* ReadabilityBrowserHelper.js in Resources */,
+				491F020D2043616A006973B3 /* Reader.css in Resources */,
+				491F020E2043616A006973B3 /* FiraSans-SemiBold.ttf in Resources */,
+				491F020F2043616A006973B3 /* Reader.html in Resources */,
+				491F02102043616A006973B3 /* Reader.xcassets in Resources */,
+				491F02112043616A006973B3 /* ReaderMode.js in Resources */,
+				491F02122043616A006973B3 /* ReaderSettings.xcassets in Resources */,
+				491F02132043616A006973B3 /* ReaderViewLoading.html in Resources */,
+				491F02142043616A006973B3 /* SiteTableViewControllerHeader.xib in Resources */,
+				491F02152043616A006973B3 /* CharisSILB.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		491F02B220436DBC006973B3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				491F02B320436DBC006973B3 /* Brave.entitlements in Resources */,
+				491F02B420436DBC006973B3 /* BraveShareToInfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E4D567161ADECE2700F1EFE7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -4094,6 +4820,63 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		491F00D92043616A006973B3 /* Copy Carthage Dependencies */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/WebImage.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SnapKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SWXMLHash.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/XCGLogger.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/GCDWebServers.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Deferred.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SwiftKeychainWrapper.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Eureka.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Mixpanel.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/libPhoneNumberiOS.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/FastImageCache.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/pop.framework",
+			);
+			name = "Copy Carthage Dependencies";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo COPYING ${SCRIPT_INPUT_FILE_COUNT}\n/usr/local/bin/carthage copy-frameworks";
+			showEnvVarsInLog = 0;
+		};
+		491F022B2043616A006973B3 /* Conditionally Add Settings Bundle */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Conditionally Add Settings Bundle";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"${INCLUDE_SETTINGS_BUNDLE}\" = \"YES\" ]\nthen\n    cp -r \"${PROJECT_DIR}/${TARGET_NAME}/Application/Settings.bundle\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\nfi";
+		};
+		491F022E2043616A006973B3 /* Fabric key setup */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Fabric key setup";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "sh ./brave/build-system/.fabric-key-setup.sh";
+		};
 		7B604F8F1C494AAA006EEEC3 /* Copy Carthage Dependencies */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -4278,6 +5061,279 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		491F00DA2043616A006973B3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				491F00DB2043616A006973B3 /* builder.cc in Sources */,
+				491F00DC2043616A006973B3 /* c.cc in Sources */,
+				491F00DD2043616A006973B3 /* Domain.swift in Sources */,
+				491F00DE2043616A006973B3 /* db_impl.cc in Sources */,
+				491F00DF2043616A006973B3 /* db_iter.cc in Sources */,
+				491F00E02043616A006973B3 /* dbformat.cc in Sources */,
+				491F00E12043616A006973B3 /* SyncSite.swift in Sources */,
+				491F00E22043616A006973B3 /* dumpfile.cc in Sources */,
+				491F00E32043616A006973B3 /* filename.cc in Sources */,
+				491F00E42043616A006973B3 /* log_reader.cc in Sources */,
+				491F00E52043616A006973B3 /* log_writer.cc in Sources */,
+				491F00E62043616A006973B3 /* memtable.cc in Sources */,
+				491F00E72043616A006973B3 /* repair.cc in Sources */,
+				491F00E82043616A006973B3 /* table_cache.cc in Sources */,
+				491F00E92043616A006973B3 /* version_edit.cc in Sources */,
+				491F00EA2043616A006973B3 /* version_set.cc in Sources */,
+				491F00EB2043616A006973B3 /* write_batch.cc in Sources */,
+				491F00EC2043616A006973B3 /* memenv.cc in Sources */,
+				491F00ED2043616A006973B3 /* TabMO.swift in Sources */,
+				491F00EE2043616A006973B3 /* LICENSE in Sources */,
+				491F00EF2043616A006973B3 /* port_posix.cc in Sources */,
+				491F00F02043616A006973B3 /* block.cc in Sources */,
+				491F00F12043616A006973B3 /* block_builder.cc in Sources */,
+				491F00F22043616A006973B3 /* filter_block.cc in Sources */,
+				491F00F32043616A006973B3 /* Niceware.swift in Sources */,
+				491F00F42043616A006973B3 /* PopupView.swift in Sources */,
+				491F00F52043616A006973B3 /* format.cc in Sources */,
+				491F00F62043616A006973B3 /* BraveShieldStatsView.swift in Sources */,
+				491F00F72043616A006973B3 /* SyncRecord.swift in Sources */,
+				491F00F82043616A006973B3 /* iterator.cc in Sources */,
+				491F00F92043616A006973B3 /* merger.cc in Sources */,
+				491F00FA2043616A006973B3 /* UIViewExtensions.swift in Sources */,
+				491F00FB2043616A006973B3 /* table.cc in Sources */,
+				491F00FC2043616A006973B3 /* table_builder.cc in Sources */,
+				491F00FD2043616A006973B3 /* two_level_iterator.cc in Sources */,
+				491F00FE2043616A006973B3 /* arena.cc in Sources */,
+				491F00FF2043616A006973B3 /* DAU.swift in Sources */,
+				491F01002043616A006973B3 /* History.swift in Sources */,
+				491F01012043616A006973B3 /* bloom.cc in Sources */,
+				491F01022043616A006973B3 /* cache.cc in Sources */,
+				491F01032043616A006973B3 /* coding.cc in Sources */,
+				491F01042043616A006973B3 /* comparator.cc in Sources */,
+				491F01052043616A006973B3 /* crc32c.cc in Sources */,
+				491F01062043616A006973B3 /* env.cc in Sources */,
+				491F01072043616A006973B3 /* env_posix.cc in Sources */,
+				491F01082043616A006973B3 /* filter_policy.cc in Sources */,
+				491F01092043616A006973B3 /* hash.cc in Sources */,
+				491F010A2043616A006973B3 /* histogram.cc in Sources */,
+				491F010B2043616A006973B3 /* logging.cc in Sources */,
+				491F010C2043616A006973B3 /* cosmetic_filter.cc in Sources */,
+				491F010D2043616A006973B3 /* AlertPopupView.swift in Sources */,
+				491F010E2043616A006973B3 /* options.cc in Sources */,
+				491F010F2043616A006973B3 /* status.cc in Sources */,
+				491F01102043616A006973B3 /* Device.swift in Sources */,
+				491F01112043616A006973B3 /* testharness.cc in Sources */,
+				491F01122043616A006973B3 /* testutil.cc in Sources */,
+				491F01132043616A006973B3 /* SyncBookmark.swift in Sources */,
+				491F01142043616A006973B3 /* WebsitePresentable.swift in Sources */,
+				491F01152043616A006973B3 /* NSData+GZIP.m in Sources */,
+				491F01162043616A006973B3 /* NSFileManager+Tar.m in Sources */,
+				491F01172043616A006973B3 /* BraveApp.swift in Sources */,
+				491F01182043616A006973B3 /* BraveUtil.swift in Sources */,
+				491F01192043616A006973B3 /* BraveBrowserBottomToolbar.swift in Sources */,
+				491F011A2043616A006973B3 /* BraveBrowserViewController.swift in Sources */,
+				491F011B2043616A006973B3 /* BraveMainWindow.swift in Sources */,
+				491F011C2043616A006973B3 /* BraveScrollController.swift in Sources */,
+				491F011D2043616A006973B3 /* BraveSettingsView.swift in Sources */,
+				491F011E2043616A006973B3 /* BraveTopViewController.swift in Sources */,
+				491F011F2043616A006973B3 /* SyncWelcomeViewController.swift in Sources */,
+				491F01202043616A006973B3 /* BraveURLBarView.swift in Sources */,
+				491F01212043616A006973B3 /* OnePasswordExtension.m in Sources */,
+				491F01222043616A006973B3 /* BraveUX.swift in Sources */,
+				491F01232043616A006973B3 /* filter.cc in Sources */,
+				491F01242043616A006973B3 /* HistorySwiper.swift in Sources */,
+				491F01252043616A006973B3 /* ODRefreshControl.m in Sources */,
+				491F01262043616A006973B3 /* PicklistSetting.swift in Sources */,
+				491F01272043616A006973B3 /* BraveRightSidePanel.swift in Sources */,
+				491F01282043616A006973B3 /* MainSidePanelViewController.swift in Sources */,
+				491F01292043616A006973B3 /* SidePanelBaseViewController.swift in Sources */,
+				491F012A2043616A006973B3 /* SwizzlingToHideSharePicker.m in Sources */,
+				491F012B2043616A006973B3 /* TabsBarViewController.swift in Sources */,
+				491F012C2043616A006973B3 /* TabWidget.swift in Sources */,
+				491F012D2043616A006973B3 /* BlankTargetLinkHandler.swift in Sources */,
+				491F012E2043616A006973B3 /* BraveContextMenu.swift in Sources */,
+				491F012F2043616A006973B3 /* BravePageUnloadHelper.swift in Sources */,
+				491F01302043616A006973B3 /* ElementAtPoint.swift in Sources */,
+				491F01312043616A006973B3 /* FaviconMO.swift in Sources */,
+				491F01322043616A006973B3 /* SyncCodewordsView.swift in Sources */,
+				491F01332043616A006973B3 /* FingerprintingProtection.swift in Sources */,
+				491F01342043616A006973B3 /* HideEmptyImages.swift in Sources */,
+				491F01352043616A006973B3 /* LoginsHelper+1PW.swift in Sources */,
+				491F01362043616A006973B3 /* GeometryExtensions.swift in Sources */,
+				491F01372043616A006973B3 /* InfoPlist.strings in Sources */,
+				491F01382043616A006973B3 /* ABPFilterLibWrapper.mm in Sources */,
+				491F01392043616A006973B3 /* DataController.swift in Sources */,
+				491F013A2043616A006973B3 /* AdBlocker.swift in Sources */,
+				491F013B2043616A006973B3 /* IntExtensions.swift in Sources */,
+				491F013C2043616A006973B3 /* UIWebViewSwizzling.m in Sources */,
+				491F013D2043616A006973B3 /* BraveShieldState.swift in Sources */,
+				491F013E2043616A006973B3 /* binding.gyp in Sources */,
+				491F013F2043616A006973B3 /* HttpsEverywhere.cpp in Sources */,
+				491F01402043616A006973B3 /* HttpsEverywhereObjC.mm in Sources */,
+				491F01412043616A006973B3 /* LICENSE in Sources */,
+				491F01422043616A006973B3 /* Makefile in Sources */,
+				491F01432043616A006973B3 /* HttpsEverywhere.swift in Sources */,
+				491F01442043616A006973B3 /* NetworkDataFileLoader.swift in Sources */,
+				491F01452043616A006973B3 /* SafeBrowsing.swift in Sources */,
+				491F01462043616A006973B3 /* TrackingProtection.swift in Sources */,
+				491F01472043616A006973B3 /* TrackingProtectionCpp.mm in Sources */,
+				491F01482043616A006973B3 /* UrlProtocol.swift in Sources */,
+				491F01492043616A006973B3 /* BraveWebView.swift in Sources */,
+				491F014A2043616A006973B3 /* LegacyJSContext.m in Sources */,
+				491F014B2043616A006973B3 /* PrivateBrowsing.swift in Sources */,
+				491F014C2043616A006973B3 /* WebViewBackForward.swift in Sources */,
+				491F014D2043616A006973B3 /* WebViewDocScale.m in Sources */,
+				491F014E2043616A006973B3 /* WebViewProgress.swift in Sources */,
+				491F014F2043616A006973B3 /* WebViewScripting.swift in Sources */,
+				491F01502043616A006973B3 /* SyncPairCameraViewController.swift in Sources */,
+				491F01512043616A006973B3 /* TPParser.cpp in Sources */,
+				491F01522043616A006973B3 /* AdjustIntegration.swift in Sources */,
+				491F01532043616A006973B3 /* AppDelegate.swift in Sources */,
+				491F01542043616A006973B3 /* CrashReporter.swift in Sources */,
+				491F01552043616A006973B3 /* DebugSettingsBundleOptions.swift in Sources */,
+				491F01562043616A006973B3 /* main.swift in Sources */,
+				491F01572043616A006973B3 /* QuickActions.swift in Sources */,
+				491F01582043616A006973B3 /* TestAppDelegate.swift in Sources */,
+				491F01592043616A006973B3 /* WebServer.swift in Sources */,
+				491F015A2043616A006973B3 /* NSAttributedStringExtensions.swift in Sources */,
+				491F015B2043616A006973B3 /* UIAlertControllerExtensions.swift in Sources */,
+				491F015C2043616A006973B3 /* UIImageViewExtensions.swift in Sources */,
+				491F015D2043616A006973B3 /* UIPasteboardExtensions.swift in Sources */,
+				491F015E2043616A006973B3 /* AboutHomeHandler.swift in Sources */,
+				491F015F2043616A006973B3 /* BackForwardListViewController.swift in Sources */,
+				491F01602043616A006973B3 /* Browser.swift in Sources */,
+				491F01612043616A006973B3 /* BrowserLocationView.swift in Sources */,
+				491F01622043616A006973B3 /* BrowserPrintPageRenderer.swift in Sources */,
+				491F01632043616A006973B3 /* BrowserPrompts.swift in Sources */,
+				491F01642043616A006973B3 /* BrowserScrollController.swift in Sources */,
+				491F01652043616A006973B3 /* BrowserToolbar.swift in Sources */,
+				491F01662043616A006973B3 /* BrowserTrayAnimators.swift in Sources */,
+				491F01672043616A006973B3 /* BrowserViewController+BrowserDelegate.swift in Sources */,
+				491F01682043616A006973B3 /* ImageCache.swift in Sources */,
+				491F01692043616A006973B3 /* BrowserViewController+ContextMenuHelperDelegate.swift in Sources */,
+				491F016A2043616A006973B3 /* BrowserViewController+FindInPage.swift in Sources */,
+				491F016B2043616A006973B3 /* BrowserViewController+KeyCommands.swift in Sources */,
+				491F016C2043616A006973B3 /* TopSite.swift in Sources */,
+				491F016D2043616A006973B3 /* JSInjector.swift in Sources */,
+				491F016E2043616A006973B3 /* BrowserViewController+ReaderModeDelegate.swift in Sources */,
+				491F016F2043616A006973B3 /* BrowserViewController+TabManagerDelegate.swift in Sources */,
+				491F01702043616A006973B3 /* BrowserViewController+ToolbarAndUrlbarDelegate.swift in Sources */,
+				491F01712043616A006973B3 /* HashSet.cpp in Sources */,
+				491F01722043616A006973B3 /* BrowserViewController+WKNavigationDelegate.swift in Sources */,
+				491F01732043616A006973B3 /* BrowserViewController+WKUIDelegate.swift in Sources */,
+				491F01742043616A006973B3 /* BrowserViewController.swift in Sources */,
+				491F01752043616A006973B3 /* ContextMenuHelper.swift in Sources */,
+				491F01762043616A006973B3 /* ErrorPageHelper.swift in Sources */,
+				491F01772043616A006973B3 /* MigrateData.swift in Sources */,
+				491F01782043616A006973B3 /* BraveBrowserToolbarButtonActions.swift in Sources */,
+				491F01792043616A006973B3 /* hashFn.cpp in Sources */,
+				491F017A2043616A006973B3 /* FaviconManager.swift in Sources */,
+				491F017B2043616A006973B3 /* Sync.swift in Sources */,
+				491F017C2043616A006973B3 /* FindInPageBar.swift in Sources */,
+				491F017D2043616A006973B3 /* FindInPageHelper.swift in Sources */,
+				491F017E2043616A006973B3 /* LoginsHelper.swift in Sources */,
+				491F017F2043616A006973B3 /* OpenPdfHelper.swift in Sources */,
+				491F01802043616A006973B3 /* OpenSearch.swift in Sources */,
+				491F01812043616A006973B3 /* PrintHelper.swift in Sources */,
+				491F01822043616A006973B3 /* ReaderModeBarView.swift in Sources */,
+				491F01832043616A006973B3 /* SyncDevice.swift in Sources */,
+				491F01842043616A006973B3 /* ScreenshotHelper.swift in Sources */,
+				491F01852043616A006973B3 /* SyncResponse.swift in Sources */,
+				491F01862043616A006973B3 /* SearchEngines.swift in Sources */,
+				491F01872043616A006973B3 /* SearchLoader.swift in Sources */,
+				491F01882043616A006973B3 /* SearchSuggestClient.swift in Sources */,
+				491F01892043616A006973B3 /* SearchViewController.swift in Sources */,
+				491F018A2043616A006973B3 /* SessionData.swift in Sources */,
+				491F018B2043616A006973B3 /* SessionRestoreHandler.swift in Sources */,
+				491F018C2043616A006973B3 /* SessionRestoreHelper.swift in Sources */,
+				491F018D2043616A006973B3 /* SyncPairWordsViewController.swift in Sources */,
+				491F018E2043616A006973B3 /* BraveTermsViewController.swift in Sources */,
+				491F018F2043616A006973B3 /* PinController.swift in Sources */,
+				491F01902043616A006973B3 /* SwipeAnimator.swift in Sources */,
+				491F01912043616A006973B3 /* TabManager.swift in Sources */,
+				491F01922043616A006973B3 /* SyncCameraView.swift in Sources */,
+				491F01932043616A006973B3 /* TabTrayController.swift in Sources */,
+				491F01942043616A006973B3 /* SyncBarcodeView.swift in Sources */,
+				491F01952043616A006973B3 /* URIFixup.swift in Sources */,
+				491F01962043616A006973B3 /* URLBarView.swift in Sources */,
+				491F01972043616A006973B3 /* BloomFilter.cpp in Sources */,
+				491F01982043616A006973B3 /* WindowCloseHelper.swift in Sources */,
+				491F01992043616A006973B3 /* BookmarksPanel.swift in Sources */,
+				491F019A2043616A006973B3 /* HistoryPanel.swift in Sources */,
+				491F019B2043616A006973B3 /* HomePanels.swift in Sources */,
+				491F019C2043616A006973B3 /* HomePanelViewController.swift in Sources */,
+				491F019D2043616A006973B3 /* ReaderPanel.swift in Sources */,
+				491F019E2043616A006973B3 /* TopSitesPanel.swift in Sources */,
+				491F019F2043616A006973B3 /* IntroViewController.swift in Sources */,
+				491F01A02043616A006973B3 /* LoginListViewController.swift in Sources */,
+				491F01A12043616A006973B3 /* FSReadingList.m in Sources */,
+				491F01A22043616A006973B3 /* ReadabilityBrowserHelper.swift in Sources */,
+				491F01A32043616A006973B3 /* ReadabilityService.swift in Sources */,
+				491F01A42043616A006973B3 /* ReaderMode.swift in Sources */,
+				491F01A52043616A006973B3 /* ReaderModeCache.swift in Sources */,
+				491F01A62043616A006973B3 /* ReaderModeHandlers.swift in Sources */,
+				491F01A72043616A006973B3 /* JSONSerializationExtensions.swift in Sources */,
+				491F01A82043616A006973B3 /* ReaderModeStyleViewController.swift in Sources */,
+				491F01A92043616A006973B3 /* ReaderModeUtils.swift in Sources */,
+				491F01AA2043616A006973B3 /* AppSettingsOptions.swift in Sources */,
+				491F01AB2043616A006973B3 /* AppSettingsTableViewController.swift in Sources */,
+				491F01AC2043616A006973B3 /* Clearables.swift in Sources */,
+				491F01AD2043616A006973B3 /* ClearPrivateDataTableViewController.swift in Sources */,
+				491F01AE2043616A006973B3 /* LoginDetailViewController.swift in Sources */,
+				491F01AF2043616A006973B3 /* SyncSettingsViewController.swift in Sources */,
+				491F01B02043616A006973B3 /* SearchEnginePicker.swift in Sources */,
+				491F01B12043616A006973B3 /* SearchSettingsTableViewController.swift in Sources */,
+				491F01B22043616A006973B3 /* SettingsContentViewController.swift in Sources */,
+				491F01B32043616A006973B3 /* Bookmark.swift in Sources */,
+				491F01B42043616A006973B3 /* SettingsNavigationController.swift in Sources */,
+				491F01B52043616A006973B3 /* SettingsTableViewController.swift in Sources */,
+				491F01B62043616A006973B3 /* FindInPageActivity.swift in Sources */,
+				491F01B72043616A006973B3 /* RequestDesktopSiteActivity.swift in Sources */,
+				491F01B82043616A006973B3 /* ShareExtensionHelper.swift in Sources */,
+				491F01B92043616A006973B3 /* TitleActivityItemProvider.swift in Sources */,
+				491F01BA2043616A006973B3 /* UIConstants.swift in Sources */,
+				491F01BB2043616A006973B3 /* AuralProgressBar.swift in Sources */,
+				491F01BC2043616A006973B3 /* AutocompleteTextField.swift in Sources */,
+				491F01BD2043616A006973B3 /* ChevronView.swift in Sources */,
+				491F01BE2043616A006973B3 /* ErrorToast.swift in Sources */,
+				491F01BF2043616A006973B3 /* InnerStrokedView.swift in Sources */,
+				491F01C02043616A006973B3 /* InsetButton.swift in Sources */,
+				491F01C12043616A006973B3 /* LoginTableViewCell.swift in Sources */,
+				491F01C22043616A006973B3 /* SearchInputView.swift in Sources */,
+				491F01C32043616A006973B3 /* Punycode.swift in Sources */,
+				491F01C42043616A006973B3 /* SeparatorTableCell.swift in Sources */,
+				491F01C52043616A006973B3 /* SiteTableViewController.swift in Sources */,
+				491F01C62043616A006973B3 /* SnackBar.swift in Sources */,
+				491F01C72043616A006973B3 /* TabsButton.swift in Sources */,
+				491F01C82043616A006973B3 /* ad_block_client.cc in Sources */,
+				491F01C92043616A006973B3 /* Theme.swift in Sources */,
+				491F01CA2043616A006973B3 /* ThumbnailCell.swift in Sources */,
+				491F01CB2043616A006973B3 /* ToggleButton.swift in Sources */,
+				491F01CC2043616A006973B3 /* Toolbar.swift in Sources */,
+				491F01CD2043616A006973B3 /* SyncAddDeviceViewController.swift in Sources */,
+				491F01CE2043616A006973B3 /* TwoLineCell.swift in Sources */,
+				491F01CF2043616A006973B3 /* SpotlightHelper.swift in Sources */,
+				491F01D02043616A006973B3 /* NSUserDefaultsPrefs.swift in Sources */,
+				491F01D12043616A006973B3 /* Profile.swift in Sources */,
+				491F01D22043616A006973B3 /* UIImage+ImageEffects.m in Sources */,
+				491F01D32043616A006973B3 /* RXMLElement.m in Sources */,
+				491F01D42043616A006973B3 /* UIImageViewAligned.m in Sources */,
+				491F01D52043616A006973B3 /* AboutUtils.swift in Sources */,
+				491F01D62043616A006973B3 /* DynamicFontHelper.swift in Sources */,
+				491F01D72043616A006973B3 /* ErrorExtensions.swift in Sources */,
+				491F01D82043616A006973B3 /* FaviconFetcher.swift in Sources */,
+				491F01D92043616A006973B3 /* MenuHelper.swift in Sources */,
+				491F01DA2043616A006973B3 /* Swizzling.m in Sources */,
+				491F01DB2043616A006973B3 /* Model.xcdatamodeld in Sources */,
+				491F01DC2043616A006973B3 /* Try.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		491F02AF20436DBC006973B3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				491F02B020436DBC006973B3 /* ShareToBraveViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4659,6 +5715,31 @@
 			target = 288A2D851AB8B3260023ABC3 /* Shared */;
 			targetProxy = 2FCAE23B1ABB520700877008 /* PBXContainerItemProxy */;
 		};
+		491F00CF2043616A006973B3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Allow2;
+			targetProxy = 491F00D02043616A006973B3 /* PBXContainerItemProxy */;
+		};
+		491F00D12043616A006973B3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 288A2D851AB8B3260023ABC3 /* Shared */;
+			targetProxy = 491F00D22043616A006973B3 /* PBXContainerItemProxy */;
+		};
+		491F00D32043616A006973B3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2FCAE2191ABB51F800877008 /* Storage */;
+			targetProxy = 491F00D42043616A006973B3 /* PBXContainerItemProxy */;
+		};
+		491F00D52043616A006973B3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E4D567171ADECE2700F1EFE7 /* ReadingList */;
+			targetProxy = 491F00D62043616A006973B3 /* PBXContainerItemProxy */;
+		};
+		491F02BB20436DE6006973B3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 491F02AE20436DBC006973B3 /* BraveShareToStaging */;
+			targetProxy = 491F02BA20436DE6006973B3 /* PBXContainerItemProxy */;
+		};
 		496726171E29B77300F33018 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Allow2;
@@ -4843,6 +5924,126 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Client.app/Client";
 			};
 			name = Debug;
+		};
+		491F027E2043616A006973B3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_ENTITLEMENTS = brave/Brave.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = L44G2T7U48;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
+				INFOPLIST_FILE = "Client copy-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.allow2.iOSSurf.staging;
+				PRODUCT_MODULE_NAME = Client;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/Client-Bridging-Header.h";
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "Client-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		491F027F2043616A006973B3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_ENTITLEMENTS = brave/Brave.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = L44G2T7U48;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
+				INFOPLIST_FILE = "Client copy-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.allow2.iOSSurf.staging;
+				PRODUCT_MODULE_NAME = Client;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/Client-Bridging-Header.h";
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "Client-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+				SWIFT_WHOLE_MODULE_OPTIMIZATION = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		491F02B620436DBC006973B3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "BraveShareTo copy-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.allow2.iOSSurf.staging.BraveShareTo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		491F02B720436DBC006973B3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "BraveShareTo copy-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.allow2.iOSSurf.staging.BraveShareTo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
 		};
 		E448FC9D1AEE7A6000869B6C /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -5561,6 +6762,24 @@
 			buildConfigurations = (
 				2FCAE2381ABB51F900877008 /* Debug */,
 				E448FCA51AEE7A6000869B6C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		491F027D2043616A006973B3 /* Build configuration list for PBXNativeTarget "Staging" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				491F027E2043616A006973B3 /* Debug */,
+				491F027F2043616A006973B3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		491F02B520436DBC006973B3 /* Build configuration list for PBXNativeTarget "BraveShareToStaging" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				491F02B620436DBC006973B3 /* Debug */,
+				491F02B720436DBC006973B3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

@@ -89,8 +89,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIViewControllerRestorati
 
         setUserAgents()
 
-        Allow2.shared.deviceToken = "fkptV9fm4OCbhGv6"
-        
+        // can set this directly if you want, or just pass the Allow2 plist section... Allow2.shared.deviceToken = "fkptV9fm4OCbhGv6"
+        Allow2.shared.setPropsFromBundle(Bundle.main.infoDictionary?["Allow2"])
+
         log.debug("Starting keyboard helper…")
         // Start the keyboard helper to monitor and cache keyboard state.
         KeyboardHelper.defaultHelper.startObserving()
