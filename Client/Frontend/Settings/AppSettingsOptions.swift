@@ -265,20 +265,20 @@ class Allow2Setting: Setting, Allow2PairingViewControllerDelegate {
         self.profile = settings.profile
         // todo: self.status = ( Allow2.shared.isPaired ? "Connected" : "Tap to connect" )
         
-        let allow2Title = Allow2.shared.isPaired ? "New Request" : "Pair with Allow2"
+        let allow2Title = Allow2.shared.isPaired ? "Connected to Allow2" : "Pair with Allow2"
         super.init(title: NSAttributedString(string: allow2Title, attributes: [NSForegroundColorAttributeName: UIConstants.TableViewRowTextColor]))
     }
     
     override func onClick(_ navigationController: UINavigationController?) {
 
         if Allow2.shared.isPaired {
-            let requestController = Allow2.allow2RequestViewController
+            //let requestController = Allow2.allow2RequestViewController
             //requestController.checkResult = self.checkResult
-            navigationController?.present(requestController, animated: true, completion: nil)
+            //navigationController?.present(requestController, animated: true, completion: nil)
 
-//            let alert = UIAlertController(title: "Paired", message: "Use your Allow2 account to disconnect this app.", preferredStyle: .alert)
-//            alert.addAction(UIAlertAction(title: "OK", style: .cancel) { (action) in })
-//            navigationController?.present(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: "Paired", message: "Use your Allow2 account to disconnect this app.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel) { (action) in })
+            navigationController?.present(alert, animated: true, completion: nil)
             return
         }
         
