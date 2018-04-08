@@ -159,6 +159,16 @@ class BraveWebView: UIWebView {
         }
     }
 
+    override func safeAreaInsetsDidChange() {
+        // On Safari, scroll view indicator is next to the edge when ipX is in landscape and notch is on the left
+        // We need to adjust inset for this only screen configuration.
+        if #available(iOS 11, *), DeviceDetector.iPhoneX {
+            let isLandscapeLeft = UIDevice.current.orientation == UIDeviceOrientation.landscapeLeft
+            // No easy way to get right inset, using hardcoded value
+            scrollView.scrollIndicatorInsets.right = isLandscapeLeft ? -44 : 0
+        }
+    }
+
     @discardableResult func updateLocationFromHtml() -> Bool {
         guard let js = stringByEvaluatingJavaScript(from: "document.location.href"), let location = Foundation.URL(string: js) else { return false }
         
@@ -364,6 +374,8 @@ class BraveWebView: UIWebView {
     override func loadRequest(_ request: URLRequest) {
         clearLoadCompletedHtmlProperty()
 
+        let mutatedRequest = UserReferralProgram.addCustomHeaders(to: request)
+
         guard let internalWebView = value(forKeyPath: "documentView.webView") else { return }
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: internalProgressChangedNotification), object: internalWebView)
         NotificationCenter.default.addObserver(self, selector: #selector(BraveWebView.internalProgressNotification(_:)), name: NSNotification.Name(rawValue: internalProgressChangedNotification), object: internalWebView)
@@ -371,7 +383,7 @@ class BraveWebView: UIWebView {
         if let url = request.url, let host = url.normalizedHost {
             internalSetBraveShieldStateForDomain(host)
         }
-        super.loadRequest(request)
+        super.loadRequest(mutatedRequest)
     }
 
     enum LoadCompleteHtmlPropertyOption {

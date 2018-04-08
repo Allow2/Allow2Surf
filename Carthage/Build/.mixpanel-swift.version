@@ -1,9 +1,0 @@
-{
-  "commitish" : "6022d6beb249cbbe7d84f8dda28e513f2e8a2e99",
-  "iOS" : [
-    {
-      "name" : "Mixpanel",
-      "hash" : "fe5cee689801af108e7c64a90da7e9b082167d59d77ce5e2e6948219beba1618"
-    }
-  ]
-}

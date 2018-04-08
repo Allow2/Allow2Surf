@@ -28,7 +28,12 @@ if [[ $app_id == com.brave.ios.browser* ]]; then
     echo "DEVELOPMENT_TEAM=$dev_team_id" >> xcconfig/local-def.xcconfig
     echo adding fabric
     echo "./Fabric.framework/run $(head -1 ~/.brave-fabric-keys) $(tail -1 ~/.brave-fabric-keys)" > build-system/.fabric-key-setup.sh
-    sed -e s/FABRIC_KEY_REMOVED/$(head -1 ~/.brave-fabric-keys)/  BraveInfo.plist.template | sed -e s/MIXPANEL_TOKEN_REMOVED/$(head -1 ~/.brave-mixpanel-key)/ > BraveInfo.plist
+
+    # using comma delimiter to escape forward slashes properly
+    sed -e s/FABRIC_KEY_REMOVED/$(head -1 ~/.brave-fabric-keys)/  BraveInfo.plist.template |
+    sed -e s/MIXPANEL_TOKEN_REMOVED/$(head -1 ~/.brave-mixpanel-key)/ |
+    sed -e s,https://laptop-updates-staging.herokuapp.com,$(head -1 ~/.brave-urp-host-key), |
+    sed -e s,\<string\>key\</string\>,\<string\>$(head -1 ~/.brave-api-key)\</string\>, > BraveInfo.plist
 else
     sed -i '' -e "s/KEYCHAIN_PLACEHOLDER/\$\(AppIdentifierPrefix\)$app_id/" Brave.entitlements
     >build-system/.fabric-key-setup.sh
@@ -42,7 +47,18 @@ echo GENERATED_BUILD_ID=`date +"%y.%m.%d.%H"` >> xcconfig/build-id.xcconfig
 
 npm update
 
-node -e "require('./node_modules/ad-block/lib/regions.js').forEach((x) =>{ if (x.lang) {console.log(x.lang + ',' + x.uuid)} } )" > adblock-regions.txt
+## setup adblock regional filters
+if ! g++ build-system/get_adblock_regions.cpp -Inode_modules/ad-block/lists/ -std=c++11 -o get_adblock_regions; then
+    echo "Error: could not setup adblock region file."
+    exit 1
+fi
+
+./get_adblock_regions && rm get_adblock_regions
+
+if [ ! -e adblock-regions.txt ]; then
+    echo "Error: adblock region file does not exist."
+    exit 1
+fi
 
 ## setup sync
 (cd ../Carthage/Checkouts/sync && brew install yarn; yarn install && yarn run build)
