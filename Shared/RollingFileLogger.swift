@@ -22,9 +22,9 @@ open class RollingFileLogger: XCGLogger {
 
     let root: String
 
-    public init(filenameRoot: String, logDirectoryPath: String?, sizeLimit: Int64 = TwoMBsInBytes) {
+    public init(filenameRoot: String, logDirectoryPath: String?, sizeLimit: Int64? = nil) {
         root = filenameRoot
-        self.sizeLimit = sizeLimit
+        self.sizeLimit = sizeLimit ?? 2 * 100000
         self.logDirectoryPath = logDirectoryPath
         super.init()
     }

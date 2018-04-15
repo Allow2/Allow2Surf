@@ -4,7 +4,6 @@
 
 import Deferred
 // Haskell, baby.
-
 // Monadic bind/flatMap operator for Deferred.
 precedencegroup MonadicBindPrecedence {
     associativity: left
@@ -53,8 +52,8 @@ public func >>> <T>(x: Deferred<Maybe<T>>, f: @escaping () -> Void) {
 }
 
 /**
-* Returns a thunk that return a Deferred that resolves to the provided value.
-*/
+ * Returns a thunk that return a Deferred that resolves to the provided value.
+ */
 public func always<T>(_ t: T) -> () -> Deferred<Maybe<T>> {
     return { deferMaybe(t) }
 }
@@ -91,14 +90,14 @@ public func accumulate<T>(_ thunks: [() -> Deferred<Maybe<T>>]) -> Deferred<Mayb
     if thunks.isEmpty {
         return deferMaybe([])
     }
-
+    
     let combined = Deferred<Maybe<[T]>>()
     var results: [T] = []
     results.reserveCapacity(thunks.count)
-
+    
     var onValue: ((T) -> Void)!
     var onResult: ((Maybe<T>) -> Void)!
-
+    
     // onValue and onResult both hold references to each other niling them out before exiting breaks a reference cycle
     // We also cannot use unowned here because the thunks are not class types.
     onValue = { t in
@@ -110,7 +109,7 @@ public func accumulate<T>(_ thunks: [() -> Deferred<Maybe<T>>]) -> Deferred<Mayb
             thunks[results.count]().upon(onResult)
         }
     }
-
+    
     onResult = { r in
         if r.isFailure {
             onValue = nil
@@ -119,9 +118,9 @@ public func accumulate<T>(_ thunks: [() -> Deferred<Maybe<T>>]) -> Deferred<Mayb
         }
         onValue(r.successValue!)
     }
-
+    
     thunks[0]().upon(onResult)
-
+    
     return combined
 }
 
@@ -133,6 +132,15 @@ public func effect<T, U>(_ f: @escaping (T) -> U) -> (T) -> Deferred<Maybe<T>> {
     return { t in
         _ = f(t)
         return deferMaybe(t)
+    }
+}
+// Prevents "Cannot convert call result type '(_) -> Deferred<Maybe<_>>' to expected type '() -> Deferred<Maybe<Void>>"
+// SE-0029 introduced this behavour
+// https://github.com/apple/swift-evolution/blob/master/proposals/0029-remove-implicit-tuple-splat.md
+public func effect(_ f: @escaping (Swift.Void) -> Void) -> (() -> Success) {
+    return {
+        f(())
+        return succeed()
     }
 }
 
@@ -158,7 +166,7 @@ extension Array where Element: Success {
             if let failure = results.find({ $0.isFailure }) {
                 return deferMaybe(failure.failureValue!)
             }
-
+            
             return succeed()
         }
     }
@@ -194,6 +202,6 @@ public func deferDispatchAsync<T>(_ queue: DispatchQueue, f: @escaping () -> Def
             deferred.fill(result)
         }
     })
-
+    
     return deferred
 }
