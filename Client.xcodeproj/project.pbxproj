@@ -595,6 +595,63 @@
 		491F02B420436DBC006973B3 /* BraveShareToInfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EB4E15EF1DB7F3BA00A4C7EA /* BraveShareToInfoPlist.strings */; };
 		491F02BC20436E29006973B3 /* BraveShareToStaging.appex in copy app extension */ = {isa = PBXBuildFile; fileRef = 491F02B820436DBC006973B3 /* BraveShareToStaging.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		49603E1E5183CDC3BD1C2D09 /* BrowserViewController+KeyCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C528288360B38C934F38D /* BrowserViewController+KeyCommands.swift */; };
+		4963537620B24999001AD8CE /* UserReferralProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A03788D20211D1D00E52C13 /* UserReferralProgram.swift */; };
+		4963538D20B249F3001AD8CE /* UrpLogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A02A947202B66FF00A1E754 /* UrpLogsViewController.swift */; };
+		4963538E20B24A25001AD8CE /* DeviceModelDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8E36AC1FBF5691007FB1C4 /* DeviceModelDetector.swift */; };
+		4963538F20B24A59001AD8CE /* UrpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A03788E20211D1D00E52C13 /* UrpService.swift */; };
+		4963539020B24A89001AD8CE /* DeviceDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A159C921FD017DB005A79BF /* DeviceDetector.swift */; };
+		4963539120B24AA0001AD8CE /* ReferralData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A03788C20211D1D00E52C13 /* ReferralData.swift */; };
+		4963539220B24AEA001AD8CE /* CustomHeaderData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7D73982076BAAD00BD66E3 /* CustomHeaderData.swift */; };
+		4963539320B24C16001AD8CE /* onepass.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A03FF5D1FCDF0C300DF32C9 /* onepass.cc */; };
+		4963539420B24C29001AD8CE /* stringpiece.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A03FF511FCDF0C300DF32C9 /* stringpiece.h */; };
+		4963539520B24C2C001AD8CE /* set.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A03FF521FCDF0C300DF32C9 /* set.cc */; };
+		4963539620B24C30001AD8CE /* make_unicode_casefold.py in Resources */ = {isa = PBXBuildFile; fileRef = 0A03FF531FCDF0C300DF32C9 /* make_unicode_casefold.py */; };
+		4963539720B24C33001AD8CE /* parse.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A03FF541FCDF0C300DF32C9 /* parse.cc */; };
+		4963539820B24C36001AD8CE /* re2_fuzzer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A03FF561FCDF0C300DF32C9 /* re2_fuzzer.cc */; };
+		4963539920B24C39001AD8CE /* nfa.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A03FF571FCDF0C300DF32C9 /* nfa.cc */; };
+		4963539A20B24C40001AD8CE /* prog.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A03FF581FCDF0C300DF32C9 /* prog.h */; };
+		4963539B20B24C42001AD8CE /* unicode_groups.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A03FF591FCDF0C300DF32C9 /* unicode_groups.cc */; };
+		4963539C20B24C44001AD8CE /* unicode_casefold.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A03FF5A1FCDF0C300DF32C9 /* unicode_casefold.cc */; };
+		4963539D20B24C46001AD8CE /* unicode.py in Resources */ = {isa = PBXBuildFile; fileRef = 0A03FF5B1FCDF0C300DF32C9 /* unicode.py */; };
+		4963539E20B24C48001AD8CE /* regexp.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A03FF5C1FCDF0C300DF32C9 /* regexp.cc */; };
+		496353A020B24C4E001AD8CE /* perl_groups.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A03FF5E1FCDF0C300DF32C9 /* perl_groups.cc */; };
+		496353A120B24C50001AD8CE /* prefilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A03FF5F1FCDF0C300DF32C9 /* prefilter.h */; };
+		496353A220B24C52001AD8CE /* mimics_pcre.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A03FF601FCDF0C300DF32C9 /* mimics_pcre.cc */; };
+		496353A320B24C54001AD8CE /* walker-inl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A03FF611FCDF0C300DF32C9 /* walker-inl.h */; };
+		496353A420B24C56001AD8CE /* prefilter_tree.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A03FF621FCDF0C300DF32C9 /* prefilter_tree.h */; };
+		496353A520B24C64001AD8CE /* filtered_re2.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A03FF631FCDF0C300DF32C9 /* filtered_re2.h */; };
+		496353A620B24C64001AD8CE /* dfa.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A03FF641FCDF0C300DF32C9 /* dfa.cc */; };
+		496353A720B24C64001AD8CE /* compile.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A03FF651FCDF0C300DF32C9 /* compile.cc */; };
+		496353A820B24C64001AD8CE /* re2.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A03FF871FCDF0C300DF32C9 /* re2.cc */; };
+		496353A920B24C64001AD8CE /* filtered_re2.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A03FF881FCDF0C300DF32C9 /* filtered_re2.cc */; };
+		496353AA20B24C64001AD8CE /* tostring.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A03FF891FCDF0C300DF32C9 /* tostring.cc */; };
+		496353AB20B24C64001AD8CE /* unicode_casefold.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A03FF8A1FCDF0C300DF32C9 /* unicode_casefold.h */; };
+		496353AC20B24C64001AD8CE /* unicode_groups.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A03FF8B1FCDF0C300DF32C9 /* unicode_groups.h */; };
+		496353AD20B24C64001AD8CE /* prefilter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A03FF8C1FCDF0C300DF32C9 /* prefilter.cc */; };
+		496353AE20B24C64001AD8CE /* simplify.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A03FF8D1FCDF0C300DF32C9 /* simplify.cc */; };
+		496353AF20B24C64001AD8CE /* prefilter_tree.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A03FF8E1FCDF0C300DF32C9 /* prefilter_tree.cc */; };
+		496353B020B24C64001AD8CE /* bitstate.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A03FF8F1FCDF0C300DF32C9 /* bitstate.cc */; };
+		496353B120B24C78001AD8CE /* make_unicode_groups.py in Resources */ = {isa = PBXBuildFile; fileRef = 0A03FF901FCDF0C300DF32C9 /* make_unicode_groups.py */; };
+		496353B220B24C78001AD8CE /* make_perl_groups.pl in Resources */ = {isa = PBXBuildFile; fileRef = 0A03FF911FCDF0C300DF32C9 /* make_perl_groups.pl */; };
+		496353B320B24C78001AD8CE /* regexp.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A03FF921FCDF0C300DF32C9 /* regexp.h */; };
+		496353B420B24C78001AD8CE /* bitmap256.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A03FF931FCDF0C300DF32C9 /* bitmap256.h */; };
+		496353B520B24C78001AD8CE /* re2.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A03FF941FCDF0C300DF32C9 /* re2.h */; };
+		496353B620B24C78001AD8CE /* set.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A03FF951FCDF0C300DF32C9 /* set.h */; };
+		496353B720B24C78001AD8CE /* stringpiece.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A03FF961FCDF0C300DF32C9 /* stringpiece.cc */; };
+		496353B820B24C78001AD8CE /* prog.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A03FF971FCDF0C300DF32C9 /* prog.cc */; };
+		496353B920B24C85001AD8CE /* mix.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A03FF3F1FCDF0C300DF32C9 /* mix.h */; };
+		496353BA20B24C85001AD8CE /* sparse_array.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A03FF401FCDF0C300DF32C9 /* sparse_array.h */; };
+		496353BB20B24C85001AD8CE /* flags.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A03FF411FCDF0C300DF32C9 /* flags.h */; };
+		496353BC20B24C85001AD8CE /* rune.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A03FF421FCDF0C300DF32C9 /* rune.cc */; };
+		496353BD20B24C85001AD8CE /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A03FF431FCDF0C300DF32C9 /* utf.h */; };
+		496353BE20B24C85001AD8CE /* pcre.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A03FF451FCDF0C300DF32C9 /* pcre.cc */; };
+		496353BF20B24C85001AD8CE /* logging.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A03FF461FCDF0C300DF32C9 /* logging.h */; };
+		496353C020B24C85001AD8CE /* util.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A03FF481FCDF0C300DF32C9 /* util.h */; };
+		496353C120B24C85001AD8CE /* pcre.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A03FF491FCDF0C300DF32C9 /* pcre.h */; };
+		496353C220B24C85001AD8CE /* strutil.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A03FF4A1FCDF0C300DF32C9 /* strutil.cc */; };
+		496353C320B24C85001AD8CE /* sparse_set.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A03FF4B1FCDF0C300DF32C9 /* sparse_set.h */; };
+		496353C420B24C85001AD8CE /* mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A03FF4C1FCDF0C300DF32C9 /* mutex.h */; };
+		496353C520B24C85001AD8CE /* strutil.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A03FF4E1FCDF0C300DF32C9 /* strutil.h */; };
 		497D6B931E1F9A9C0021EAB8 /* Allow2.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 497D6B821E1F96CE0021EAB8 /* Allow2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		49B0DDB0C82A7C833ED598C0 /* atomic_pointer.h in Headers */ = {isa = PBXBuildFile; fileRef = 599EC63A8464C30F44D63B47 /* atomic_pointer.h */; };
 		49EC58027D98E205CF632DCF /* FirstPartyHost.h in Headers */ = {isa = PBXBuildFile; fileRef = 32454E9E39178D4B3CD31294 /* FirstPartyHost.h */; };
@@ -4132,26 +4189,37 @@
 				491F023C2043616A006973B3 /* version_edit.h in Headers */,
 				491F023D2043616A006973B3 /* BloomFilter.h in Headers */,
 				491F023E2043616A006973B3 /* version_set.h in Headers */,
+				496353B920B24C85001AD8CE /* mix.h in Headers */,
 				491F023F2043616A006973B3 /* write_batch_internal.h in Headers */,
 				491F02402043616A006973B3 /* filter.h in Headers */,
 				491F02412043616A006973B3 /* memenv.h in Headers */,
 				491F02422043616A006973B3 /* c.h in Headers */,
 				491F02432043616A006973B3 /* cache.h in Headers */,
 				491F02442043616A006973B3 /* comparator.h in Headers */,
+				496353BD20B24C85001AD8CE /* utf.h in Headers */,
 				491F02452043616A006973B3 /* db.h in Headers */,
 				491F02462043616A006973B3 /* dumpfile.h in Headers */,
 				491F02472043616A006973B3 /* env.h in Headers */,
+				496353A320B24C54001AD8CE /* walker-inl.h in Headers */,
+				496353C320B24C85001AD8CE /* sparse_set.h in Headers */,
 				491F02482043616A006973B3 /* filter_policy.h in Headers */,
 				491F02492043616A006973B3 /* iterator.h in Headers */,
+				4963539A20B24C40001AD8CE /* prog.h in Headers */,
+				496353C420B24C85001AD8CE /* mutex.h in Headers */,
 				491F024A2043616A006973B3 /* options.h in Headers */,
 				491F024B2043616A006973B3 /* slice.h in Headers */,
+				496353B520B24C78001AD8CE /* re2.h in Headers */,
 				491F024C2043616A006973B3 /* status.h in Headers */,
 				491F024D2043616A006973B3 /* table.h in Headers */,
 				491F024E2043616A006973B3 /* table_builder.h in Headers */,
 				491F024F2043616A006973B3 /* write_batch.h in Headers */,
 				491F02502043616A006973B3 /* atomic_pointer.h in Headers */,
+				496353B420B24C78001AD8CE /* bitmap256.h in Headers */,
+				496353BA20B24C85001AD8CE /* sparse_array.h in Headers */,
 				491F02512043616A006973B3 /* port.h in Headers */,
+				496353AC20B24C64001AD8CE /* unicode_groups.h in Headers */,
 				491F02522043616A006973B3 /* port_example.h in Headers */,
+				496353A120B24C50001AD8CE /* prefilter.h in Headers */,
 				491F02532043616A006973B3 /* ad_block_client.h in Headers */,
 				491F02542043616A006973B3 /* port_posix.h in Headers */,
 				491F02552043616A006973B3 /* thread_annotations.h in Headers */,
@@ -4163,17 +4231,23 @@
 				491F025B2043616A006973B3 /* base.h in Headers */,
 				491F025C2043616A006973B3 /* merger.h in Headers */,
 				491F025D2043616A006973B3 /* two_level_iterator.h in Headers */,
+				496353A420B24C56001AD8CE /* prefilter_tree.h in Headers */,
+				496353BB20B24C85001AD8CE /* flags.h in Headers */,
 				491F025E2043616A006973B3 /* arena.h in Headers */,
 				491F025F2043616A006973B3 /* coding.h in Headers */,
+				496353B620B24C78001AD8CE /* set.h in Headers */,
+				496353C520B24C85001AD8CE /* strutil.h in Headers */,
 				491F02602043616A006973B3 /* crc32c.h in Headers */,
 				491F02612043616A006973B3 /* hash.h in Headers */,
 				491F02622043616A006973B3 /* histogram.h in Headers */,
 				491F02632043616A006973B3 /* logging.h in Headers */,
 				491F02642043616A006973B3 /* mutexlock.h in Headers */,
 				491F02652043616A006973B3 /* posix_logger.h in Headers */,
+				4963539420B24C29001AD8CE /* stringpiece.h in Headers */,
 				491F02662043616A006973B3 /* random.h in Headers */,
 				491F02672043616A006973B3 /* testharness.h in Headers */,
 				491F02682043616A006973B3 /* HashSet.h in Headers */,
+				496353C120B24C85001AD8CE /* pcre.h in Headers */,
 				491F02692043616A006973B3 /* testutil.h in Headers */,
 				491F026A2043616A006973B3 /* NSData+GZIP.h in Headers */,
 				491F026B2043616A006973B3 /* NSFileManager+Tar.h in Headers */,
@@ -4187,10 +4261,15 @@
 				491F02732043616A006973B3 /* cosmetic_filter.h in Headers */,
 				491F02742043616A006973B3 /* HttpsEverywhereObjC.h in Headers */,
 				491F02752043616A006973B3 /* JsonCpp.h in Headers */,
+				496353B320B24C78001AD8CE /* regexp.h in Headers */,
 				491F02762043616A006973B3 /* RecentlyUsedCache.h in Headers */,
 				491F02772043616A006973B3 /* TrackingProtectionCpp.h in Headers */,
 				491F02782043616A006973B3 /* LegacyJSContext.h in Headers */,
+				496353AB20B24C64001AD8CE /* unicode_casefold.h in Headers */,
+				496353BF20B24C85001AD8CE /* logging.h in Headers */,
 				491F02792043616A006973B3 /* WebViewDocScale.h in Headers */,
+				496353C020B24C85001AD8CE /* util.h in Headers */,
+				496353A520B24C64001AD8CE /* filtered_re2.h in Headers */,
 				491F027A2043616A006973B3 /* FirstPartyHost.h in Headers */,
 				491F027B2043616A006973B3 /* TPParser.h in Headers */,
 			);
@@ -4906,12 +4985,14 @@
 				491F01E42043616A006973B3 /* adblock-regions.txt in Resources */,
 				491F01E52043616A006973B3 /* BlankTargetDetector.js in Resources */,
 				491F01E62043616A006973B3 /* Localizable.strings in Resources */,
+				4963539D20B24C46001AD8CE /* unicode.py in Resources */,
 				491F01E72043616A006973B3 /* FiraSans-Light.ttf in Resources */,
 				491F01E82043616A006973B3 /* ElementAtPoint.js in Resources */,
 				491F01E92043616A006973B3 /* FingerprintingProtection.js in Resources */,
 				491F01EA2043616A006973B3 /* CharisSILR.ttf in Resources */,
 				491F01EB2043616A006973B3 /* FiraSans-Bold.ttf in Resources */,
 				491F01EC2043616A006973B3 /* FiraSans-Book.ttf in Resources */,
+				4963539620B24C30001AD8CE /* make_unicode_casefold.py in Resources */,
 				491F01ED2043616A006973B3 /* HideEmptyImages.js in Resources */,
 				491F01EE2043616A006973B3 /* PageUnload.js in Resources */,
 				491F01EF2043616A006973B3 /* SafeBrowsingError.html in Resources */,
@@ -4926,6 +5007,7 @@
 				491F01F72043616A006973B3 /* LoginsHelper.js in Resources */,
 				491F01F82043616A006973B3 /* NetError.css in Resources */,
 				491F01F92043616A006973B3 /* CharisSILI.ttf in Resources */,
+				496353B220B24C78001AD8CE /* make_perl_groups.pl in Resources */,
 				491F01FA2043616A006973B3 /* NetError.html in Resources */,
 				491F01FB2043616A006973B3 /* ios-sync.js in Resources */,
 				491F01FC2043616A006973B3 /* PrintHelper.js in Resources */,
@@ -4951,6 +5033,7 @@
 				491F02102043616A006973B3 /* Reader.xcassets in Resources */,
 				491F02112043616A006973B3 /* ReaderMode.js in Resources */,
 				491F02122043616A006973B3 /* ReaderSettings.xcassets in Resources */,
+				496353B120B24C78001AD8CE /* make_unicode_groups.py in Resources */,
 				491F02132043616A006973B3 /* ReaderViewLoading.html in Resources */,
 				491F02142043616A006973B3 /* SiteTableViewControllerHeader.xib in Resources */,
 				491F02152043616A006973B3 /* CharisSILB.ttf in Resources */,
@@ -5337,6 +5420,7 @@
 				491F00DD2043616A006973B3 /* Domain.swift in Sources */,
 				491F00DE2043616A006973B3 /* db_impl.cc in Sources */,
 				491F00DF2043616A006973B3 /* db_iter.cc in Sources */,
+				4963539920B24C39001AD8CE /* nfa.cc in Sources */,
 				491F00E02043616A006973B3 /* dbformat.cc in Sources */,
 				491F00E12043616A006973B3 /* SyncSite.swift in Sources */,
 				491F00E22043616A006973B3 /* dumpfile.cc in Sources */,
@@ -5344,6 +5428,8 @@
 				491F00E42043616A006973B3 /* log_reader.cc in Sources */,
 				491F00E52043616A006973B3 /* log_writer.cc in Sources */,
 				491F00E62043616A006973B3 /* memtable.cc in Sources */,
+				4963539520B24C2C001AD8CE /* set.cc in Sources */,
+				4963539020B24A89001AD8CE /* DeviceDetector.swift in Sources */,
 				491F00E72043616A006973B3 /* repair.cc in Sources */,
 				491F00E82043616A006973B3 /* table_cache.cc in Sources */,
 				491F00E92043616A006973B3 /* version_edit.cc in Sources */,
@@ -5358,6 +5444,7 @@
 				491F00F22043616A006973B3 /* filter_block.cc in Sources */,
 				491F00F32043616A006973B3 /* Niceware.swift in Sources */,
 				491F00F42043616A006973B3 /* PopupView.swift in Sources */,
+				4963539820B24C36001AD8CE /* re2_fuzzer.cc in Sources */,
 				491F00F52043616A006973B3 /* format.cc in Sources */,
 				491F00F62043616A006973B3 /* BraveShieldStatsView.swift in Sources */,
 				491F00F72043616A006973B3 /* SyncRecord.swift in Sources */,
@@ -5365,6 +5452,7 @@
 				491F00F92043616A006973B3 /* merger.cc in Sources */,
 				491F00FA2043616A006973B3 /* UIViewExtensions.swift in Sources */,
 				491F00FB2043616A006973B3 /* table.cc in Sources */,
+				496353A620B24C64001AD8CE /* dfa.cc in Sources */,
 				491F00FC2043616A006973B3 /* table_builder.cc in Sources */,
 				491F00FD2043616A006973B3 /* two_level_iterator.cc in Sources */,
 				491F00FE2043616A006973B3 /* arena.cc in Sources */,
@@ -5374,6 +5462,7 @@
 				491F01022043616A006973B3 /* cache.cc in Sources */,
 				491F01032043616A006973B3 /* coding.cc in Sources */,
 				491F01042043616A006973B3 /* comparator.cc in Sources */,
+				4963539E20B24C48001AD8CE /* regexp.cc in Sources */,
 				491F01052043616A006973B3 /* crc32c.cc in Sources */,
 				491F01062043616A006973B3 /* env.cc in Sources */,
 				491F01072043616A006973B3 /* env_posix.cc in Sources */,
@@ -5411,6 +5500,7 @@
 				491F01272043616A006973B3 /* BraveRightSidePanel.swift in Sources */,
 				491F01282043616A006973B3 /* MainSidePanelViewController.swift in Sources */,
 				491F01292043616A006973B3 /* SidePanelBaseViewController.swift in Sources */,
+				496353A720B24C64001AD8CE /* compile.cc in Sources */,
 				491F012A2043616A006973B3 /* SwizzlingToHideSharePicker.m in Sources */,
 				491F012B2043616A006973B3 /* TabsBarViewController.swift in Sources */,
 				491F012C2043616A006973B3 /* TabWidget.swift in Sources */,
@@ -5436,6 +5526,7 @@
 				491F01402043616A006973B3 /* HttpsEverywhereObjC.mm in Sources */,
 				491F01412043616A006973B3 /* LICENSE in Sources */,
 				491F01422043616A006973B3 /* Makefile in Sources */,
+				496353A920B24C64001AD8CE /* filtered_re2.cc in Sources */,
 				491F01432043616A006973B3 /* HttpsEverywhere.swift in Sources */,
 				491F01442043616A006973B3 /* NetworkDataFileLoader.swift in Sources */,
 				491F01452043616A006973B3 /* SafeBrowsing.swift in Sources */,
@@ -5444,18 +5535,24 @@
 				491F01482043616A006973B3 /* UrlProtocol.swift in Sources */,
 				491F01492043616A006973B3 /* BraveWebView.swift in Sources */,
 				491F014A2043616A006973B3 /* LegacyJSContext.m in Sources */,
+				4963539320B24C16001AD8CE /* onepass.cc in Sources */,
 				491F014B2043616A006973B3 /* PrivateBrowsing.swift in Sources */,
 				491F014C2043616A006973B3 /* WebViewBackForward.swift in Sources */,
 				491F014D2043616A006973B3 /* WebViewDocScale.m in Sources */,
+				4963539B20B24C42001AD8CE /* unicode_groups.cc in Sources */,
 				491F014E2043616A006973B3 /* WebViewProgress.swift in Sources */,
 				491F014F2043616A006973B3 /* WebViewScripting.swift in Sources */,
+				496353B820B24C78001AD8CE /* prog.cc in Sources */,
 				491F01502043616A006973B3 /* SyncPairCameraViewController.swift in Sources */,
 				491F01512043616A006973B3 /* TPParser.cpp in Sources */,
 				491F01522043616A006973B3 /* AdjustIntegration.swift in Sources */,
+				496353C220B24C85001AD8CE /* strutil.cc in Sources */,
 				491F01532043616A006973B3 /* AppDelegate.swift in Sources */,
 				491F01542043616A006973B3 /* CrashReporter.swift in Sources */,
 				491F01552043616A006973B3 /* DebugSettingsBundleOptions.swift in Sources */,
+				4963538E20B24A25001AD8CE /* DeviceModelDetector.swift in Sources */,
 				491F01562043616A006973B3 /* main.swift in Sources */,
+				496353A220B24C52001AD8CE /* mimics_pcre.cc in Sources */,
 				491F01572043616A006973B3 /* QuickActions.swift in Sources */,
 				491F01582043616A006973B3 /* TestAppDelegate.swift in Sources */,
 				491F01592043616A006973B3 /* WebServer.swift in Sources */,
@@ -5482,6 +5579,7 @@
 				491F016E2043616A006973B3 /* BrowserViewController+ReaderModeDelegate.swift in Sources */,
 				491F016F2043616A006973B3 /* BrowserViewController+TabManagerDelegate.swift in Sources */,
 				491F01702043616A006973B3 /* BrowserViewController+ToolbarAndUrlbarDelegate.swift in Sources */,
+				496353AF20B24C64001AD8CE /* prefilter_tree.cc in Sources */,
 				491F01712043616A006973B3 /* HashSet.cpp in Sources */,
 				491F01722043616A006973B3 /* BrowserViewController+WKNavigationDelegate.swift in Sources */,
 				491F01732043616A006973B3 /* BrowserViewController+WKUIDelegate.swift in Sources */,
@@ -5491,12 +5589,15 @@
 				491F01772043616A006973B3 /* MigrateData.swift in Sources */,
 				491F01782043616A006973B3 /* BraveBrowserToolbarButtonActions.swift in Sources */,
 				491F01792043616A006973B3 /* hashFn.cpp in Sources */,
+				496353BC20B24C85001AD8CE /* rune.cc in Sources */,
 				491F017A2043616A006973B3 /* FaviconManager.swift in Sources */,
 				491F017B2043616A006973B3 /* Sync.swift in Sources */,
+				496353B720B24C78001AD8CE /* stringpiece.cc in Sources */,
 				491F017C2043616A006973B3 /* FindInPageBar.swift in Sources */,
 				491F017D2043616A006973B3 /* FindInPageHelper.swift in Sources */,
 				491F017E2043616A006973B3 /* LoginsHelper.swift in Sources */,
 				491F017F2043616A006973B3 /* OpenPdfHelper.swift in Sources */,
+				4963538D20B249F3001AD8CE /* UrpLogsViewController.swift in Sources */,
 				491F01802043616A006973B3 /* OpenSearch.swift in Sources */,
 				491F01812043616A006973B3 /* PrintHelper.swift in Sources */,
 				491F01822043616A006973B3 /* ReaderModeBarView.swift in Sources */,
@@ -5514,6 +5615,7 @@
 				491F018E2043616A006973B3 /* BraveTermsViewController.swift in Sources */,
 				491F018F2043616A006973B3 /* PinController.swift in Sources */,
 				491F01902043616A006973B3 /* SwipeAnimator.swift in Sources */,
+				4963539720B24C33001AD8CE /* parse.cc in Sources */,
 				491F01912043616A006973B3 /* TabManager.swift in Sources */,
 				491F01922043616A006973B3 /* SyncCameraView.swift in Sources */,
 				491F01932043616A006973B3 /* TabTrayController.swift in Sources */,
@@ -5527,6 +5629,7 @@
 				491F019B2043616A006973B3 /* HomePanels.swift in Sources */,
 				491F019C2043616A006973B3 /* HomePanelViewController.swift in Sources */,
 				491F019D2043616A006973B3 /* ReaderPanel.swift in Sources */,
+				496353AA20B24C64001AD8CE /* tostring.cc in Sources */,
 				491F019E2043616A006973B3 /* TopSitesPanel.swift in Sources */,
 				491F019F2043616A006973B3 /* IntroViewController.swift in Sources */,
 				491F01A02043616A006973B3 /* LoginListViewController.swift in Sources */,
@@ -5546,8 +5649,10 @@
 				491F01AE2043616A006973B3 /* LoginDetailViewController.swift in Sources */,
 				491F01AF2043616A006973B3 /* SyncSettingsViewController.swift in Sources */,
 				491F01B02043616A006973B3 /* SearchEnginePicker.swift in Sources */,
+				4963537620B24999001AD8CE /* UserReferralProgram.swift in Sources */,
 				491F01B12043616A006973B3 /* SearchSettingsTableViewController.swift in Sources */,
 				491F01B22043616A006973B3 /* SettingsContentViewController.swift in Sources */,
+				4963539220B24AEA001AD8CE /* CustomHeaderData.swift in Sources */,
 				491F01B32043616A006973B3 /* Bookmark.swift in Sources */,
 				491F01B42043616A006973B3 /* SettingsNavigationController.swift in Sources */,
 				491F01B52043616A006973B3 /* SettingsTableViewController.swift in Sources */,
@@ -5559,16 +5664,20 @@
 				491F01BB2043616A006973B3 /* AuralProgressBar.swift in Sources */,
 				491F01BC2043616A006973B3 /* AutocompleteTextField.swift in Sources */,
 				491F01BD2043616A006973B3 /* ChevronView.swift in Sources */,
+				4963539C20B24C44001AD8CE /* unicode_casefold.cc in Sources */,
 				491F01BE2043616A006973B3 /* ErrorToast.swift in Sources */,
 				491F01BF2043616A006973B3 /* InnerStrokedView.swift in Sources */,
+				496353A820B24C64001AD8CE /* re2.cc in Sources */,
 				491F01C02043616A006973B3 /* InsetButton.swift in Sources */,
 				491F01C12043616A006973B3 /* LoginTableViewCell.swift in Sources */,
 				491F01C22043616A006973B3 /* SearchInputView.swift in Sources */,
 				491F01C32043616A006973B3 /* Punycode.swift in Sources */,
 				491F01C42043616A006973B3 /* SeparatorTableCell.swift in Sources */,
 				491F01C52043616A006973B3 /* SiteTableViewController.swift in Sources */,
+				496353AE20B24C64001AD8CE /* simplify.cc in Sources */,
 				491F01C62043616A006973B3 /* SnackBar.swift in Sources */,
 				491F01C72043616A006973B3 /* TabsButton.swift in Sources */,
+				496353BE20B24C85001AD8CE /* pcre.cc in Sources */,
 				491F01C82043616A006973B3 /* ad_block_client.cc in Sources */,
 				491F01C92043616A006973B3 /* Theme.swift in Sources */,
 				491F01CA2043616A006973B3 /* ThumbnailCell.swift in Sources */,
@@ -5578,7 +5687,9 @@
 				491F01CE2043616A006973B3 /* TwoLineCell.swift in Sources */,
 				491F01CF2043616A006973B3 /* SpotlightHelper.swift in Sources */,
 				491F01D02043616A006973B3 /* NSUserDefaultsPrefs.swift in Sources */,
+				496353B020B24C64001AD8CE /* bitstate.cc in Sources */,
 				491F01D12043616A006973B3 /* Profile.swift in Sources */,
+				496353A020B24C4E001AD8CE /* perl_groups.cc in Sources */,
 				491F01D22043616A006973B3 /* UIImage+ImageEffects.m in Sources */,
 				491F01D32043616A006973B3 /* RXMLElement.m in Sources */,
 				491F01D42043616A006973B3 /* UIImageViewAligned.m in Sources */,
@@ -5586,10 +5697,13 @@
 				491F01D62043616A006973B3 /* DynamicFontHelper.swift in Sources */,
 				491F01D72043616A006973B3 /* ErrorExtensions.swift in Sources */,
 				491F01D82043616A006973B3 /* FaviconFetcher.swift in Sources */,
+				4963539120B24AA0001AD8CE /* ReferralData.swift in Sources */,
 				491F01D92043616A006973B3 /* MenuHelper.swift in Sources */,
+				496353AD20B24C64001AD8CE /* prefilter.cc in Sources */,
 				491F01DA2043616A006973B3 /* Swizzling.m in Sources */,
 				491F01DB2043616A006973B3 /* Model.xcdatamodeld in Sources */,
 				491F01DC2043616A006973B3 /* Try.m in Sources */,
+				4963538F20B24A59001AD8CE /* UrpService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
