@@ -366,8 +366,10 @@ class BrowserViewController: UIViewController {
             let dayTypes = JSON()
             let children = JSON()
             let allDayTypes = JSON()
+            let subscription = JSON()
 
-            let result = Allow2CheckResult(allowed: false,
+            let result = Allow2CheckResult(subscription: subscription,
+                                           allowed: false,
                                            activities: activities,
                                            dayTypes: dayTypes,
                                            allDayTypes: allDayTypes,
