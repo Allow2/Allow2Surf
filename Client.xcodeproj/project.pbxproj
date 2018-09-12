@@ -653,6 +653,10 @@
 		496353C420B24C85001AD8CE /* mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A03FF4C1FCDF0C300DF32C9 /* mutex.h */; };
 		496353C520B24C85001AD8CE /* strutil.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A03FF4E1FCDF0C300DF32C9 /* strutil.h */; };
 		497D6B931E1F9A9C0021EAB8 /* Allow2.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 497D6B821E1F96CE0021EAB8 /* Allow2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		498F4FF32147DB7A001F72AA /* SVProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 498F4FF22147DB7A001F72AA /* SVProgressHUD.framework */; };
+		498F4FF52147DB8A001F72AA /* SVProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 498F4FF42147DB8A001F72AA /* SVProgressHUD.framework */; };
+		498F4FF82147ED77001F72AA /* SVProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 498F4FF42147DB8A001F72AA /* SVProgressHUD.framework */; };
+		498F4FF92147ED77001F72AA /* SVProgressHUD.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 498F4FF42147DB8A001F72AA /* SVProgressHUD.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		49B0DDB0C82A7C833ED598C0 /* atomic_pointer.h in Headers */ = {isa = PBXBuildFile; fileRef = 599EC63A8464C30F44D63B47 /* atomic_pointer.h */; };
 		49EC58027D98E205CF632DCF /* FirstPartyHost.h in Headers */ = {isa = PBXBuildFile; fileRef = 32454E9E39178D4B3CD31294 /* FirstPartyHost.h */; };
 		49FA9784204B99C600A9EFD4 /* Allow2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49FA9783204B99C500A9EFD4 /* Allow2.xcassets */; };
@@ -1431,6 +1435,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				498F4FF92147ED77001F72AA /* SVProgressHUD.framework in Copy Frameworks */,
 				491F02172043616A006973B3 /* Allow2.framework in Copy Frameworks */,
 				491F02182043616A006973B3 /* ReadingList.framework in Copy Frameworks */,
 				491F02192043616A006973B3 /* Storage.framework in Copy Frameworks */,
@@ -1720,6 +1725,8 @@
 		491F02B920436DBC006973B3 /* BraveShareTo copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "BraveShareTo copy-Info.plist"; path = "/Users/andrew/Projects-A2/brave/ios/BraveShareTo copy-Info.plist"; sourceTree = "<absolute>"; };
 		496A2069937D1214E5D088D8 /* testutil.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = testutil.h; path = ./brave/ThirdParty/leveldb/util/testutil.h; sourceTree = "<group>"; };
 		497D6B7C1E1F96CE0021EAB8 /* Allow2Framework.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Allow2Framework.xcodeproj; path = ThirdParty/Allow2/Allow2Framework.xcodeproj; sourceTree = "<group>"; };
+		498F4FF22147DB7A001F72AA /* SVProgressHUD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SVProgressHUD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		498F4FF42147DB8A001F72AA /* SVProgressHUD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SVProgressHUD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		49B46C33DD00B2A2DA25A97E /* UMTableViewCell.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = UMTableViewCell.h; path = ./ThirdParty/SWTableViewCell/UMTableViewCell.h; sourceTree = "<group>"; };
 		49FA9783204B99C500A9EFD4 /* Allow2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Allow2.xcassets; path = Client/Assets/Allow2.xcassets; sourceTree = "<group>"; };
 		4A01E0C243FA16CD4A8D1BB6 /* HomePanels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HomePanels.swift; path = ./Client/Frontend/Home/HomePanels.swift; sourceTree = "<group>"; };
@@ -2288,6 +2295,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				498F4FF32147DB7A001F72AA /* SVProgressHUD.framework in Frameworks */,
 				5C94B8EE1F58B20300DE5FEE /* CoreGraphics.framework in Frameworks */,
 				5D75A1E71F1420F0003FB8C7 /* SQLite.framework in Frameworks */,
 				5C82452C1E68E95600D3CA09 /* AVFoundation.framework in Frameworks */,
@@ -2325,7 +2333,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				498F4FF52147DB8A001F72AA /* SVProgressHUD.framework in Frameworks */,
 				491F021D2043616A006973B3 /* CoreGraphics.framework in Frameworks */,
+				498F4FF82147ED77001F72AA /* SVProgressHUD.framework in Frameworks */,
 				491F021E2043616A006973B3 /* SQLite.framework in Frameworks */,
 				491F021F2043616A006973B3 /* AVFoundation.framework in Frameworks */,
 				491F02202043616A006973B3 /* CoreImage.framework in Frameworks */,
@@ -3343,6 +3353,8 @@
 		928B373CD06CCFB1407180F1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				498F4FF42147DB8A001F72AA /* SVProgressHUD.framework */,
+				498F4FF22147DB7A001F72AA /* SVProgressHUD.framework */,
 				5C82452B1E68E95600D3CA09 /* AVFoundation.framework */,
 				5C6F1B1C1E67433F008B0ADD /* CoreImage.framework */,
 				5C44C0C21E38479200B1FD81 /* CoreData.framework */,
@@ -4451,6 +4463,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 491F027D2043616A006973B3 /* Build configuration list for PBXNativeTarget "Staging" */;
 			buildPhases = (
+				498F4FF62147DC51001F72AA /* Increment Build Number */,
 				491F00D92043616A006973B3 /* Copy Carthage Dependencies */,
 				491F00DA2043616A006973B3 /* Sources */,
 				491F01DD2043616A006973B3 /* Resources */,
@@ -4607,6 +4620,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F84B21DD1A090F8100AAB793 /* Build configuration list for PBXNativeTarget "Client" */;
 			buildPhases = (
+				498F4FF72147DDED001F72AA /* Increment Build Number */,
 				7B604F8F1C494AAA006EEEC3 /* Copy Carthage Dependencies */,
 				F84B21BA1A090F8100AAB793 /* Sources */,
 				F84B21BC1A090F8100AAB793 /* Resources */,
@@ -5223,6 +5237,34 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "sh ./brave/build-system/.fabric-key-setup.sh";
+		};
+		498F4FF62147DC51001F72AA /* Increment Build Number */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Increment Build Number";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/brave/BraveInfo.plist\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/brave/BraveInfo.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Client copy-Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/BraveShareTo/BraveShareToInfo.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/BraveShareTo copy-Info.plist\"";
+		};
+		498F4FF72147DDED001F72AA /* Increment Build Number */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Increment Build Number";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/brave/BraveInfo.plist\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/brave/BraveInfo.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Client copy-Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/BraveShareTo/BraveShareToInfo.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/BraveShareTo copy-Info.plist\"";
 		};
 		7B604F8F1C494AAA006EEEC3 /* Copy Carthage Dependencies */ = {
 			isa = PBXShellScriptBuildPhase;
