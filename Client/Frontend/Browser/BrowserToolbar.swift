@@ -80,6 +80,8 @@ open class BrowserToolbarHelper: NSObject {
         toolbar.pwdMgrButton.addTarget(self, action: #selector(BrowserToolbarHelper.SELdidClickPwdMgr), for: UIControlEvents.touchUpInside)
 
         setTintColor(buttonTintColor, forButtons: toolbar.actionButtons)
+        
+        
     }
 
     func SELdidClickBack() {
@@ -96,6 +98,7 @@ open class BrowserToolbarHelper: NSObject {
     
     func SELdidClickAddTab() {
         let app = UIApplication.shared.delegate as! AppDelegate
+
         app.tabManager.addTabAndSelect()
         app.browserViewController.urlBar.browserLocationViewDidTapLocation(app.browserViewController.urlBar.locationView)
     }

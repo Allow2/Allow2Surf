@@ -11,36 +11,36 @@ private let log = Logger.browserLogger
 
 struct TabsButtonUX {
     static let CornerRadius: CGFloat = 2
-    static let TitleFont: UIFont = UIConstants.DefaultChromeSmallFontBold
+    static let TitleFont: UIFont = UIFont.systemFont(ofSize: 10, weight: UIFontWeightSemibold)
     static let BorderStrokeWidth: CGFloat = 1.5
     static let BorderColor = UIColor.clear
     static let HighlightButtonColor = UIColor.clear
-    static let TitleInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
+    static let TitleInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
 
     static let Themes: [String: Theme] = {
         var themes = [String: Theme]()
         var theme = Theme()
-        theme.borderColor = .white
+        theme.borderColor = BraveUX.GreyG
         theme.borderWidth = BorderStrokeWidth
         theme.font = TitleFont
         theme.backgroundColor = .clear
-        theme.textColor = .white
+        theme.textColor = BraveUX.GreyG
         theme.insets = TitleInsets
-        theme.highlightButtonColor = .white
-        theme.highlightTextColor = .black
-        theme.highlightBorderColor = .white
+        theme.highlightButtonColor = BraveUX.GreyA
+        theme.highlightTextColor = BraveUX.GreyA
+        theme.highlightBorderColor = BraveUX.GreyA
         themes[Theme.PrivateMode] = theme
 
         theme = Theme()
-        theme.borderColor = .black
+        theme.borderColor = BraveUX.GreyI
         theme.borderWidth = BorderStrokeWidth
         theme.font = TitleFont
         theme.backgroundColor = .clear
-        theme.textColor = .black
+        theme.textColor = BraveUX.GreyI
         theme.insets = TitleInsets
-        theme.highlightButtonColor = .black
-        theme.highlightTextColor = .white
-        theme.highlightBorderColor = .black
+        theme.highlightButtonColor = BraveUX.GreyJ
+        theme.highlightTextColor = BraveUX.GreyJ
+        theme.highlightBorderColor = BraveUX.GreyJ
         themes[Theme.NormalMode] = theme
 
         return themes
@@ -49,6 +49,8 @@ struct TabsButtonUX {
 
 class TabsButton: UIControl {
     fileprivate var theme: Theme = TabsButtonUX.Themes[Theme.NormalMode]!
+    
+    fileprivate var imageView: UIImageView = UIImageView(image: UIImage(named: "tabs")?.withRenderingMode(.alwaysTemplate))
     
     override var isHighlighted: Bool {
         didSet {
@@ -97,9 +99,12 @@ class TabsButton: UIControl {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+//        insideButton.addSubview(imageView)
         insideButton.addSubview(labelBackground)
         insideButton.addSubview(borderView)
         insideButton.addSubview(titleLabel)
+        
         addSubview(insideButton)
         isAccessibilityElement = true
         accessibilityTraits |= UIAccessibilityTraitButton
@@ -112,6 +117,11 @@ class TabsButton: UIControl {
     override func updateConstraints() {
         super.updateConstraints()
 
+//            imageView.contentMode = .center
+//            imageView.snp.remakeConstraints { (make) -> Void in
+//                make.edges.equalTo(insideButton)
+//            }
+
         labelBackground.snp.remakeConstraints { (make) -> Void in
             make.edges.equalTo(insideButton)
         }
@@ -121,11 +131,12 @@ class TabsButton: UIControl {
         titleLabel.snp.remakeConstraints { (make) -> Void in
             make.edges.equalTo(insideButton)
         }
+        
         insideButton.snp.remakeConstraints { (make) -> Void in
           // BRAVE mod: getting layout errors with firefox method, temporary hack to bypass the errors
           make.right.equalTo(self).inset(12)
           make.centerY.equalTo(self)
-          make.size.equalTo(22)
+          make.size.equalTo(19)
         }
     }
 
@@ -135,6 +146,8 @@ class TabsButton: UIControl {
 
     override func clone() -> UIView {
         let button = TabsButton()
+        
+        imageView.tintColor = borderView.color
 
         button.accessibilityLabel = accessibilityLabel
         button.titleLabel.text = titleLabel.text
@@ -165,7 +178,8 @@ class TabsButton: UIControl {
     
     func tabsButtonHold() {
         let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
-        let closeAllTabsAction =  UIAlertAction(title: Strings.CloseAllTabsTitle, style: UIAlertActionStyle.destructive) { (action: UIAlertAction) in
+        let closeAllTitle = String(format: Strings.CloseAllTabsTitle, getApp().tabManager.tabs.displayedTabsForCurrentPrivateMode.count)
+        let closeAllTabsAction =  UIAlertAction(title: closeAllTitle, style: UIAlertActionStyle.destructive) { (action: UIAlertAction) in
             getApp().tabManager.removeAll(createTabIfNoneLeft: true, restricted: true)
         }
         
@@ -224,9 +238,13 @@ extension TabsButton: Themeable {
 
 // MARK: UIAppearance
 extension TabsButton {
+    
     dynamic var borderColor: UIColor {
         get { return borderView.color }
-        set { borderView.color = newValue }
+        set {
+            borderView.color = newValue
+            imageView.tintColor = newValue
+        }
     }
 
     dynamic var borderWidth: CGFloat {
