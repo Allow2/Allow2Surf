@@ -74,6 +74,7 @@ class BraveBrowserBottomToolbar : BrowserToolbar {
                                                      action: #selector(longPressForPrivateTab(gestureRecognizer:)))
         longPress.minimumPressDuration = 0.2
         addTabButton.addGestureRecognizer(longPress)
+
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -96,26 +97,26 @@ class BraveBrowserBottomToolbar : BrowserToolbar {
         let alertController = UIAlertController(title: nil,
                                                 message: nil,
                                                 preferredStyle: .actionSheet)
-        
+
         let cancelAction = UIAlertAction(title: Strings.Cancel,
                                          style: .cancel,
                                          handler: nil)
         alertController.addAction(cancelAction)
-        
+
         if !PrivateBrowsing.singleton.isOn {
             let newPrivateTabAction = UIAlertAction(title: Strings.NewPrivateTabTitle,
                                                     style: .default,
                                                     handler: respondToNewPrivateTab(action:))
             alertController.addAction(newPrivateTabAction)
         }
-        
-        
-        
+
+
+
         let newTabAction = UIAlertAction(title: Strings.NewTabTitle,
                                          style: .default,
                                          handler: respondToNewTab(action:))
         alertController.addAction(newTabAction)
-        
+
         getApp().browserViewController.present(alertController, animated: true, completion: nil)
     }
 

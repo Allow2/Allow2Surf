@@ -130,7 +130,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIViewControllerRestorati
             log.error("Failed to assign AVAudioSession category to allow playing with silent switch on for aural progress bar")
         }
 
-        let defaultRequest = URLRequest(url: UIConstants.DefaultHomePage as URL)
+        var defaultRequest = URLRequest(url: UIConstants.DefaultHomePage as URL)
+        defaultRequest.addValue(WebServer.uniqueBytes, forHTTPHeaderField: WebServer.headerAuthKey)
         let imageStore = DiskImageStore(files: profile.files, namespace: "TabManagerScreenshots", quality: UIConstants.ScreenshotQuality)
 
         log.debug("Configuring tabManager…")
@@ -157,6 +158,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIViewControllerRestorati
             }
         })
 
+        let favoritesInit = profile.prefs.boolForKey(FavoritesHelper.initPrefsKey) ?? false
+        if !favoritesInit {
+            let isFirstLaunch = profile.prefs.arrayForKey(DAU.preferencesKey) == nil
+
+            if isFirstLaunch {
+                log.info("Favorites initialization, new user.")
+                FavoritesHelper.addDefaultFavorites()
+            } else { // existing user, using Brave before the topsites to favorites change.
+                log.info("Favorites initialization, existing user.")
+                postAsyncToMain(1.5) {
+                    self.browserViewController.tabManager.addAdjacentTabAndSelect()
+                    self.browserViewController.presentTopSitesToFavoritesChange()
+                }
+            }
+
+            profile.prefs.setBool(true, forKey: FavoritesHelper.initPrefsKey)
+        }
+        
         // MARK: User referral program
         if let urp = UserReferralProgram() {
             let isFirstLaunch = self.getProfile(application).prefs.arrayForKey(DAU.preferencesKey) == nil
@@ -281,7 +300,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIViewControllerRestorati
         return shouldPerformAdditionalDelegateHandling
     }
 
-    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+    // Note: annotation is explicitly marked as Any? instead of Any because of an issue leading to a crash in some versions of Xcode.
+    // For context, see here https://bit.ly/2H04dOw (Swift contributor commenting on source of mysterious crash) and here https://bit.ly/2HDSAhz (workaround)
+    // This'll trigger a benign warning until this version of openURL is no longer needed (newer method was added in iOS 10).
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any?) -> Bool {
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
             return false
         }
@@ -492,7 +514,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIViewControllerRestorati
         ReaderModeHandlers.register(server, profile: profile)
         ErrorPageHelper.register(server, certStore: profile.certStore)
         AboutHomeHandler.register(server)
-        AboutLicenseHandler.register(server)
         SessionRestoreHandler.register(server)
         // Bug 1223009 was an issue whereby CGDWebserver crashed when moving to a background task
         // catching and handling the error seemed to fix things, but we're not sure why.
