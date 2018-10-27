@@ -80,7 +80,6 @@
 		0A159C931FD017DB005A79BF /* DeviceDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A159C921FD017DB005A79BF /* DeviceDetector.swift */; };
 		0A2551764195AA45DBDDF655 /* memtable.cc in Sources */ = {isa = PBXBuildFile; fileRef = 03E632C3081928FF6C86DEE4 /* memtable.cc */; };
 		0A3AA90C1FFF8C3100855082 /* FavoritesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3AA90B1FFF8C3100855082 /* FavoritesDataSource.swift */; };
-		0A3D9E65207FBC290034D5F0 /* crypto.js in Resources */ = {isa = PBXBuildFile; fileRef = 0A3D9E64207FBC290034D5F0 /* crypto.js */; };
 		0A4932892019FC4800EB7DB8 /* ViewUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4932882019FC4800EB7DB8 /* ViewUtil.swift */; };
 		0A59F2CB207406D900B0779F /* GlobalSign_r3.cer in Resources */ = {isa = PBXBuildFile; fileRef = 0A59F2C9207406D900B0779F /* GlobalSign_r3.cer */; };
 		0A59F2CC207406D900B0779F /* GlobalSign_r1.cer in Resources */ = {isa = PBXBuildFile; fileRef = 0A59F2CA207406D900B0779F /* GlobalSign_r1.cer */; };
@@ -674,7 +673,6 @@
 		49822EB12177EEE5007AAFCE /* AddToFavoritesActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0F5D8A200E0F64006EB7F1 /* AddToFavoritesActivity.swift */; };
 		498F4FF32147DB7A001F72AA /* SVProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 498F4FF22147DB7A001F72AA /* SVProgressHUD.framework */; };
 		498F4FF52147DB8A001F72AA /* SVProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 498F4FF42147DB8A001F72AA /* SVProgressHUD.framework */; };
-		498F4FF82147ED77001F72AA /* SVProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 498F4FF42147DB8A001F72AA /* SVProgressHUD.framework */; };
 		498F4FF92147ED77001F72AA /* SVProgressHUD.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 498F4FF42147DB8A001F72AA /* SVProgressHUD.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		49B0DDB0C82A7C833ED598C0 /* atomic_pointer.h in Headers */ = {isa = PBXBuildFile; fileRef = 599EC63A8464C30F44D63B47 /* atomic_pointer.h */; };
 		49EC58027D98E205CF632DCF /* FirstPartyHost.h in Headers */ = {isa = PBXBuildFile; fileRef = 32454E9E39178D4B3CD31294 /* FirstPartyHost.h */; };
@@ -820,7 +818,6 @@
 		5D75A1E81F1420F0003FB8C7 /* SQLite.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 5CD1641D1EDFB7090037ECCC /* SQLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5DA05E2D1EFC4315001D7EDE /* ErrorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA05E2C1EFC4315001D7EDE /* ErrorExtensions.swift */; };
 		5DB03ABD1FFE7D6D0088FBF4 /* fetch.js in Resources */ = {isa = PBXBuildFile; fileRef = 5DB03AA81FFE7D6D0088FBF4 /* fetch.js */; };
-		5DB03ABF1FFE82B20088FBF4 /* bundle.js in Resources */ = {isa = PBXBuildFile; fileRef = 5DB03ABE1FFE82B20088FBF4 /* bundle.js */; };
 		5DB199151E859F9100A851B6 /* SyncResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB199141E859F9100A851B6 /* SyncResponse.swift */; };
 		5DC5CFBE1F0D4126009553C4 /* GeometryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC5CFBD1F0D4126009553C4 /* GeometryExtensions.swift */; };
 		5E5E76550DFB4EB71194132F /* LICENSE in Sources */ = {isa = PBXBuildFile; fileRef = 36C647DC00749BCC944D6EC6 /* LICENSE */; };
@@ -2375,7 +2372,6 @@
 			files = (
 				498F4FF52147DB8A001F72AA /* SVProgressHUD.framework in Frameworks */,
 				491F021D2043616A006973B3 /* CoreGraphics.framework in Frameworks */,
-				498F4FF82147ED77001F72AA /* SVProgressHUD.framework in Frameworks */,
 				491F021E2043616A006973B3 /* SQLite.framework in Frameworks */,
 				491F021F2043616A006973B3 /* AVFoundation.framework in Frameworks */,
 				491F02202043616A006973B3 /* CoreImage.framework in Frameworks */,
@@ -4526,7 +4522,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 491F027D2043616A006973B3 /* Build configuration list for PBXNativeTarget "Staging" */;
 			buildPhases = (
-				498F4FF62147DC51001F72AA /* Increment Build Number */,
 				491F00D92043616A006973B3 /* Copy Carthage Dependencies */,
 				491F00DA2043616A006973B3 /* Sources */,
 				491F01DD2043616A006973B3 /* Resources */,
@@ -4683,7 +4678,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F84B21DD1A090F8100AAB793 /* Build configuration list for PBXNativeTarget "Client" */;
 			buildPhases = (
-				498F4FF72147DDED001F72AA /* Increment Build Number */,
 				7B604F8F1C494AAA006EEEC3 /* Copy Carthage Dependencies */,
 				F84B21BA1A090F8100AAB793 /* Sources */,
 				F84B21BC1A090F8100AAB793 /* Resources */,
@@ -5191,7 +5185,6 @@
 				EB8F569B1DD13DF300679A78 /* FiraSans-Bold.ttf in Resources */,
 				EB8F569D1DD13DF300679A78 /* FiraSans-Book.ttf in Resources */,
 				4C8CFF069B42CD78C72CC4F4 /* HideEmptyImages.js in Resources */,
-				5DB03ABF1FFE82B20088FBF4 /* bundle.js in Resources */,
 				DDF18B7D90D1BF9E6072344C /* PageUnload.js in Resources */,
 				4305183B54F23C211BD5112A /* SafeBrowsingError.html in Resources */,
 				0A59F2CC207406D900B0779F /* GlobalSign_r1.cer in Resources */,
@@ -5230,7 +5223,6 @@
 				A017135F85E8E813D1E8DF11 /* WindowCloseHelper.js in Resources */,
 				C68CDF76C7FC1770D6427F76 /* Home.xcassets in Resources */,
 				3E0F37CB279D8276AD55303D /* Intro.xcassets in Resources */,
-				0A3D9E65207FBC290034D5F0 /* crypto.js in Resources */,
 				C415871DCEBA47DC7C423105 /* ReadabilityBrowserHelper.js in Resources */,
 				35A3D6A6BB8100ACF4EBFD5E /* Reader.css in Resources */,
 				EB8F56A21DD13DF300679A78 /* FiraSans-SemiBold.ttf in Resources */,
@@ -5303,34 +5295,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "sh ./brave/build-system/.fabric-key-setup.sh";
-		};
-		498F4FF62147DC51001F72AA /* Increment Build Number */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Increment Build Number";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/brave/BraveInfo.plist\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/brave/BraveInfo.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Client copy-Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/BraveShareTo/BraveShareToInfo.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/BraveShareTo copy-Info.plist\"";
-		};
-		498F4FF72147DDED001F72AA /* Increment Build Number */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Increment Build Number";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/brave/BraveInfo.plist\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/brave/BraveInfo.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/Client copy-Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/BraveShareTo/BraveShareToInfo.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/BraveShareTo copy-Info.plist\"";
 		};
 		7B604F8F1C494AAA006EEEC3 /* Copy Carthage Dependencies */ = {
 			isa = PBXShellScriptBuildPhase;
