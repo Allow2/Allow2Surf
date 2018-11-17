@@ -117,7 +117,7 @@ class BraveSettingsView : AppSettingsTableViewController {
                         getApp().browserViewController.switchBrowsingMode(toPrivate: isOn)
                     })]
             ),
-            SettingSection(title: NSAttributedString(string: "Allow2"), children: [ Allow2Setting(settings: self) ]),
+            SettingSection(title: NSAttributedString(string: "Parental Freedom"), children: [ Allow2Setting(settings: self) ]),
             SettingSection(title: NSAttributedString(string: Strings.Security.uppercased()), children:
                 [BoolSetting(prefs: prefs, prefKey: kPrefKeyBrowserLock, defaultValue: false, titleText: Strings.Browser_Lock, statusText: nil, settingDidChange: { isOn in
                     if isOn {

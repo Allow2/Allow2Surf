@@ -674,6 +674,7 @@
 		498F4FF32147DB7A001F72AA /* SVProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 498F4FF22147DB7A001F72AA /* SVProgressHUD.framework */; };
 		498F4FF52147DB8A001F72AA /* SVProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 498F4FF42147DB8A001F72AA /* SVProgressHUD.framework */; };
 		498F4FF92147ED77001F72AA /* SVProgressHUD.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 498F4FF42147DB8A001F72AA /* SVProgressHUD.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		49AA59DC2183EC2F00C109B4 /* SVProgressHUD.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 498F4FF42147DB8A001F72AA /* SVProgressHUD.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		49B0DDB0C82A7C833ED598C0 /* atomic_pointer.h in Headers */ = {isa = PBXBuildFile; fileRef = 599EC63A8464C30F44D63B47 /* atomic_pointer.h */; };
 		49EC58027D98E205CF632DCF /* FirstPartyHost.h in Headers */ = {isa = PBXBuildFile; fileRef = 32454E9E39178D4B3CD31294 /* FirstPartyHost.h */; };
 		49FA9784204B99C600A9EFD4 /* Allow2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49FA9783204B99C500A9EFD4 /* Allow2.xcassets */; };
@@ -1512,6 +1513,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				49AA59DC2183EC2F00C109B4 /* SVProgressHUD.framework in Copy Frameworks */,
 				497D6B931E1F9A9C0021EAB8 /* Allow2.framework in Copy Frameworks */,
 				E4D567301ADECE2800F1EFE7 /* ReadingList.framework in Copy Frameworks */,
 				2FCAE2321ABB51F800877008 /* Storage.framework in Copy Frameworks */,

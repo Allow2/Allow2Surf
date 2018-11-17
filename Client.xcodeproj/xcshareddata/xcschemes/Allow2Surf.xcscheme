@@ -10,7 +10,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "conf=${CONFIGURATION}&#10;if [ $conf == &quot;Release&quot; ]&#10;then&#10;say &apos;Build pre-action: incrementing build number&apos; &amp;&#10;echo GENERATED_BUILD_ID=`date +&quot;%y.%m.%d.%H&quot;` &gt; ${PROJECT_DIR}/Client/Configuration/build-id.xcconfig&#10;fi">
+               scriptText = "conf=${CONFIGURATION}&#10;if [ $conf == &quot;Release&quot; ]&#10;then&#10;say &apos;Build pre-action: incrementing build number&apos; &amp;&#10;echo GENERATED_BUILD_ID=`date +&quot;%y.%m.%d.%H&quot;` &gt; ${PROJECT_DIR}/Client/Configuration/build-id.xcconfig&#10;buildNumber=$(/usr/libexec/PlistBuddy -c &quot;Print CFBundleVersion&quot; &quot;${PROJECT_DIR}/brave/BraveInfo.plist&quot;)&#10;buildNumber=$(($buildNumber + 1))&#10;/usr/libexec/PlistBuddy -c &quot;Set :CFBundleVersion $buildNumber&quot; &quot;${PROJECT_DIR}/brave/BraveInfo.plist&quot;&#10;/usr/libexec/PlistBuddy -c &quot;Set :CFBundleVersion $buildNumber&quot; &quot;${PROJECT_DIR}/Client copy-Info.plist&quot;&#10;/usr/libexec/PlistBuddy -c &quot;Set :CFBundleVersion $buildNumber&quot; &quot;${PROJECT_DIR}/BraveShareTo/BraveShareToInfo.plist&quot;&#10;/usr/libexec/PlistBuddy -c &quot;Set :CFBundleVersion $buildNumber&quot; &quot;${PROJECT_DIR}/BraveShareTo copy-Info.plist&quot;&#10;fi">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
@@ -137,16 +137,6 @@
    <ArchiveAction
       buildConfiguration = "Release"
       revealArchiveInOrganizer = "YES">
-      <PreActions>
-         <ExecutionAction
-            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
-            <ActionContent
-               title = "Run Script"
-               scriptText = "buildNumber=$(/usr/libexec/PlistBuddy -c &quot;Print CFBundleVersion&quot; &quot;${PROJECT_DIR}/brave/BraveInfo.plist&quot;)&#10;buildNumber=$(($buildNumber + 1))&#10;/usr/libexec/PlistBuddy -c &quot;Set :CFBundleVersion $buildNumber&quot; &quot;${PROJECT_DIR}/brave/BraveInfo.plist&quot;&#10;/usr/libexec/PlistBuddy -c &quot;Set :CFBundleVersion $buildNumber&quot; &quot;${PROJECT_DIR}/Client copy-Info.plist&quot;&#10;/usr/libexec/PlistBuddy -c &quot;Set :CFBundleVersion $buildNumber&quot; &quot;${PROJECT_DIR}/BraveShareTo/BraveShareToInfo.plist&quot;&#10;/usr/libexec/PlistBuddy -c &quot;Set :CFBundleVersion $buildNumber&quot; &quot;${PROJECT_DIR}/BraveShareTo copy-Info.plist&quot;"
-               shellToInvoke = "/bin/sh">
-            </ActionContent>
-         </ExecutionAction>
-      </PreActions>
       <PostActions>
          <ExecutionAction
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
